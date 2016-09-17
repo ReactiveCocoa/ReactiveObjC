@@ -17,6 +17,6 @@ that one isn't already logged. We are also happy to help you in our Slack room (
 Fork this repository, make it awesomer (preferably in a branch named for the
 topic), send a pull request!
 
-All code contributions should match our coding conventions ([Objective-c](https://github.com/github/objective-c-conventions) and [Swift](https://github.com/github/swift-style-guide)). If your particular case is not described in the coding convention, check the ReactiveCocoa codebase.
+All code contributions should match our coding conventions ([Objective-c](https://github.com/github/objective-c-conventions)). If your particular case is not described in the coding convention, check the ReactiveObjC codebase.
 
 Thanks for contributing! :boom::camel:
