@@ -68,12 +68,12 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 	#import <ReactiveObjC/UICollectionReusableView+RACSignalSupport.h>
 	#import <ReactiveObjC/UIControl+RACSignalSupport.h>
 	#import <ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h>
+	#import <ReactiveObjC/UISearchBar+RACSignalSupport.h>
 	#import <ReactiveObjC/UISegmentedControl+RACSignalSupport.h>
 	#import <ReactiveObjC/UITableViewCell+RACSignalSupport.h>
 	#import <ReactiveObjC/UITableViewHeaderFooterView+RACSignalSupport.h>
 	#import <ReactiveObjC/UITextField+RACSignalSupport.h>
 	#import <ReactiveObjC/UITextView+RACSignalSupport.h>
-	#import <ReactiveObjC/UISearchBar+RACSignalSupport.h>
 
 	#if TARGET_OS_IOS
 		#import <ReactiveObjC/NSURLConnection+RACSupport.h>
