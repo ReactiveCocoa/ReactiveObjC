@@ -318,8 +318,8 @@
 		A9B3161C1B3940AF0001CB9C /* RACUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764BE19EDA41200A782A9 /* RACUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9B316341B394C7F0001CB9C /* RACCompoundDisposableProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D037646A19EDA41200A782A9 /* RACCompoundDisposableProvider.d */; };
 		A9B316351B394C7F0001CB9C /* RACSignalProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D03764A319EDA41200A782A9 /* RACSignalProvider.d */; };
-		B7528AE01D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; };
-		B7528AE11D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; };
+		B7528AE01D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7528AE11D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7528AE21D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */; };
 		B7528AE31D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */; };
 		BEBDD6E51CDC292D009A75A9 /* RACDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = D037646B19EDA41200A782A9 /* RACDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
