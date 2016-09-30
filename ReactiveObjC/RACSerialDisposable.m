@@ -60,7 +60,7 @@
 	self = [super init];
 	if (self == nil) return nil;
 
-	const int result = pthread_mutex_init(&_mutex, NULL);
+	const int result __attribute__((unused)) = pthread_mutex_init(&_mutex, NULL);
 	NSCAssert(0 == result, @"Failed to initialize mutex with error %d", result);
 
 	return self;
@@ -76,7 +76,7 @@
 }
 
 - (void)dealloc {
-	const int result = pthread_mutex_destroy(&_mutex);
+	const int result __attribute__((unused)) = pthread_mutex_destroy(&_mutex);
 	NSCAssert(0 == result, @"Failed to destroy mutex with error %d", result);
 }
 
