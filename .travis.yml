@@ -55,6 +55,12 @@ matrix:
         - carthage build --no-skip-current --platform watchOS
       env:
         - JOB=CARTHAGE-watchOS
+    - script:
+      - gem install cocoapods --pre
+      - pod repo update
+      - pod lib lint ReactiveObjC.podspec
+      env:
+        - JOB=PODSPEC
 notifications:
   email: false
   slack:
