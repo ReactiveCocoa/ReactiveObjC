@@ -18,13 +18,14 @@ Pod::Spec.new do |s|
   s.documentation_url  = "https://github.com/ReactiveCocoa/ReactiveObjC/"\
                          "tree/master/Documentation#readme"
 
-  s.author             = { "Josh Abernathy" => "josh@github.com" }
+  s.author             = "ReactiveCocoa"
   s.social_media_url   = "https://twitter.com/ReactiveCocoa"
 
   s.ios.deployment_target     = "8.0"
   s.osx.deployment_target     = "10.9"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target    = "9.0"
+
   s.source = { git: "https://github.com/ReactiveCocoa/ReactiveObjC.git",
                tag: s.version }
 
@@ -57,6 +58,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.frameworks   = "Foundation"
-  s.dependency     "Result", "~> 2.0"
 
 end
