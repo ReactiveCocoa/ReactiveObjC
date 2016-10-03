@@ -494,7 +494,7 @@ To add RAC to your application:
 
  1. Add the ReactiveObjC repository as a submodule of your application's
     repository.
- 1. Run `script/bootstrap` from within the ReactiveObjC folder.
+ 1. Run `git submodule update --init --recursive` from within the ReactiveObjC folder.
  1. Drag and drop `ReactiveObjC.xcodeproj` into your
     application's Xcode project or workspace.
  1. On the "Build Phases" tab of your application target, add RAC to the "Link
