@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ReactiveObjC"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "The 2.x ReactiveCocoa Objective-C API: Streams of values over time"
 
   s.description  = <<-DESC.strip_heredoc
