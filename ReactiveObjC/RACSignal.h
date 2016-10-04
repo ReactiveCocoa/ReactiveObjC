@@ -14,7 +14,7 @@
 @class RACSubject;
 @protocol RACSubscriber;
 
-@interface RACSignal : RACStream
+@interface RACSignal<__covariant ValueType> : RACStream
 NS_ASSUME_NONNULL_BEGIN
 
 /// Creates a new signal. This is the preferred way to create a new signal
@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface RACSignal (Subscription)
+@interface RACSignal<__covariant ValueType> (Subscription)
 
 /// Subscribes `subscriber` to changes on the receiver. The receiver defines which
 /// events it actually sends and in what situations the events are sent.
@@ -134,13 +134,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// Convenience method to subscribe to the `next` event.
 ///
 /// This corresponds to `IObserver<T>.OnNext` in Rx.
-- (RACDisposable *)subscribeNext:(void (^)(id _Nullable x))nextBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock;
 
 /// Convenience method to subscribe to the `next` and `completed` events.
-- (RACDisposable *)subscribeNext:(void (^)(id _Nullable x))nextBlock completed:(void (^)(void))completedBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock completed:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to the `next`, `completed`, and `error` events.
-- (RACDisposable *)subscribeNext:(void (^)(id _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock completed:(void (^)(void))completedBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock completed:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to `error` events.
 ///
@@ -153,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (RACDisposable *)subscribeCompleted:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to `next` and `error` events.
-- (RACDisposable *)subscribeNext:(void (^)(id _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock;
 
 /// Convenience method to subscribe to `error` and `completed` events.
 - (RACDisposable *)subscribeError:(void (^)(NSError * _Nullable error))errorBlock completed:(void (^)(void))completedBlock;
@@ -180,7 +180,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Additional methods to assist with unit testing.
 ///
 /// **These methods should never ship in production code.**
-@interface RACSignal (Testing)
+@interface RACSignal<__covariant ValueType> (Testing)
 
 /// Spins the main run loop for a short while, waiting for the receiver to send a `next`.
 ///
@@ -196,7 +196,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns the first value received, or `defaultValue` if no value is received
 /// before the signal finishes or the method times out.
-- (nullable id)asynchronousFirstOrDefault:(nullable id)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error;
+- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error;
 
 /// Spins the main run loop for a short while, waiting for the receiver to complete.
 ///

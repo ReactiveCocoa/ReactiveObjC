@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 /// The domain for any errors originating from -rac_signalForSelector:.
 extern NSString * const RACSelectorSignalErrorDomain;

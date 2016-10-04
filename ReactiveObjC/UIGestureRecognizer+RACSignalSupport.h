@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface UIGestureRecognizer (RACSignalSupport)
 
 /// Returns a signal that sends the receiver when its gesture occurs.
-- (RACSignal *)rac_gestureSignal;
+- (RACSignal<__kindof UIGestureRecognizer *> *)rac_gestureSignal;
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <ReactiveObjC/EXTKeyPathCoding.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 /// Assigns a signal to an object property, automatically setting the given key
 /// path on every `next`. When the signal completes, the binding is automatically

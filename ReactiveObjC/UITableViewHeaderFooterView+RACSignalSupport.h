@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
+@class RACUnit;
 
 // This category is only applicable to iOS >= 6.0.
 @interface UITableViewHeaderFooterView (RACSignalSupport)
@@ -24,6 +25,6 @@
 ///     subscribeNext:^(UIButton *x) {
 ///         // do other things
 ///     }];
-@property (nonatomic, strong, readonly) RACSignal *rac_prepareForReuseSignal;
+@property (nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
 
 @end

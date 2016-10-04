@@ -10,7 +10,7 @@
 #import "RACSubscriber.h"
 
 @class RACCompoundDisposable;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 // A private subscriber that passes through all events to another subscriber
 // while not disposed.

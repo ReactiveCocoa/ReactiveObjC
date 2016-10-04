@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSControl (RACTextSignalSupport)
 
@@ -19,6 +19,6 @@
 ///
 /// Returns a signal which sends the current string value of the receiver, then
 /// the new value any time it changes.
-- (RACSignal *)rac_textSignal;
+- (RACSignal<NSString *> *)rac_textSignal;
 
 @end
