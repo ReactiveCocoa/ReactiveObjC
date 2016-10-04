@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RACDisposable;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 /// A multicast connection encapsulates the idea of sharing one subscription to a
 /// signal to many subscribers. This is most often needed if the subscription to

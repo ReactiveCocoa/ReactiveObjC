@@ -10,7 +10,7 @@
 #import "RACStream.h"
 
 @class RACScheduler;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 /// Represents an immutable sequence of values. Unless otherwise specified, the
 /// sequences' values are evaluated lazily on demand. Like Cocoa collections,
