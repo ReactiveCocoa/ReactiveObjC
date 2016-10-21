@@ -10,6 +10,8 @@
 
 @class RACCompoundDisposable;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Represents any object which can directly receive values from a RACSignal.
 ///
 /// You generally shouldn't need to implement this protocol. +[RACSignal
@@ -25,7 +27,7 @@
 /// Sends the next value to subscribers.
 ///
 /// value - The value to send. This can be `nil`.
-- (void)sendNext:(id)value;
+- (void)sendNext:(nullable id)value;
 
 /// Sends the error to subscribers.
 ///
@@ -33,7 +35,7 @@
 ///
 /// This terminates the subscription, and invalidates the subscriber (such that
 /// it cannot subscribe to anything else in the future).
-- (void)sendError:(NSError *)error;
+- (void)sendError:(nullable NSError *)error;
 
 /// Sends completed to subscribers.
 ///
@@ -49,3 +51,5 @@
 - (void)didSubscribeWithDisposable:(RACCompoundDisposable *)disposable;
 
 @end
+
+NS_ASSUME_NONNULL_END
