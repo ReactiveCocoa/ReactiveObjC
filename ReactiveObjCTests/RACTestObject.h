@@ -72,6 +72,8 @@ typedef struct {
 
 + (void)lifeIsGood:(id)sender;
 
+- (void)methodHotpatch;
+
 - (NSRange)returnRangeValueWithObjectValue:(id)objectValue andIntegerValue:(NSInteger)integerValue;
 
 // Writes 5 to the int pointed to by intPointer.

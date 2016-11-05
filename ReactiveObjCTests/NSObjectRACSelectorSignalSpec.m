@@ -9,6 +9,8 @@
 @import Quick;
 @import Nimble;
 
+#import <objc/message.h>
+
 #import "RACTestObject.h"
 #import "RACSubclassObject.h"
 
@@ -192,6 +194,42 @@ qck_describe(@"RACTestObject", ^{
 		[object rac_signalForSelector:selector];
 
 		expect(@([object respondsToSelector:selector])).to(beTruthy());
+	});
+
+	qck_it(@"hotpatch with dynamic subclass: disable a selector then re-implementing it in forwardInvocation:", ^{
+		__block BOOL patchApplied = NO;
+		
+		RACTestObject *object = [[RACTestObject alloc] init];
+		
+		// A dynamic subclass created.
+		[[RACObserve(object, objectValue) publish] connect];
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		// Simulator of hotpatch:
+		SEL selectorPatched = @selector(methodHotpatch);
+		//   Step 1: get class
+		Class originalClass = NSClassFromString(@"RACTestObject");
+		//   Step 2: disable original selector
+		Method method = class_getInstanceMethod(originalClass, selectorPatched);
+		const char *typeDescription = (char *)method_getTypeEncoding(method);
+		IMP originalImp = class_replaceMethod(originalClass, selectorPatched, _objc_msgForward, typeDescription);
+		//   Step 4: re-implementing it in forwardInvocation: (same process as jsPatch)
+		id patchForwardInvocationBlock = ^(id self, NSInvocation *invocation) {
+			expect(@(patchApplied)).to(beFalsy());
+			patchApplied = YES;
+		};
+		IMP hpForwardInvocation = imp_implementationWithBlock(patchForwardInvocationBlock);
+		//   Step 5: applying newly patched selector
+		IMP originalForwardImp = class_replaceMethod(originalClass, @selector(forwardInvocation:), hpForwardInvocation, "v@:@");
+		
+		// Calling patched method
+		[object methodHotpatch];
+		
+		expect(@(patchApplied)).to(beTruthy());
+		
+		// Finish: restore hotpatch
+		class_replaceMethod(originalClass, selectorPatched, originalImp, typeDescription);
+		class_replaceMethod(originalClass, @selector(forwardInvocation:), originalForwardImp, "v@:@");
 	});
 
 	qck_it(@"should properly implement -respondsToSelector: when called on signalForSelector'd receiver that has subsequently been KVO'd", ^{
