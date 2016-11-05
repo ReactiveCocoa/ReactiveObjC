@@ -57,6 +57,14 @@ static BOOL RACForwardInvocation(id self, NSInvocation *invocation) {
 
 static void RACSwizzleForwardInvocation(Class class) {
 	SEL forwardInvocationSEL = @selector(forwardInvocation:);
+	
+	// Existing implementation of -forwardInvocation: should be preserved for the preformance.
+	__block Method preservedForwardInvocationMethod = class_getInstanceMethod(class, forwardInvocationSEL);
+
+	__block void (*preservedForwardInvocation)(id, SEL, NSInvocation *) = NULL;
+	if (preservedForwardInvocationMethod != NULL) {
+		preservedForwardInvocation = (__typeof__(preservedForwardInvocation))method_getImplementation(preservedForwardInvocationMethod);
+	}
 
 	// Set up a new version of -forwardInvocation:.
 	//
@@ -79,16 +87,25 @@ static void RACSwizzleForwardInvocation(Class class) {
 		// This process adds the compatibility with libraries such as Aspects,
 		// jsPatch or waxPatch whom hook functions with forwardInvocation:.
 		Class originalClass = [self class];
-		Method forwardInvocationMethod = class_getInstanceMethod(originalClass, forwardInvocationSEL);
-		void (*originalForwardInvocation)(id, SEL, NSInvocation *) = NULL;
-		if (forwardInvocationMethod != NULL) {
-			originalForwardInvocation = (__typeof__(originalForwardInvocation))method_getImplementation(forwardInvocationMethod);
+		Class actualClass = object_getClass(self);
+		// IMP shouldn't be retrieved while @selector(class) returns the dynamic subclass
+		if (originalClass != actualClass) {
+			Method forwardInvocationMethod = class_getInstanceMethod(originalClass, forwardInvocationSEL);
+			if (preservedForwardInvocationMethod != forwardInvocationMethod) {
+				preservedForwardInvocationMethod = forwardInvocationMethod;
+				
+				if (preservedForwardInvocationMethod != NULL) {
+					preservedForwardInvocation = (__typeof__(preservedForwardInvocation))method_getImplementation(preservedForwardInvocationMethod);
+				} else {
+					preservedForwardInvocation = NULL;
+				}
+			}
 		}
 
-		if (originalForwardInvocation == NULL) {
+		if (preservedForwardInvocation == NULL) {
 			[self doesNotRecognizeSelector:invocation.selector];
 		} else {
-			originalForwardInvocation(self, forwardInvocationSEL, invocation);
+			preservedForwardInvocation(self, forwardInvocationSEL, invocation);
 		}
 	};
 
