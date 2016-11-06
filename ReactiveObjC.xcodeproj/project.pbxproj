@@ -318,6 +318,10 @@
 		A9B3161C1B3940AF0001CB9C /* RACUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764BE19EDA41200A782A9 /* RACUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9B316341B394C7F0001CB9C /* RACCompoundDisposableProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D037646A19EDA41200A782A9 /* RACCompoundDisposableProvider.d */; };
 		A9B316351B394C7F0001CB9C /* RACSignalProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D03764A319EDA41200A782A9 /* RACSignalProvider.d */; };
+		B7528AE01D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7528AE11D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7528AE21D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */; };
+		B7528AE31D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */; };
 		BEBDD6E51CDC292D009A75A9 /* RACDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = D037646B19EDA41200A782A9 /* RACDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEBDD6E61CDC292D009A75A9 /* RACDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = D037646B19EDA41200A782A9 /* RACDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEBDD6E71CDC292E009A75A9 /* RACDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = D037646B19EDA41200A782A9 /* RACDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -774,6 +778,8 @@
 		A97451351B3A935E00F48E55 /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		A97451361B3A935E00F48E55 /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
 		A9B315541B3940610001CB9C /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+RACSignalSupport.h"; sourceTree = "<group>"; };
+		B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+RACSignalSupport.m"; sourceTree = "<group>"; };
 		BE330A0E1D634F1E00806963 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = build/Debug/ReactiveSwift.framework; sourceTree = "<group>"; };
 		BE330A101D634F2900806963 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = build/Debug/ReactiveSwift.framework; sourceTree = "<group>"; };
 		BE330A121D634F2E00806963 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = "build/Debug-iphoneos/ReactiveSwift.framework"; sourceTree = "<group>"; };
@@ -1378,6 +1384,8 @@
 				D03764D719EDA41200A782A9 /* UIRefreshControl+RACCommandSupport.m */,
 				D03764D819EDA41200A782A9 /* UISegmentedControl+RACSignalSupport.h */,
 				D03764D919EDA41200A782A9 /* UISegmentedControl+RACSignalSupport.m */,
+				B7528ADE1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h */,
+				B7528ADF1D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m */,
 				D03764DA19EDA41200A782A9 /* UISlider+RACSignalSupport.h */,
 				D03764DB19EDA41200A782A9 /* UISlider+RACSignalSupport.m */,
 				D03764DC19EDA41200A782A9 /* UIStepper+RACSignalSupport.h */,
@@ -1592,6 +1600,7 @@
 				57A4D2251BA13D7A00F7D4B1 /* RACGroupedSignal.h in Headers */,
 				57A4D2261BA13D7A00F7D4B1 /* RACKVOChannel.h in Headers */,
 				57A4D2271BA13D7A00F7D4B1 /* RACMulticastConnection.h in Headers */,
+				B7528AE11D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */,
 				57A4D2281BA13D7A00F7D4B1 /* RACQueueScheduler.h in Headers */,
 				57DC89A51C50675700E367B7 /* UITextField+RACSignalSupport.h in Headers */,
 				57A4D2291BA13D7A00F7D4B1 /* RACQueueScheduler+Subclass.h in Headers */,
@@ -1805,6 +1814,7 @@
 				D037661119EDA41200A782A9 /* RACUnit.h in Headers */,
 				D03765FD19EDA41200A782A9 /* RACTargetQueueScheduler.h in Headers */,
 				D037661919EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h in Headers */,
+				B7528AE01D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.h in Headers */,
 				D037664D19EDA41200A782A9 /* UIStepper+RACSignalSupport.h in Headers */,
 				D037662119EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h in Headers */,
 				D03765EB19EDA41200A782A9 /* RACSubject.h in Headers */,
@@ -2068,6 +2078,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57D476951C4206EC00EFE697 /* UITableViewCell+RACSignalSupport.m in Sources */,
+				B7528AE31D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */,
 				57A4D1B21BA13D7A00F7D4B1 /* RACCompoundDisposableProvider.d in Sources */,
 				57D476901C4206D400EFE697 /* UIControl+RACSignalSupportPrivate.m in Sources */,
 				57A4D1B31BA13D7A00F7D4B1 /* RACSignalProvider.d in Sources */,
@@ -2484,6 +2495,7 @@
 				D037662319EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				D03765A119EDA41200A782A9 /* RACKVOTrampoline.m in Sources */,
 				D037665B19EDA41200A782A9 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */,
+				B7528AE21D8F10DD00C2D281 /* UISearchBar+RACSignalSupport.m in Sources */,
 				D037650B19EDA41200A782A9 /* NSInvocation+RACTypeParsing.m in Sources */,
 				D037660719EDA41200A782A9 /* RACTuple.m in Sources */,
 				D037667019EDA57100A782A9 /* EXTRuntimeExtensions.m in Sources */,
