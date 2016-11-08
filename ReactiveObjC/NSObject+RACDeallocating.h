@@ -10,7 +10,7 @@
 
 @class RACCompoundDisposable;
 @class RACDisposable;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSObject (RACDeallocating)
 

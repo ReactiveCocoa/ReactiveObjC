@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface UIControl (RACSignalSupport)
 
 /// Creates and returns a signal that sends the sender of the control event
 /// whenever one of the control events is triggered.
-- (RACSignal *)rac_signalForControlEvents:(UIControlEvents)controlEvents;
+- (RACSignal<__kindof UIControl *> *)rac_signalForControlEvents:(UIControlEvents)controlEvents;
 
 @end

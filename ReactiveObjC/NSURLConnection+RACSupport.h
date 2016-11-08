@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSignal;
+@class RACTuple;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSURLConnection (RACSupport)
 
@@ -20,6 +21,6 @@
 // then send a `RACTuple` of the received `NSURLResponse` and downloaded
 // `NSData`, and complete on a background thread. If any errors occur, the
 // returned signal will error out.
-+ (RACSignal *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
++ (RACSignal<RACTuple *> *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
 
 @end

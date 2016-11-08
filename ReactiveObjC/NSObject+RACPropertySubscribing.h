@@ -65,7 +65,7 @@
 #endif
 
 @class RACDisposable;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSObject (RACPropertySubscribing)
 

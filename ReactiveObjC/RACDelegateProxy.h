@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 // A private delegate object suitable for using
 // -rac_signalForSelector:fromProtocol: upon.
