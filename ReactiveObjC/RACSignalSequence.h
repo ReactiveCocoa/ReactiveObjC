@@ -8,7 +8,7 @@
 
 #import "RACSequence.h"
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 // Private class that adapts a RACSignal to the RACSequence interface.
 @interface RACSignalSequence : RACSequence

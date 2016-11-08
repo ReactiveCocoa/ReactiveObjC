@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RACScheduler;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSString (RACSupport)
 
@@ -17,6 +17,6 @@
 // Note that encoding won't be valid until the signal completes successfully.
 //
 // scheduler - cannot be nil.
-+ (RACSignal *)rac_readContentsOfURL:(NSURL *)URL usedEncoding:(NSStringEncoding *)encoding scheduler:(RACScheduler *)scheduler;
++ (RACSignal<NSString *> *)rac_readContentsOfURL:(NSURL *)URL usedEncoding:(NSStringEncoding *)encoding scheduler:(RACScheduler *)scheduler;
 
 @end

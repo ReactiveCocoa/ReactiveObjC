@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class RACDelegateProxy;
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface UIImagePickerController (RACSignalSupport)
 
@@ -28,6 +28,6 @@
 /// Returns a signal which will send the dictionary with info for the selected image.
 /// Caller is responsible for picker controller dismissal. The signal will complete
 /// itself when the receiver is deallocated or when user cancels selection.
-- (RACSignal *)rac_imageSelectedSignal;
+- (RACSignal<NSDictionary *> *)rac_imageSelectedSignal;
 
 @end

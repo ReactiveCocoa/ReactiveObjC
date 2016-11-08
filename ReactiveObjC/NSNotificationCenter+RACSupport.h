@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSNotificationCenter (RACSupport)
 
 // Sends the NSNotification every time the notification is posted.
-- (RACSignal *)rac_addObserverForName:(NSString *)notificationName object:(id)object;
+- (RACSignal<NSNotification *> *)rac_addObserverForName:(NSString *)notificationName object:(id)object;
 
 @end

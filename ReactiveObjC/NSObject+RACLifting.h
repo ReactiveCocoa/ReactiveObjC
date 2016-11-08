@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSignal;
+@class RACSignal<__covariant ValueType>;
 
 @interface NSObject (RACLifting)
 
