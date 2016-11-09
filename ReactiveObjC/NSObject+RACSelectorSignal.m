@@ -38,15 +38,40 @@ static NSMutableSet *swizzledClasses() {
 
 @implementation NSObject (RACSelectorSignal)
 
-static BOOL RACForwardInvocation(id self, NSInvocation *invocation) {
+static BOOL RACForwardInvocation(id self, NSInvocation *invocation, void (*forwardInvocation)(id, SEL, NSInvocation *)) {
 	SEL aliasSelector = RACAliasForSelector(invocation.selector);
 	RACSubject *subject = objc_getAssociatedObject(self, aliasSelector);
 
 	Class class = object_getClass(invocation.target);
 	BOOL respondsToAlias = [class instancesRespondToSelector:aliasSelector];
 	if (respondsToAlias) {
-		invocation.selector = aliasSelector;
-		[invocation invoke];
+		BOOL updatedOrForwarded = NO;
+		
+		// Fetch latest implementation of aliasSelector from originalClass
+		Class originalClass = [self class];
+		if (originalClass != class) {
+			
+			// Detect changing of aliasSelector we saved previously
+			Method originalInvocationMethod = class_getInstanceMethod(originalClass, invocation.selector);
+			Method aliasInvocationMethod = class_getInstanceMethod(class, aliasSelector);
+			void (*originalInvocation)(id, SEL, NSInvocation *) = (__typeof__(originalInvocation))method_getImplementation(originalInvocationMethod);
+			void (*aliasInvocation)(id, SEL, NSInvocation *) = (__typeof__(aliasInvocation))method_getImplementation(aliasInvocationMethod);
+			if (originalInvocation != aliasInvocation) {
+				if ((IMP)originalInvocation == _objc_msgForward) {
+					// Hotpatch: method re-implemented with `forwardInvocation:`
+					originalInvocation = forwardInvocation;
+				}
+				if (originalInvocation != NULL) {
+					originalInvocation(self, invocation.selector, invocation);
+					updatedOrForwarded = YES;
+				}
+			}
+		}
+		
+		if (! updatedOrForwarded) {
+			invocation.selector = aliasSelector;
+			[invocation invoke];
+		}
 	}
 
 	if (subject == nil) return respondsToAlias;
@@ -59,8 +84,7 @@ static void RACSwizzleForwardInvocation(Class class) {
 	SEL forwardInvocationSEL = @selector(forwardInvocation:);
 	
 	// Existing implementation of -forwardInvocation: should be preserved for the preformance.
-	__block Method preservedForwardInvocationMethod = class_getInstanceMethod(class, forwardInvocationSEL);
-
+	Method preservedForwardInvocationMethod = class_getInstanceMethod(class, forwardInvocationSEL);
 	__block void (*preservedForwardInvocation)(id, SEL, NSInvocation *) = NULL;
 	if (preservedForwardInvocationMethod != NULL) {
 		preservedForwardInvocation = (__typeof__(preservedForwardInvocation))method_getImplementation(preservedForwardInvocationMethod);
@@ -76,31 +100,24 @@ static void RACSwizzleForwardInvocation(Class class) {
 	// was no existing implementation, throw an unrecognized selector
 	// exception.
 	id newForwardInvocation = ^(id self, NSInvocation *invocation) {
-		BOOL matched = RACForwardInvocation(self, invocation);
-		if (matched) return;
-
-		// Fetch newest implementation of -forwardInvocation:.
+		// Fetch latest implementation of -forwardInvocation:.
 		//
-		// Implementation we preserved may be replaced in later.
+		// The preserved `preservedForwardInvocation` may be replaced in later.
 		// Continue to use old implementation will lead to an unexpected situration.
 		//
 		// This process adds the compatibility with libraries such as Aspects,
 		// jsPatch or waxPatch whom hook functions with forwardInvocation:.
 		Class originalClass = [self class];
 		Class actualClass = object_getClass(self);
+
 		// IMP shouldn't be retrieved while @selector(class) returns the dynamic subclass
 		if (originalClass != actualClass) {
 			Method forwardInvocationMethod = class_getInstanceMethod(originalClass, forwardInvocationSEL);
-			if (preservedForwardInvocationMethod != forwardInvocationMethod) {
-				preservedForwardInvocationMethod = forwardInvocationMethod;
-				
-				if (preservedForwardInvocationMethod != NULL) {
-					preservedForwardInvocation = (__typeof__(preservedForwardInvocation))method_getImplementation(preservedForwardInvocationMethod);
-				} else {
-					preservedForwardInvocation = NULL;
-				}
-			}
+			preservedForwardInvocation = (__typeof__(preservedForwardInvocation))method_getImplementation(forwardInvocationMethod);
 		}
+
+		BOOL matched = RACForwardInvocation(self, invocation, preservedForwardInvocation);
+		if (matched) return;
 
 		if (preservedForwardInvocation == NULL) {
 			[self doesNotRecognizeSelector:invocation.selector];
