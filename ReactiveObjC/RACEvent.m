@@ -58,7 +58,6 @@
 
 - (id)initWithEventType:(RACEventType)type object:(id)object {
 	self = [super init];
-	if (self == nil) return nil;
 
 	_eventType = type;
 	_object = object;

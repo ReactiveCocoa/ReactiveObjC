@@ -83,7 +83,6 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	NSCParameterAssert(signalBlock != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_addedExecutionSignalsSubject = [RACSubject new];
 	_allowsConcurrentExecutionSubject = [RACSubject new];

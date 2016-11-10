@@ -67,6 +67,8 @@
 @class RACDisposable;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACPropertySubscribing)
 
 /// Creates a signal to observe the value at the given key path.
@@ -99,6 +101,8 @@
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #define RACAble(...) \
 	metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__)) \

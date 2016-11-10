@@ -50,7 +50,6 @@
 
 - (instancetype)init {
 	self = [super init];
-	if (self == nil) return nil;
 	
 	self.backingArray = [NSArray array];
 	
@@ -92,7 +91,6 @@
 
 - (id)initWithCoder:(NSCoder *)coder {
 	self = [self init];
-	if (self == nil) return nil;
 	
 	self.backingArray = [coder decodeObjectForKey:@keypath(self.backingArray)];
 	return self;

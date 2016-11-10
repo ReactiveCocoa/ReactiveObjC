@@ -8,6 +8,8 @@
 
 #import "RACSubject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A grouped signal is used by -[RACSignal groupBy:transform:].
 @interface RACGroupedSignal : RACSubject
 
@@ -17,3 +19,5 @@
 + (instancetype)signalWithKey:(id<NSCopying>)key;
 
 @end
+
+NS_ASSUME_NONNULL_END

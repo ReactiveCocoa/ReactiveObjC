@@ -86,7 +86,6 @@
 	NSCParameterAssert(bindingName != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_target = target;
 	_bindingName = [bindingName copy];

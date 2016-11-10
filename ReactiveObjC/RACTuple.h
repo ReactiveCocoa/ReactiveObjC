@@ -43,6 +43,8 @@
 #define RACTupleUnpack(...) \
         RACTupleUnpack_(__VA_ARGS__)
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A sentinel object that represents nils in the tuple.
 ///
 /// It should never be necessary to create a tuple nil yourself. Just use
@@ -61,12 +63,12 @@
 
 /// These properties all return the object at that index or nil if the number of 
 /// objects is less than the index.
-@property (nonatomic, readonly) id first;
-@property (nonatomic, readonly) id second;
-@property (nonatomic, readonly) id third;
-@property (nonatomic, readonly) id fourth;
-@property (nonatomic, readonly) id fifth;
-@property (nonatomic, readonly) id last;
+@property (nonatomic, readonly, nullable) id first;
+@property (nonatomic, readonly, nullable) id second;
+@property (nonatomic, readonly, nullable) id third;
+@property (nonatomic, readonly, nullable) id fourth;
+@property (nonatomic, readonly, nullable) id fifth;
+@property (nonatomic, readonly, nullable) id last;
 
 /// Creates a new tuple out of the array. Does not convert nulls to nils.
 + (instancetype)tupleWithObjectsFromArray:(NSArray *)array;
@@ -82,7 +84,7 @@
 /// Returns the object at `index` or nil if the object is a RACTupleNil. Unlike
 /// NSArray and friends, it's perfectly fine to ask for the object at an index
 /// past the tuple's count - 1. It will simply return nil.
-- (id)objectAtIndex:(NSUInteger)index;
+- (nullable id)objectAtIndex:(NSUInteger)index;
 
 /// Returns an array of all the objects. RACTupleNils are converted to NSNulls.
 - (NSArray *)allObjects;
@@ -92,7 +94,7 @@
 /// obj - The object to add to the tuple. This argument may be nil.
 ///
 /// Returns a new tuple.
-- (instancetype)tupleByAddingObject:(id)obj;
+- (instancetype)tupleByAddingObject:(nullable id)obj;
 
 @end
 
@@ -106,7 +108,7 @@
 @interface RACTuple (ObjectSubscripting)
 /// Returns the object at that index or nil if the number of objects is less
 /// than the index.
-- (id)objectAtIndexedSubscript:(NSUInteger)idx; 
+- (nullable id)objectAtIndexedSubscript:(NSUInteger)idx;
 @end
 
 /// This and everything below is for internal use only.
@@ -154,6 +156,8 @@
 @interface RACTupleUnpackingTrampoline : NSObject
 
 + (instancetype)trampoline;
-- (void)setObject:(RACTuple *)tuple forKeyedSubscript:(NSArray *)variables;
+- (void)setObject:(nullable RACTuple *)tuple forKeyedSubscript:(NSArray *)variables;
 
 @end
+
+NS_ASSUME_NONNULL_END

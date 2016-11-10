@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACLifting)
 
 /// Lifts the selector on the receiver into the reactive world. The selector will
@@ -44,6 +46,8 @@
 - (RACSignal *)rac_liftSelector:(SEL)selector withSignalOfArguments:(RACSignal *)arguments;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 @interface NSObject (RACUnavailableLifting)
 

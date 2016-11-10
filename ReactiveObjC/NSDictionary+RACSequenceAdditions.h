@@ -10,6 +10,8 @@
 
 @class RACSequence;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (RACSequenceAdditions)
 
 /// Creates and returns a sequence of RACTuple key/value pairs. The key will be
@@ -29,3 +31,5 @@
 @property (nonatomic, copy, readonly) RACSequence *rac_valueSequence;
 
 @end
+
+NS_ASSUME_NONNULL_END

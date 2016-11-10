@@ -25,7 +25,6 @@
 	NSCParameterAssert(protocol != NULL);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	class_addProtocol(self.class, protocol);
 

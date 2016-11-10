@@ -17,6 +17,8 @@
 @implementation NSUserDefaults (RACSupport)
 
 - (RACChannelTerminal *)rac_channelTerminalForKey:(NSString *)key {
+	NSParameterAssert(key != nil);
+
 	RACChannel *channel = [RACChannel new];
 	
 	RACScheduler *scheduler = [RACScheduler scheduler];
