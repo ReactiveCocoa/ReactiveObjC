@@ -74,7 +74,6 @@ static void RACReleaseScheduledAction(CFAllocatorRef allocator, const void *ptr)
 
 - (instancetype)init {
 	self = [super initWithName:@"org.reactivecocoa.ReactiveObjC.RACTestScheduler"];
-	if (self == nil) return nil;
 
 	CFBinaryHeapCallBacks callbacks = (CFBinaryHeapCallBacks){
 		.version = 0,
@@ -205,7 +204,6 @@ static void RACReleaseScheduledAction(CFAllocatorRef allocator, const void *ptr)
 	NSCParameterAssert(block != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_date = [date copy];
 	_block = [block copy];

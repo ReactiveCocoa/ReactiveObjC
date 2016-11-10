@@ -19,7 +19,6 @@
 	NSCParameterAssert(queue != NULL);
 
 	self = [super initWithName:name];
-	if (self == nil) return nil;
 
 	_queue = queue;
 #if !OS_OBJECT_USE_OBJC

@@ -14,8 +14,9 @@
 @class RACSubject;
 @protocol RACSubscriber;
 
-@interface RACSignal<__covariant ValueType> : RACStream
 NS_ASSUME_NONNULL_BEGIN
+
+@interface RACSignal<__covariant ValueType> : RACStream
 
 /// Creates a new signal. This is the preferred way to create a new signal
 /// operation or behavior.
@@ -209,15 +210,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// `error` will be set to any error that occurred.
 - (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error;
 
-NS_ASSUME_NONNULL_END
 @end
 
+NS_ASSUME_NONNULL_END
+
 @interface RACSignal (Unavailable)
-NS_ASSUME_NONNULL_BEGIN
 
 + (RACSignal *)start:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
 + (RACSignal *)startWithScheduler:(RACScheduler *)scheduler subjectBlock:(void (^)(RACSubject *subject))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
 + (RACSignal *)startWithScheduler:(RACScheduler *)scheduler block:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
 
-NS_ASSUME_NONNULL_END
 @end

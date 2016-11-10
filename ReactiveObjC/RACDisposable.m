@@ -33,7 +33,6 @@
 
 - (id)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	_disposeBlock = (__bridge void *)self;
 	OSMemoryBarrier();
@@ -45,7 +44,6 @@
 	NSCParameterAssert(block != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_disposeBlock = (void *)CFBridgingRetain([block copy]); 
 	OSMemoryBarrier();

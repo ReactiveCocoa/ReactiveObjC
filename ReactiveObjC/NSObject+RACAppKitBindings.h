@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACAppKitBindings)
 
 /// Invokes -rac_channelToBinding:options: without any options.
@@ -26,9 +28,11 @@
 ///
 /// Returns a RACChannelTerminal which will send future values from the receiver,
 /// and update the receiver when values are sent to the terminal.
-- (RACChannelTerminal *)rac_channelToBinding:(NSString *)binding options:(NSDictionary *)options;
+- (RACChannelTerminal *)rac_channelToBinding:(NSString *)binding options:(nullable NSDictionary *)options;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 @interface NSObject (RACUnavailableAppKitBindings)
 

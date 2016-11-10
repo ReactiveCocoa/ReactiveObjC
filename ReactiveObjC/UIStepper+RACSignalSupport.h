@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIStepper (RACSignalSupport)
 
 /// Creates a new RACChannel-based binding to the receiver.
@@ -19,6 +21,8 @@
 /// Returns a RACChannelTerminal that sends the receiver's value whenever the
 /// UIControlEventValueChanged control event is fired, and sets the value to the
 /// values it receives.
-- (RACChannelTerminal *)rac_newValueChannelWithNilValue:(NSNumber *)nilValue;
+- (RACChannelTerminal *)rac_newValueChannelWithNilValue:(nullable NSNumber *)nilValue;
 
 @end
+
+NS_ASSUME_NONNULL_END

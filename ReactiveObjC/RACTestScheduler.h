@@ -8,6 +8,8 @@
 
 #import "RACScheduler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A special kind of scheduler that steps through virtualized time.
 ///
 /// This scheduler class can be used in unit tests to verify asynchronous
@@ -40,3 +42,5 @@
 - (void)stepAll;
 
 @end
+
+NS_ASSUME_NONNULL_END

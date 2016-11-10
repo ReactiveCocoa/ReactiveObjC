@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSFileHandle (RACSupport)
 
 // Read any available data in the background and send it. Completes when data
@@ -17,3 +19,5 @@
 - (RACSignal<NSData *> *)rac_readInBackground;
 
 @end
+
+NS_ASSUME_NONNULL_END

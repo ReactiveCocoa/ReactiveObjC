@@ -11,6 +11,8 @@
 @class RACChannelTerminal;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UITextField (RACSignalSupport)
 
 /// Creates and returns a signal for the text of the field. It always starts with
@@ -26,3 +28,5 @@
 - (RACChannelTerminal *)rac_newTextChannel;
 
 @end
+
+NS_ASSUME_NONNULL_END

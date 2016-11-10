@@ -9,16 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RACSignal.h"
 
-/// The domain for errors originating in RACSignal operations.
-extern NSString * _Nonnull const RACSignalErrorDomain;
-
-/// The error code used with -timeout:.
-extern const NSInteger RACSignalErrorTimedOut;
-
-/// The error code used when a value passed into +switch:cases:default: does not
-/// match any of the cases, and no default was given.
-extern const NSInteger RACSignalErrorNoMatchingCase;
-
 @class RACCommand;
 @class RACDisposable;
 @class RACMulticastConnection;
@@ -28,8 +18,19 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 @class RACTuple;
 @protocol RACSubscriber;
 
-@interface RACSignal (Operations)
 NS_ASSUME_NONNULL_BEGIN
+
+/// The domain for errors originating in RACSignal operations.
+extern NSString * const RACSignalErrorDomain;
+
+/// The error code used with -timeout:.
+extern const NSInteger RACSignalErrorTimedOut;
+
+/// The error code used when a value passed into +switch:cases:default: does not
+/// match any of the cases, and no default was given.
+extern const NSInteger RACSignalErrorNoMatchingCase;
+
+@interface RACSignal (Operations)
 
 /// Do the given block on `next`. This should be used to inject side effects into
 /// the signal.
@@ -704,8 +705,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// to the remaining elements.
 - (RACSignal *)reduceApply;
 
-NS_ASSUME_NONNULL_END
 @end
+
+NS_ASSUME_NONNULL_END
 
 @interface RACSignal (UnavailableOperations)
 NS_ASSUME_NONNULL_BEGIN

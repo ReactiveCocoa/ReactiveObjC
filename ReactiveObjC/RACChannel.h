@@ -11,6 +11,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A two-way channel.
 ///
 /// Conceptually, RACChannel can be thought of as a bidirectional connection,
@@ -48,6 +50,8 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
+
 /// Represents one end of a RACChannel.
 ///
 /// An terminal is similar to a socket or pipe -- it represents one end of
@@ -68,3 +72,4 @@
 - (id)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 
 @end
+

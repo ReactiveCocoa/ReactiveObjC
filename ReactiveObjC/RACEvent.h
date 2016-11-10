@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Describes the type of a RACEvent.
 ///
 /// RACEventTypeCompleted - A `completed` event.
@@ -28,10 +30,10 @@ typedef NS_ENUM(NSUInteger, RACEventType) {
 + (instancetype)completedEvent;
 
 /// Returns a new event of type RACEventTypeError, containing the given error.
-+ (instancetype)eventWithError:(NSError *)error;
++ (instancetype)eventWithError:(nullable NSError *)error;
 
 /// Returns a new event of type RACEventTypeNext, containing the given value.
-+ (instancetype)eventWithValue:(id)value;
++ (instancetype)eventWithValue:(nullable id)value;
 
 /// The type of event represented by the receiver.
 @property (nonatomic, assign, readonly) RACEventType eventType;
@@ -42,10 +44,12 @@ typedef NS_ENUM(NSUInteger, RACEventType) {
 
 /// The error associated with an event of type RACEventTypeError. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly, nullable) NSError *error;
 
 /// The value associated with an event of type RACEventTypeNext. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly) id value;
+@property (nonatomic, strong, readonly, nullable) id value;
 
 @end
+
+NS_ASSUME_NONNULL_END

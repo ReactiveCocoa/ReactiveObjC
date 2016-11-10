@@ -80,7 +80,6 @@ static CFMutableArrayRef RACCreateDisposablesArray(void) {
 
 - (instancetype)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	const int result __attribute__((unused)) = pthread_mutex_init(&_mutex, NULL);
 	NSCAssert(0 == result, @"Failed to initialize mutex with error %d.", result);
@@ -90,7 +89,6 @@ static CFMutableArrayRef RACCreateDisposablesArray(void) {
 
 - (instancetype)initWithDisposables:(NSArray *)otherDisposables {
 	self = [self init];
-	if (self == nil) return nil;
 
 	#if RACCompoundDisposableInlineCount
 	[otherDisposables enumerateObjectsUsingBlock:^(RACDisposable *disposable, NSUInteger index, BOOL *stop) {

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RACScheduler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// An interface for use by subclasses.
 ///
 /// Subclasses should use `-performAsCurrentScheduler:` to do the actual block
@@ -27,3 +29,5 @@
 - (void)performAsCurrentScheduler:(void (^)(void))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

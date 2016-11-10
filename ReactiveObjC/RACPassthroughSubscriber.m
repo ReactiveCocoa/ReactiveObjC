@@ -56,7 +56,6 @@ static const char *cleanedSignalDescription(RACSignal *signal) {
 	NSCParameterAssert(subscriber != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_innerSubscriber = subscriber;
 	_signal = signal;

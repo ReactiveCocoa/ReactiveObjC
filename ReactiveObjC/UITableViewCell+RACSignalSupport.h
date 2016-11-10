@@ -11,6 +11,8 @@
 @class RACSignal<__covariant ValueType>;
 @class RACUnit;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UITableViewCell (RACSignalSupport)
 
 /// A signal which will send a RACUnit whenever -prepareForReuse is invoked upon
@@ -27,3 +29,5 @@
 @property (nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
 
 @end
+
+NS_ASSUME_NONNULL_END
