@@ -58,7 +58,7 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 
 /// The current scheduler. This will only be valid when used from within a
 /// -[RACScheduler schedule:] block or when on the main thread.
-+ (RACScheduler *)currentScheduler;
++ (nullable RACScheduler *)currentScheduler;
 
 /// Schedule the given block for execution on the scheduler.
 ///
