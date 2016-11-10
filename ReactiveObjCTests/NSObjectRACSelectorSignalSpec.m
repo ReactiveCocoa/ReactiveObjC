@@ -393,7 +393,7 @@ qck_describe(@"hotpatch with dynamic subclassing", ^{
 		
 		expect(@(patchApplied)).to(beTruthy());
 	});
-	
+
 	qck_it(@"should perform method-swizzling successfully on a selector intercepted by rac_signalForSelector:", ^{
 		// A dynamic subclass created by `signalForSelector:`.
 		[object rac_signalForSelector:@selector(lifeIsGood:)];
