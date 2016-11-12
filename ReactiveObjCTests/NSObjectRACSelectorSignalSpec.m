@@ -9,8 +9,12 @@
 @import Quick;
 @import Nimble;
 
+#import <objc/message.h>
+
 #import "RACTestObject.h"
 #import "RACSubclassObject.h"
+
+#import <ReactiveObjC/EXTScope.h>
 
 #import "NSObject+RACDeallocating.h"
 #import "NSObject+RACPropertySubscribing.h"
@@ -193,7 +197,7 @@ qck_describe(@"RACTestObject", ^{
 
 		expect(@([object respondsToSelector:selector])).to(beTruthy());
 	});
-
+	
 	qck_it(@"should properly implement -respondsToSelector: when called on signalForSelector'd receiver that has subsequently been KVO'd", ^{
 		RACTestObject *object = [[RACTestObject alloc] init];
 
@@ -303,6 +307,109 @@ qck_describe(@"RACTestObject", ^{
 		
 		[object setObjectValue:@YES andSecondObjectValue:@"Winner"];
 		expect(@(invokedMethodBefore)).to(beTruthy());
+	});
+});
+
+qck_describe(@"interoperability", ^{
+	__block BOOL invoked;
+	__block RACTestObject * object;
+	__block Class originalClass;
+
+	qck_beforeEach(^{
+		invoked = NO;
+		object = [[RACTestObject alloc] init];
+		originalClass = RACTestObject.class;
+	});
+
+	qck_it(@"should invoke the swizzled `forwardInvocation:` on an instance isa-swizzled by both RAC and KVO.", ^{
+		[[RACObserve(object, objectValue) publish] connect];
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		SEL swizzledSelector = @selector(lifeIsGood:);
+		
+		// Redirect `swizzledSelector` to the forwarding machinery.
+		Method method = class_getInstanceMethod(originalClass, swizzledSelector);
+		const char *typeDescription = (char *)method_getTypeEncoding(method);
+		IMP originalImp = class_replaceMethod(originalClass, swizzledSelector, _objc_msgForward, typeDescription);
+
+		@onExit {
+			class_replaceMethod(originalClass, swizzledSelector, originalImp, typeDescription);
+		};
+
+		// Swizzle `forwardInvocation:` to intercept `swizzledSelector`.
+		id patchForwardInvocationBlock = ^(id self, NSInvocation *invocation) {
+			if (invocation.selector == swizzledSelector) {
+				expect(@(invoked)).to(beFalsy());
+				invoked = YES;
+			}
+		};
+
+		IMP newForwardInvocation = imp_implementationWithBlock(patchForwardInvocationBlock);
+		IMP oldForwardInvocation = class_replaceMethod(originalClass, @selector(forwardInvocation:), newForwardInvocation, "v@:@");
+
+		@onExit {
+			class_replaceMethod(originalClass, @selector(forwardInvocation:), oldForwardInvocation, "v@:@");
+		};
+		
+		[object lifeIsGood:nil];
+		expect(@(invoked)).to(beTruthy());
+	});
+	
+	qck_it(@"should invoke the swizzled `forwardInvocation:` on an instance isa-swizzled by RAC.", ^{
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		SEL swizzledSelector = @selector(lifeIsGood:);
+
+		// Redirect `swizzledSelector` to the forwarding machinery.
+		Method method = class_getInstanceMethod(originalClass, swizzledSelector);
+		const char *typeEncoding = (char *)method_getTypeEncoding(method);
+		IMP originalImp = class_replaceMethod(originalClass, swizzledSelector, _objc_msgForward, typeEncoding);
+
+		@onExit {
+			class_replaceMethod(originalClass, swizzledSelector, originalImp, typeEncoding);
+		};
+
+		// Swizzle `forwardInvocation:` to intercept `swizzledSelector`.
+		id patchForwardInvocationBlock = ^(id self, NSInvocation *invocation) {
+			if (invocation.selector == swizzledSelector) {
+				expect(@(invoked)).to(beFalsy());
+				invoked = YES;
+			}
+		};
+
+		IMP newForwardInvocation = imp_implementationWithBlock(patchForwardInvocationBlock);
+		IMP oldForwardInvocation = class_replaceMethod(originalClass, @selector(forwardInvocation:), newForwardInvocation, "v@:@");
+
+		@onExit {
+			class_replaceMethod(originalClass, @selector(forwardInvocation:), oldForwardInvocation, "v@:@");
+		};
+		
+		[object lifeIsGood:nil];
+		expect(@(invoked)).to(beTruthy());
+	});
+
+	qck_it(@"should invoke the swizzled selector on an instance isa-swizzled by RAC.", ^{
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		SEL swizzledSelector = @selector(lifeIsGood:);
+		
+		Method method = class_getInstanceMethod(originalClass, swizzledSelector);
+		const char *typeEncoding = (char *)method_getTypeEncoding(method);
+		
+		id methodSwizzlingBlock = ^(id self) {
+			expect(@(invoked)).to(beFalsy());
+			invoked = YES;
+		};
+
+		IMP newImplementation = imp_implementationWithBlock(methodSwizzlingBlock);
+		IMP oldImplementation = class_replaceMethod(originalClass, swizzledSelector, newImplementation, typeEncoding);
+
+		@onExit {
+			class_replaceMethod(originalClass, swizzledSelector, oldImplementation, typeEncoding);
+		};
+		
+		[object lifeIsGood:nil];
+		expect(@(invoked)).to(beTruthy());
 	});
 });
 

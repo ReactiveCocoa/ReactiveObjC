@@ -38,32 +38,9 @@ static NSMutableSet *swizzledClasses() {
 
 @implementation NSObject (RACSelectorSignal)
 
-static BOOL RACForwardInvocation(id self, NSInvocation *invocation) {
-	SEL aliasSelector = RACAliasForSelector(invocation.selector);
-	RACSubject *subject = objc_getAssociatedObject(self, aliasSelector);
-
-	Class class = object_getClass(invocation.target);
-	BOOL respondsToAlias = [class instancesRespondToSelector:aliasSelector];
-	if (respondsToAlias) {
-		invocation.selector = aliasSelector;
-		[invocation invoke];
-	}
-
-	if (subject == nil) return respondsToAlias;
-
-	[subject sendNext:invocation.rac_argumentsTuple];
-	return YES;
-}
-
 static void RACSwizzleForwardInvocation(Class class) {
+	Class superclass = class_getSuperclass(class);
 	SEL forwardInvocationSEL = @selector(forwardInvocation:);
-	Method forwardInvocationMethod = class_getInstanceMethod(class, forwardInvocationSEL);
-
-	// Preserve any existing implementation of -forwardInvocation:.
-	void (*originalForwardInvocation)(id, SEL, NSInvocation *) = NULL;
-	if (forwardInvocationMethod != NULL) {
-		originalForwardInvocation = (__typeof__(originalForwardInvocation))method_getImplementation(forwardInvocationMethod);
-	}
 
 	// Set up a new version of -forwardInvocation:.
 	//
@@ -75,13 +52,37 @@ static void RACSwizzleForwardInvocation(Class class) {
 	// was no existing implementation, throw an unrecognized selector
 	// exception.
 	id newForwardInvocation = ^(id self, NSInvocation *invocation) {
-		BOOL matched = RACForwardInvocation(self, invocation);
-		if (matched) return;
+		SEL originalSelector = invocation.selector;
+		SEL aliasSelector = RACAliasForSelector(invocation.selector);
+		RACSubject* subject = objc_getAssociatedObject(self, aliasSelector);
 
-		if (originalForwardInvocation == NULL) {
-			[self doesNotRecognizeSelector:invocation.selector];
-		} else {
-			originalForwardInvocation(self, forwardInvocationSEL, invocation);
+		BOOL responseToSelector = [superclass instancesRespondToSelector:originalSelector];
+		BOOL forward = NO;
+		if (responseToSelector) {
+			Method method = class_getInstanceMethod(superclass, invocation.selector);
+			IMP impl = method_getImplementation(method);
+
+			if (impl != _objc_msgForward) {
+				class_replaceMethod(object_getClass(self), aliasSelector, impl, method_getTypeEncoding(method));
+				invocation.selector = aliasSelector;
+				[invocation invoke];
+			} else {
+				forward = YES;
+			}
+		}
+
+		if (forward || (!responseToSelector && subject == nil)) {
+			struct objc_super target = {
+				.super_class = superclass,
+				.receiver = self,
+			};
+
+			void*(*superForwardInvocation)(struct objc_super *, SEL, NSInvocation*) = (__typeof__(superForwardInvocation)) objc_msgSendSuper;
+			superForwardInvocation(&target, forwardInvocationSEL, invocation);
+		}
+
+		if (subject != nil) {
+			[subject sendNext:invocation.rac_argumentsTuple];
 		}
 	};
 
@@ -223,9 +224,6 @@ static RACSignal *NSObjectRACSignalForSelector(NSObject *self, SEL selector, Pro
 			const char *typeEncoding = method_getTypeEncoding(targetMethod);
 
 			RACCheckTypeEncoding(typeEncoding);
-
-			BOOL addedAlias __attribute__((unused)) = class_addMethod(class, aliasSelector, method_getImplementation(targetMethod), typeEncoding);
-			NSCAssert(addedAlias, @"Original implementation for %@ is already copied to %@ on %@", NSStringFromSelector(selector), NSStringFromSelector(aliasSelector), class);
 
 			// Redefine the selector to call -forwardInvocation:.
 			class_replaceMethod(class, selector, _objc_msgForward, method_getTypeEncoding(targetMethod));
