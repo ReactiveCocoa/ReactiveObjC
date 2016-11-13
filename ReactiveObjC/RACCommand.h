@@ -114,15 +114,3 @@ extern NSString * const RACUnderlyingCommandErrorKey;
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface RACCommand (Unavailable)
-
-@property (atomic, readonly) BOOL canExecute __attribute__((unavailable("Use the 'enabled' signal instead")));
-
-+ (instancetype)command __attribute__((unavailable("Use -initWithSignalBlock: instead")));
-+ (instancetype)commandWithCanExecuteSignal:(RACSignal *)canExecuteSignal __attribute__((unavailable("Use -initWithEnabled:signalBlock: instead")));
-- (id)initWithCanExecuteSignal:(RACSignal *)canExecuteSignal __attribute__((unavailable("Use -initWithEnabled:signalBlock: instead")));
-- (RACSignal *)addSignalBlock:(RACSignal * (^)(id value))signalBlock __attribute__((unavailable("Pass the signalBlock to -initWithSignalBlock: instead")));
-
-@end
-

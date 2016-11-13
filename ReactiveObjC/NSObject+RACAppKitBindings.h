@@ -33,12 +33,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface NSObject (RACUnavailableAppKitBindings)
-
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath nilValue:(id)nilValue __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath transform:(id (^)(id value))transformBlock __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withNegatedKeyPath:(NSString *)keyPath __attribute__((unavailable("Use -rac_bind:options: instead")));
-
-@end
