@@ -166,6 +166,48 @@ qck_describe(@"RACTestObject", ^{
 		expect(key).to(equal(@"Winner"));
 	});
 
+	qck_it(@"should send arguments for invocation and invoke the a KVO-swizzled then RAC-swizzled setter", ^{
+		RACTestObject *object = [[RACTestObject alloc] init];
+
+		__block id latestValue;
+		[[[RACObserve(object, objectValue) publish] autoconnect] subscribeNext:^(id objectValue) {
+			latestValue = objectValue;
+		}];
+		expect(latestValue).to(beNil());
+
+		__block id value;
+		[[object rac_signalForSelector:@selector(setObjectValue:)] subscribeNext:^(RACTuple *x) {
+			value = x.first;
+		}];
+
+		[object setObjectValue:@YES];
+
+		expect(object.objectValue).to(equal(@YES));
+		expect(latestValue).to(equal(@YES));
+		expect(value).to(equal(@YES));
+	});
+
+	qck_it(@"should send arguments for invocation and invoke the a RAC-swizzled then KVO-swizzled setter", ^{
+		RACTestObject *object = [[RACTestObject alloc] init];
+
+		__block id value;
+		[[object rac_signalForSelector:@selector(setObjectValue:)] subscribeNext:^(RACTuple *x) {
+			value = x.first;
+		}];
+
+		__block id latestValue;
+		[[[RACObserve(object, objectValue) publish] autoconnect] subscribeNext:^(id objectValue) {
+			latestValue = objectValue;
+		}];
+		expect(latestValue).to(beNil());
+
+		[object setObjectValue:@YES];
+
+		expect(object.objectValue).to(equal(@YES));
+		expect(latestValue).to(equal(@YES));
+		expect(value).to(equal(@YES));
+	});
+
 	qck_it(@"should send arguments for invocation and invoke the original method when receiver is subsequently KVO'd", ^{
 		RACTestObject *object = [[RACTestObject alloc] init];
 
