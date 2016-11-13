@@ -90,11 +90,8 @@ static void RACSwizzleForwardInvocation(Class class) {
 }
 
 static void RACSwizzleRespondsToSelector(Class class) {
+	Class superclass = class_getSuperclass(class);
 	SEL respondsToSelectorSEL = @selector(respondsToSelector:);
-
-	// Preserve existing implementation of -respondsToSelector:.
-	Method respondsToSelectorMethod = class_getInstanceMethod(class, respondsToSelectorSEL);
-	BOOL (*originalRespondsToSelector)(id, SEL, SEL) = (__typeof__(originalRespondsToSelector))method_getImplementation(respondsToSelectorMethod);
 
 	// Set up a new version of -respondsToSelector: that returns YES for methods
 	// added by -rac_signalForSelector:.
@@ -111,10 +108,17 @@ static void RACSwizzleRespondsToSelector(Class class) {
 			if (objc_getAssociatedObject(self, aliasSelector) != nil) return YES;
 		}
 
-		return originalRespondsToSelector(self, respondsToSelectorSEL, selector);
+		struct objc_super target = {
+			.super_class = superclass,
+			.receiver = self,
+		};
+
+		BOOL(*superRespondsToSelector)(struct objc_super *, SEL, SEL) = (__typeof__(superRespondsToSelector)) objc_msgSendSuper;
+
+		return superRespondsToSelector(&target, respondsToSelectorSEL, selector);
 	};
 
-	class_replaceMethod(class, respondsToSelectorSEL, imp_implementationWithBlock(newRespondsToSelector), method_getTypeEncoding(respondsToSelectorMethod));
+	class_replaceMethod(class, respondsToSelectorSEL, imp_implementationWithBlock(newRespondsToSelector), "v@::");
 }
 
 static void RACSwizzleGetClass(Class class, Class statedClass) {
