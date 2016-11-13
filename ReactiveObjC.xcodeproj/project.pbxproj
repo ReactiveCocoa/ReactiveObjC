@@ -198,6 +198,9 @@
 		7DFBED6C1CDB8DE300EE435B /* RACTestUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C3131D19EF2D9700984962 /* RACTestUIButton.m */; };
 		7DFBED6E1CDB918900EE435B /* UIBarButtonItem+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C719EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m */; };
 		7DFBED6F1CDB926400EE435B /* UIBarButtonItem+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C619EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9AE2F1121DD8BF96008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE2F10E1DD8B827008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m */; };
+		9AE2F1131DD8BF97008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE2F10E1DD8B827008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m */; };
+		9AE2F1141DD8BF98008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE2F10E1DD8B827008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m */; };
 		A1046B7A1BFF5661004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A1046B7B1BFF5662004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A1046B7C1BFF5662004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -769,6 +772,7 @@
 		7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxy.m; sourceTree = "<group>"; };
 		7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxySpec.m; sourceTree = "<group>"; };
 		7DFBED031CDB8C9500EE435B /* ReactiveObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE2F10E1DD8B827008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectRACSelectorSignalPerformanceTests.m; sourceTree = "<group>"; };
 		A97451331B3A935E00F48E55 /* watchOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Application.xcconfig"; sourceTree = "<group>"; };
 		A97451341B3A935E00F48E55 /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		A97451351B3A935E00F48E55 /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
@@ -1396,6 +1400,7 @@
 				D037667E19EDA60000A782A9 /* NSObjectRACPropertySubscribingExamples.m */,
 				D037667F19EDA60000A782A9 /* NSObjectRACPropertySubscribingSpec.m */,
 				D037668019EDA60000A782A9 /* NSObjectRACSelectorSignalSpec.m */,
+				9AE2F10E1DD8B827008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m */,
 				D037668119EDA60000A782A9 /* NSStringRACKeyPathUtilitiesSpec.m */,
 				D037668319EDA60000A782A9 /* NSURLConnectionRACSupportSpec.m */,
 				D037668419EDA60000A782A9 /* NSUserDefaultsRACSupportSpec.m */,
@@ -2132,6 +2137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE2F1141DD8BF98008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */,
 				7DFBED321CDB8DE300EE435B /* NSEnumeratorRACSequenceAdditionsSpec.m in Sources */,
 				7DFBED331CDB8DE300EE435B /* NSNotificationCenterRACSupportSpec.m in Sources */,
 				7DFBED351CDB8DE300EE435B /* NSObjectRACDeallocatingSpec.m in Sources */,
@@ -2339,6 +2345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE2F1121DD8BF96008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */,
 				D03766C719EDA60000A782A9 /* NSObjectRACPropertySubscribingExamples.m in Sources */,
 				D03766E319EDA60000A782A9 /* RACDelegateProxySpec.m in Sources */,
 				D03766F919EDA60000A782A9 /* RACSerialDisposableSpec.m in Sources */,
@@ -2510,6 +2517,7 @@
 				D03766C619EDA60000A782A9 /* NSObjectRACLiftingSpec.m in Sources */,
 				D0C3131F19EF2D9700984962 /* RACTestExampleScheduler.m in Sources */,
 				D03766D219EDA60000A782A9 /* NSURLConnectionRACSupportSpec.m in Sources */,
+				9AE2F1131DD8BF97008A8FDD /* NSObjectRACSelectorSignalPerformanceTests.m in Sources */,
 				D03766F419EDA60000A782A9 /* RACSequenceAdditionsSpec.m in Sources */,
 				D03766EE19EDA60000A782A9 /* RACMulticastConnectionSpec.m in Sources */,
 				D03766EA19EDA60000A782A9 /* RACKVOChannelSpec.m in Sources */,
