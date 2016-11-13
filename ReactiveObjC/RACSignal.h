@@ -213,11 +213,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface RACSignal (Unavailable)
-
-+ (RACSignal *)start:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-+ (RACSignal *)startWithScheduler:(RACScheduler *)scheduler subjectBlock:(void (^)(RACSubject *subject))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-+ (RACSignal *)startWithScheduler:(RACScheduler *)scheduler block:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-
-@end

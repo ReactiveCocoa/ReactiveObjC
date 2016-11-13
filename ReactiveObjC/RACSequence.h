@@ -150,10 +150,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface RACSequence (Unavailable)
-
-- (id)foldLeftWithStart:(id)start combine:(id (^)(id accumulator, id value))combine __attribute__((unavailable("Renamed to -foldLeftWithStart:reduce:")));
-- (id)foldRightWithStart:(id)start combine:(id (^)(id first, RACSequence *rest))combine __attribute__((unavailable("Renamed to -foldRightWithStart:reduce:")));
-
-@end

@@ -144,9 +144,3 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface RACScheduler (Unavailable)
-
-+ (RACScheduler *)schedulerWithQueue:(dispatch_queue_t)queue name:(NSString *)name __attribute__((unavailable("Use -[RACTargetQueueScheduler initWithName:targetQueue:] instead.")));
-
-@end
