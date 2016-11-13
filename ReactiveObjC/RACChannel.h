@@ -50,8 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END
-
 /// Represents one end of a RACChannel.
 ///
 /// An terminal is similar to a socket or pipe -- it represents one end of
@@ -73,3 +71,4 @@ NS_ASSUME_NONNULL_END
 
 @end
 
+NS_ASSUME_NONNULL_END
