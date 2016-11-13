@@ -141,7 +141,11 @@ qck_describe(@"RACTestObject", ^{
 	qck_it(@"should send arguments for invocation and invoke the original method on previously KVO'd receiver", ^{
 		RACTestObject *object = [[RACTestObject alloc] init];
 
-		[[RACObserve(object, objectValue) publish] connect];
+		__block id latestValue;
+		[[[RACObserve(object, objectValue) publish] autoconnect] subscribeNext:^(id objectValue) {
+			latestValue = objectValue;
+		}];
+		expect(latestValue).to(beNil());
 
 		__block id key;
 		__block id value;
@@ -155,6 +159,8 @@ qck_describe(@"RACTestObject", ^{
 		expect(@(object.hasInvokedSetObjectValueAndSecondObjectValue)).to(beTruthy());
 		expect(object.objectValue).to(equal(@YES));
 		expect(object.secondObjectValue).to(equal(@"Winner"));
+
+		expect(latestValue).to(equal(@YES));
 
 		expect(value).to(equal(@YES));
 		expect(key).to(equal(@"Winner"));
@@ -170,13 +176,19 @@ qck_describe(@"RACTestObject", ^{
 			key = x.second;
 		}];
 
-		[[RACObserve(object, objectValue) publish] connect];
+		__block id latestValue;
+		[[[RACObserve(object, objectValue) publish] autoconnect] subscribeNext:^(id objectValue) {
+			latestValue = objectValue;
+		}];
+		expect(latestValue).to(beNil());
 
 		[object setObjectValue:@YES andSecondObjectValue:@"Winner"];
 
 		expect(@(object.hasInvokedSetObjectValueAndSecondObjectValue)).to(beTruthy());
 		expect(object.objectValue).to(equal(@YES));
 		expect(object.secondObjectValue).to(equal(@"Winner"));
+
+		expect(latestValue).to(equal(@YES));
 
 		expect(value).to(equal(@YES));
 		expect(key).to(equal(@"Winner"));
@@ -408,6 +420,30 @@ qck_describe(@"interoperability", ^{
 			class_replaceMethod(originalClass, swizzledSelector, oldImplementation, typeEncoding);
 		};
 		
+		[object lifeIsGood:nil];
+		expect(@(invoked)).to(beTruthy());
+	});
+
+	qck_it(@"should invoke the swizzled setter on an instance isa-swizzled by RAC.", ^{
+		[object rac_signalForSelector:@selector(setObjectValue:)];
+
+		SEL swizzledSelector = @selector(lifeIsGood:);
+
+		Method method = class_getInstanceMethod(originalClass, swizzledSelector);
+		const char *typeEncoding = (char *)method_getTypeEncoding(method);
+
+		id methodSwizzlingBlock = ^(id self) {
+			expect(@(invoked)).to(beFalsy());
+			invoked = YES;
+		};
+
+		IMP newImplementation = imp_implementationWithBlock(methodSwizzlingBlock);
+		IMP oldImplementation = class_replaceMethod(originalClass, swizzledSelector, newImplementation, typeEncoding);
+
+		@onExit {
+			class_replaceMethod(originalClass, swizzledSelector, oldImplementation, typeEncoding);
+		};
+
 		[object lifeIsGood:nil];
 		expect(@(invoked)).to(beTruthy());
 	});
