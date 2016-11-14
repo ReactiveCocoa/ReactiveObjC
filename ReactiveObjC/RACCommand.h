@@ -79,7 +79,7 @@ extern NSString * const RACUnderlyingCommandErrorKey;
 @property (atomic, assign) BOOL allowsConcurrentExecution;
 
 /// Invokes -initWithEnabled:signalBlock: with a nil `enabledSignal`.
-- (id)initWithSignalBlock:(RACSignal * (^)(InputType _Nullable input))signalBlock;
+- (instancetype)initWithSignalBlock:(RACSignal<ValueType> * (^)(InputType _Nullable input))signalBlock;
 
 /// Initializes a command that is conditionally enabled.
 ///
@@ -94,7 +94,7 @@ extern NSString * const RACUnderlyingCommandErrorKey;
 ///                 to a replay subject, sent on `executionSignals`, then
 ///                 subscribed to synchronously. Neither the block nor the
 ///                 returned signal may be nil.
-- (id)initWithEnabled:(nullable RACSignal<NSNumber *> *)enabledSignal signalBlock:(RACSignal * (^)(InputType _Nullable input))signalBlock;
+- (instancetype)initWithEnabled:(nullable RACSignal<NSNumber *> *)enabledSignal signalBlock:(RACSignal<ValueType> * (^)(InputType _Nullable input))signalBlock;
 
 /// If the receiver is enabled, this method will:
 ///
