@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 // A private delegate object suitable for using
 // -rac_signalForSelector:fromProtocol: upon.
 @interface RACDelegateProxy : NSObject
@@ -26,3 +28,5 @@
 - (RACSignal *)signalForSelector:(SEL)selector;
 
 @end
+
+NS_ASSUME_NONNULL_END

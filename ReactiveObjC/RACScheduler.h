@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The priority for the scheduler.
 ///
 /// RACSchedulerPriorityHigh       - High priority.
@@ -46,7 +48,7 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 /// Scheduler creation is cheap. It's unnecessary to save the result of this
 /// method call unless you want to serialize some actions on the same background
 /// scheduler.
-+ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority name:(NSString *)name;
++ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority name:(nullable NSString *)name;
 
 /// Invokes +schedulerWithPriority:name: with a default name.
 + (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority;
@@ -56,7 +58,7 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 
 /// The current scheduler. This will only be valid when used from within a
 /// -[RACScheduler schedule:] block or when on the main thread.
-+ (RACScheduler *)currentScheduler;
++ (nullable RACScheduler *)currentScheduler;
 
 /// Schedule the given block for execution on the scheduler.
 ///
@@ -66,7 +68,7 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 ///
 /// Returns a disposable which can be used to cancel the scheduled block before
 /// it begins executing, or nil if cancellation is not supported.
-- (RACDisposable *)schedule:(void (^)(void))block;
+- (nullable RACDisposable *)schedule:(void (^)(void))block;
 
 /// Schedule the given block for execution on the scheduler at or after
 /// a specific time.
@@ -84,12 +86,12 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 ///
 /// Returns a disposable which can be used to cancel the scheduled block before
 /// it begins executing, or nil if cancellation is not supported.
-- (RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block;
+- (nullable RACDisposable *)after:(NSDate *)date schedule:(void (^)(void))block;
 
 /// Schedule the given block for execution on the scheduler after the delay.
 ///
 /// Converts the delay into an NSDate, then invokes `-after:schedule:`.
-- (RACDisposable *)afterDelay:(NSTimeInterval)delay schedule:(void (^)(void))block;
+- (nullable RACDisposable *)afterDelay:(NSTimeInterval)delay schedule:(void (^)(void))block;
 
 /// Reschedule the given block at a particular interval, starting at a specific
 /// time, and with a given leeway for deferral.
@@ -118,7 +120,7 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 ///
 /// Returns a disposable which can be used to cancel the automatic scheduling and
 /// rescheduling, or nil if cancellation is not supported.
-- (RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block;
+- (nullable RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block;
 
 /// Schedule the given recursive block for execution on the scheduler. The
 /// scheduler will automatically flatten any recursive scheduling into iteration
@@ -137,12 +139,8 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 /// Returns a disposable which can be used to cancel the scheduled block before
 /// it begins executing, or to stop it from rescheduling if it's already begun
 /// execution.
-- (RACDisposable *)scheduleRecursiveBlock:(RACSchedulerRecursiveBlock)recursiveBlock;
+- (nullable RACDisposable *)scheduleRecursiveBlock:(RACSchedulerRecursiveBlock)recursiveBlock;
 
 @end
 
-@interface RACScheduler (Unavailable)
-
-+ (RACScheduler *)schedulerWithQueue:(dispatch_queue_t)queue name:(NSString *)name __attribute__((unavailable("Use -[RACTargetQueueScheduler initWithName:targetQueue:] instead.")));
-
-@end
+NS_ASSUME_NONNULL_END

@@ -9,6 +9,8 @@
 #import "RACSignal.h"
 #import "RACSubscriber.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A subject can be thought of as a signal that you can manually control by
 /// sending next, completed, and error.
 ///
@@ -20,3 +22,5 @@
 + (instancetype)subject;
 
 @end
+
+NS_ASSUME_NONNULL_END

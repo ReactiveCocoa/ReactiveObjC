@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSControl (RACTextSignalSupport)
 
 /// Observes a text-based control for changes.
@@ -22,3 +24,5 @@
 - (RACSignal<NSString *> *)rac_textSignal;
 
 @end
+
+NS_ASSUME_NONNULL_END

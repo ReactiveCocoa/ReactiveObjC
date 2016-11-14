@@ -11,6 +11,8 @@
 @class RACDelegateProxy;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIImagePickerController (RACSignalSupport)
 
 /// A delegate proxy which will be set as the receiver's delegate when any of the
@@ -31,3 +33,5 @@
 - (RACSignal<NSDictionary *> *)rac_imageSelectedSignal;
 
 @end
+
+NS_ASSUME_NONNULL_END

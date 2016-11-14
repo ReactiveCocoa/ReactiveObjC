@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACLifting)
 
 /// Lifts the selector on the receiver into the reactive world. The selector will
@@ -45,13 +47,4 @@
 
 @end
 
-@interface NSObject (RACUnavailableLifting)
-
-- (RACSignal *)rac_liftSelector:(SEL)selector withObjects:(id)arg, ... __attribute__((unavailable("Use -rac_liftSelector:withSignals: instead")));
-- (RACSignal *)rac_liftSelector:(SEL)selector withObjectsFromArray:(NSArray *)args __attribute__((unavailable("Use -rac_liftSelector:withSignalsFromArray: instead")));
-- (RACSignal *)rac_liftBlock:(id)block withArguments:(id)arg, ... NS_REQUIRES_NIL_TERMINATION __attribute__((unavailable("Use +combineLatest:reduce: instead")));
-- (RACSignal *)rac_liftBlock:(id)block withArgumentsFromArray:(NSArray *)args __attribute__((unavailable("Use +combineLatest:reduce: instead")));
-
-- (instancetype)rac_lift __attribute__((unavailable("Use -rac_liftSelector:withSignals: instead")));
-
-@end
+NS_ASSUME_NONNULL_END

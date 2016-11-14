@@ -10,6 +10,8 @@
 
 @class RACCommand<__contravariant InputType, __covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIBarButtonItem (RACCommandSupport)
 
 /// Sets the control's command. When the control is clicked, the command is
@@ -17,6 +19,8 @@
 /// to the command's `canExecute`.
 ///
 /// Note: this will reset the control's target and action.
-@property (nonatomic, strong) RACCommand<__kindof UIBarButtonItem *, id> *rac_command;
+@property (nonatomic, strong, nullable) RACCommand<__kindof UIBarButtonItem *, id> *rac_command;
 
 @end
+
+NS_ASSUME_NONNULL_END

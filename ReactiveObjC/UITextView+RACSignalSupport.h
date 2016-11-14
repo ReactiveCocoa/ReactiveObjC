@@ -11,6 +11,8 @@
 @class RACDelegateProxy;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UITextView (RACSignalSupport)
 
 /// A delegate proxy which will be set as the receiver's delegate when any of the
@@ -32,8 +34,4 @@
 
 @end
 
-@interface UITextView (RACSignalSupportUnavailable)
-
-- (RACSignal *)rac_signalForDelegateMethod:(SEL)method __attribute__((unavailable("Use -rac_signalForSelector:fromProtocol: instead")));
-
-@end
+NS_ASSUME_NONNULL_END

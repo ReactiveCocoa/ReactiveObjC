@@ -8,6 +8,8 @@
 
 #import "RACDisposable.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A disposable of disposables. When it is disposed, it disposes of all its
 /// contained disposables.
 ///
@@ -22,7 +24,7 @@
 
 /// Creates and returns a new compound disposable containing the given
 /// disposables.
-+ (instancetype)compoundDisposableWithDisposables:(NSArray *)disposables;
++ (instancetype)compoundDisposableWithDisposables:(nullable NSArray *)disposables;
 
 /// Adds the given disposable. If the receiving disposable has already been
 /// disposed of, the given disposable is disposed immediately.
@@ -31,7 +33,7 @@
 ///
 /// disposable - The disposable to add. This may be nil, in which case nothing
 ///              happens.
-- (void)addDisposable:(RACDisposable *)disposable;
+- (void)addDisposable:(nullable RACDisposable *)disposable;
 
 /// Removes the specified disposable from the compound disposable (regardless of
 /// its disposed status), or does nothing if it's not in the compound disposable.
@@ -43,6 +45,8 @@
 ///
 /// disposable - The disposable to remove. This argument may be nil (to make the
 ///              use of weak references easier).
-- (void)removeDisposable:(RACDisposable *)disposable;
+- (void)removeDisposable:(nullable RACDisposable *)disposable;
 
 @end
+
+NS_ASSUME_NONNULL_END

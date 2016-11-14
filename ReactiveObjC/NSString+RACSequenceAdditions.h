@@ -10,6 +10,8 @@
 
 @class RACSequence;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSString (RACSequenceAdditions)
 
 /// Creates and returns a sequence containing strings corresponding to each
@@ -19,3 +21,5 @@
 @property (nonatomic, copy, readonly) RACSequence *rac_sequence;
 
 @end
+
+NS_ASSUME_NONNULL_END

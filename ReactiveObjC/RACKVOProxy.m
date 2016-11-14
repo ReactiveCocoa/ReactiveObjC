@@ -30,7 +30,6 @@
 
 - (instancetype)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	_queue = dispatch_queue_create("org.reactivecocoa.ReactiveObjC.RACKVOProxy", DISPATCH_QUEUE_SERIAL);
 	_trampolines = [NSMapTable strongToWeakObjectsMapTable];

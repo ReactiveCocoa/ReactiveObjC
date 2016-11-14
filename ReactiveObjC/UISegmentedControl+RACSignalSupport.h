@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UISegmentedControl (RACSignalSupport)
 
 /// Creates a new RACChannel-based binding to the receiver.
@@ -19,6 +21,8 @@
 /// Returns a RACChannelTerminal that sends the receiver's currently selected
 /// segment's index whenever the UIControlEventValueChanged control event is
 /// fired, and sets the selected segment index to the values it receives.
-- (RACChannelTerminal *)rac_newSelectedSegmentIndexChannelWithNilValue:(NSNumber *)nilValue;
+- (RACChannelTerminal *)rac_newSelectedSegmentIndexChannelWithNilValue:(nullable NSNumber *)nilValue;
 
 @end
+
+NS_ASSUME_NONNULL_END

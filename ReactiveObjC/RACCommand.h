@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RACSignal<__covariant ValueType>;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// The domain for errors originating within `RACCommand`.
@@ -110,18 +111,6 @@ extern NSString * const RACUnderlyingCommandErrorKey;
 /// RACCommandErrorNotEnabled.
 - (RACSignal<ValueType> *)execute:(nullable InputType)input;
 
-NS_ASSUME_NONNULL_END
 @end
 
-@interface RACCommand (Unavailable)
-NS_ASSUME_NONNULL_BEGIN
-
-@property (atomic, readonly) BOOL canExecute __attribute__((unavailable("Use the 'enabled' signal instead")));
-
-+ (instancetype)command __attribute__((unavailable("Use -initWithSignalBlock: instead")));
-+ (instancetype)commandWithCanExecuteSignal:(RACSignal *)canExecuteSignal __attribute__((unavailable("Use -initWithEnabled:signalBlock: instead")));
-- (id)initWithCanExecuteSignal:(RACSignal *)canExecuteSignal __attribute__((unavailable("Use -initWithEnabled:signalBlock: instead")));
-- (RACSignal *)addSignalBlock:(RACSignal * (^)(id value))signalBlock __attribute__((unavailable("Pass the signalBlock to -initWithSignalBlock: instead")));
-
 NS_ASSUME_NONNULL_END
-@end

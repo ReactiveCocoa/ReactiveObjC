@@ -12,6 +12,8 @@
 @class RACDisposable;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACDeallocating)
 
 /// The compound disposable which will be disposed of when the receiver is
@@ -25,9 +27,4 @@
 
 @end
 
-@interface NSObject (RACUnavailableDeallocating)
-
-- (RACSignal *)rac_didDeallocSignal __attribute__((unavailable("Use -rac_willDeallocSignal")));
-- (void)rac_addDeallocDisposable:(RACDisposable *)disposable __attribute__((unavailable("Add disposables to -rac_deallocDisposable instead")));
-
-@end
+NS_ASSUME_NONNULL_END

@@ -8,6 +8,8 @@
 
 #import "RACSubject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern const NSUInteger RACReplaySubjectUnlimitedCapacity;
 
 /// A replay subject saves the values it is sent (up to its defined capacity)
@@ -20,3 +22,5 @@ extern const NSUInteger RACReplaySubjectUnlimitedCapacity;
 + (instancetype)replaySubjectWithCapacity:(NSUInteger)capacity;
 
 @end
+
+NS_ASSUME_NONNULL_END
