@@ -9,16 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RACSignal.h"
 
-/// The domain for errors originating in RACSignal operations.
-extern NSString * _Nonnull const RACSignalErrorDomain;
-
-/// The error code used with -timeout:.
-extern const NSInteger RACSignalErrorTimedOut;
-
-/// The error code used when a value passed into +switch:cases:default: does not
-/// match any of the cases, and no default was given.
-extern const NSInteger RACSignalErrorNoMatchingCase;
-
 @class RACCommand;
 @class RACDisposable;
 @class RACMulticastConnection;
@@ -28,8 +18,19 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 @class RACTuple;
 @protocol RACSubscriber;
 
-@interface RACSignal (Operations)
 NS_ASSUME_NONNULL_BEGIN
+
+/// The domain for errors originating in RACSignal operations.
+extern NSString * const RACSignalErrorDomain;
+
+/// The error code used with -timeout:.
+extern const NSInteger RACSignalErrorTimedOut;
+
+/// The error code used when a value passed into +switch:cases:default: does not
+/// match any of the cases, and no default was given.
+extern const NSInteger RACSignalErrorNoMatchingCase;
+
+@interface RACSignal (Operations)
 
 /// Do the given block on `next`. This should be used to inject side effects into
 /// the signal.
@@ -704,25 +705,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// to the remaining elements.
 - (RACSignal *)reduceApply;
 
-NS_ASSUME_NONNULL_END
 @end
 
-@interface RACSignal (UnavailableOperations)
-NS_ASSUME_NONNULL_BEGIN
-
-- (RACSignal *)windowWithStart:(RACSignal *)openSignal close:(RACSignal * (^)(RACSignal *start))closeBlock __attribute__((unavailable("See https://github.com/ReactiveCocoa/ReactiveCocoa/issues/587")));
-- (RACSignal *)buffer:(NSUInteger)bufferCount __attribute__((unavailable("See https://github.com/ReactiveCocoa/ReactiveCocoa/issues/587")));
-- (RACSignal *)let:(RACSignal * (^)(RACSignal *sharedSignal))letBlock __attribute__((unavailable("Use -publish instead")));
-+ (RACSignal *)interval:(NSTimeInterval)interval __attribute__((unavailable("Use +interval:onScheduler: instead")));
-+ (RACSignal *)interval:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway __attribute__((unavailable("Use +interval:onScheduler:withLeeway: instead")));
-- (RACSignal *)bufferWithTime:(NSTimeInterval)interval __attribute__((unavailable("Use -bufferWithTime:onScheduler: instead")));
-- (RACSignal *)timeout:(NSTimeInterval)interval __attribute__((unavailable("Use -timeout:onScheduler: instead")));
-- (RACDisposable *)toProperty:(NSString *)keyPath onObject:(NSObject *)object __attribute__((unavailable("Renamed to -setKeyPath:onObject:")));
-- (RACSignal *)ignoreElements __attribute__((unavailable("Renamed to -ignoreValues")));
-- (RACSignal *)sequenceNext:(RACSignal * (^)(void))block __attribute__((unavailable("Renamed to -then:")));
-- (RACSignal *)aggregateWithStart:(nullable id)start combine:(id _Nullable (^)(id _Nullable running, id _Nullable next))combineBlock __attribute__((unavailable("Renamed to -aggregateWithStart:reduce:")));
-- (RACSignal *)aggregateWithStartFactory:(id _Nullable (^)(void))startFactory combine:(id _Nullable (^)(id _Nullable running, id _Nullable next))combineBlock __attribute__((unavailable("Renamed to -aggregateWithStartFactory:reduce:")));
-- (RACDisposable *)executeCommand:(RACCommand *)command __attribute__((unavailable("Use -flattenMap: or -subscribeNext: instead")));
-
 NS_ASSUME_NONNULL_END
-@end

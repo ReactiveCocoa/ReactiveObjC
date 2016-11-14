@@ -10,6 +10,8 @@
 
 @class RACSequence;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSEnumerator (RACSequenceAdditions)
 
 /// Creates and returns a sequence corresponding to the receiver.
@@ -18,3 +20,5 @@
 @property (nonatomic, copy, readonly) RACSequence *rac_sequence;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (RACAppKitBindings)
 
 /// Invokes -rac_channelToBinding:options: without any options.
@@ -26,15 +28,8 @@
 ///
 /// Returns a RACChannelTerminal which will send future values from the receiver,
 /// and update the receiver when values are sent to the terminal.
-- (RACChannelTerminal *)rac_channelToBinding:(NSString *)binding options:(NSDictionary *)options;
+- (RACChannelTerminal *)rac_channelToBinding:(NSString *)binding options:(nullable NSDictionary *)options;
 
 @end
 
-@interface NSObject (RACUnavailableAppKitBindings)
-
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath nilValue:(id)nilValue __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withKeyPath:(NSString *)keyPath transform:(id (^)(id value))transformBlock __attribute__((unavailable("Use -rac_bind:options: instead")));
-- (void)rac_bind:(NSString *)binding toObject:(id)object withNegatedKeyPath:(NSString *)keyPath __attribute__((unavailable("Use -rac_bind:options: instead")));
-
-@end
+NS_ASSUME_NONNULL_END

@@ -10,6 +10,8 @@
 
 @class RACScopedDisposable;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A disposable encapsulates the work necessary to tear down and cleanup a
 /// subscription.
 @interface RACDisposable : NSObject
@@ -33,3 +35,5 @@
 - (RACScopedDisposable *)asScopedDisposable;
 
 @end
+
+NS_ASSUME_NONNULL_END

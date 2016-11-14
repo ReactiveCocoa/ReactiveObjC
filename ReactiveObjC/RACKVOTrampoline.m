@@ -37,7 +37,6 @@
 	if (strongTarget == nil) return nil;
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_keyPath = [keyPath copy];
 

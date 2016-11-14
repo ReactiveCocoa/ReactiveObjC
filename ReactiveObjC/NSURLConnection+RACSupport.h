@@ -11,6 +11,8 @@
 @class RACTuple;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSURLConnection (RACSupport)
 
 // Lazily loads data for the given request in the background.
@@ -24,3 +26,5 @@
 + (RACSignal<RACTuple *> *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END

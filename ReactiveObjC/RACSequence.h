@@ -12,6 +12,8 @@
 @class RACScheduler;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Represents an immutable sequence of values. Unless otherwise specified, the
 /// sequences' values are evaluated lazily on demand. Like Cocoa collections,
 /// sequences cannot contain nil.
@@ -28,13 +30,13 @@
 /// The first object in the sequence, or nil if the sequence is empty.
 ///
 /// Subclasses must provide an implementation of this method.
-@property (nonatomic, strong, readonly) id head;
+@property (nonatomic, strong, readonly, nullable) id head;
 
 /// All but the first object in the sequence, or nil if there are no other
 /// objects.
 ///
 /// Subclasses must provide an implementation of this method.
-@property (nonatomic, strong, readonly) RACSequence *tail;
+@property (nonatomic, strong, readonly, nullable) RACSequence *tail;
 
 /// Evaluates the full sequence to produce an equivalently-sized array.
 @property (nonatomic, copy, readonly) NSArray *array;
@@ -84,7 +86,7 @@
 ///          Cannot be nil.
 ///
 /// Returns a reduced value.
-- (id)foldLeftWithStart:(id)start reduce:(id (^)(id accumulator, id value))reduce;
+- (id)foldLeftWithStart:(nullable id)start reduce:(id _Nullable (^)(id _Nullable accumulator, id _Nullable value))reduce;
 
 /// Applies a right fold to the sequence.
 ///
@@ -103,28 +105,28 @@
 ///          don't need to.
 ///
 /// Returns a reduced value.
-- (id)foldRightWithStart:(id)start reduce:(id (^)(id first, RACSequence *rest))reduce;
+- (id)foldRightWithStart:(nullable id)start reduce:(id _Nullable (^)(id _Nullable first, RACSequence *rest))reduce;
 
 /// Check if any value in sequence passes the block.
 ///
 /// block - The block predicate used to check each item. Cannot be nil.
 ///
 /// Returns a boolean indiciating if any value in the sequence passed.
-- (BOOL)any:(BOOL (^)(id value))block;
+- (BOOL)any:(BOOL (^)(id _Nullable value))block;
 
 /// Check if all values in the sequence pass the block.
 ///
 /// block - The block predicate used to check each item. Cannot be nil.
 ///
 /// Returns a boolean indicating if all values in the sequence passed.
-- (BOOL)all:(BOOL (^)(id value))block;
+- (BOOL)all:(BOOL (^)(id _Nullable value))block;
 
 /// Returns the first object that passes the block.
 ///
 /// block - The block predicate used to check each item. Cannot be nil.
 ///
 /// Returns an object that passes the block or nil if no objects passed.
-- (id)objectPassingTest:(BOOL (^)(id value))block;
+- (id)objectPassingTest:(BOOL (^)(id _Nullable value))block;
 
 /// Creates a sequence that dynamically generates its values.
 ///
@@ -143,13 +145,8 @@
 ///
 /// Returns a sequence that lazily invokes the given blocks to provide head and
 /// tail. `headBlock` must not be nil.
-+ (RACSequence *)sequenceWithHeadBlock:(id (^)(void))headBlock tailBlock:(RACSequence *(^)(void))tailBlock;
++ (RACSequence *)sequenceWithHeadBlock:(id _Nullable (^)(void))headBlock tailBlock:(nullable RACSequence *(^)(void))tailBlock;
 
 @end
 
-@interface RACSequence (Unavailable)
-
-- (id)foldLeftWithStart:(id)start combine:(id (^)(id accumulator, id value))combine __attribute__((unavailable("Renamed to -foldLeftWithStart:reduce:")));
-- (id)foldRightWithStart:(id)start combine:(id (^)(id first, RACSequence *rest))combine __attribute__((unavailable("Renamed to -foldRightWithStart:reduce:")));
-
-@end
+NS_ASSUME_NONNULL_END

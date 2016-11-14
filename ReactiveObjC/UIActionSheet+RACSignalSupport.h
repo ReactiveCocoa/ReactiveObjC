@@ -11,6 +11,8 @@
 @class RACDelegateProxy;
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIActionSheet (RACSignalSupport)
 
 /// A delegate proxy which will be set as the receiver's delegate when any of the
@@ -30,3 +32,5 @@
 - (RACSignal<NSNumber *> *)rac_buttonClickedSignal;
 
 @end
+
+NS_ASSUME_NONNULL_END

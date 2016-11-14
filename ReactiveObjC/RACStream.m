@@ -17,7 +17,6 @@
 
 - (id)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	self.name = @"";
 	return self;

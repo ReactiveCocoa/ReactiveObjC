@@ -27,7 +27,6 @@
 
 - (id)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	// We don't want any starting value from the leadingSubject, but we do want
 	// error and completion to be replayed.
@@ -55,7 +54,6 @@
 	NSCParameterAssert(otherTerminal != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_values = values;
 	_otherTerminal = otherTerminal;

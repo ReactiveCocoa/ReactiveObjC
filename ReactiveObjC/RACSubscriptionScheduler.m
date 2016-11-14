@@ -23,7 +23,6 @@
 
 - (id)init {
 	self = [super initWithName:@"org.reactivecocoa.ReactiveObjC.RACScheduler.subscriptionScheduler"];
-	if (self == nil) return nil;
 
 	_backgroundScheduler = [RACScheduler scheduler];
 

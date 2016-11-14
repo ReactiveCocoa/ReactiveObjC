@@ -33,7 +33,6 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 
 - (id)initWithName:(NSString *)name {
 	self = [super init];
-	if (self == nil) return nil;
 
 	if (name == nil) {
 		_name = [NSString stringWithFormat:@"org.reactivecocoa.ReactiveObjC.%@.anonymousScheduler", self.class];

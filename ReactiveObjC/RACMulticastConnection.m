@@ -40,7 +40,6 @@
 	NSCParameterAssert(subject != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_sourceSignal = source;
 	_serialDisposable = [[RACSerialDisposable alloc] init];
