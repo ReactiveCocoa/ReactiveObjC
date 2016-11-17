@@ -17,7 +17,7 @@
 
 #pragma mark API
 
-- (id)initWithBlock:(id)block {
+- (instancetype)initWithBlock:(id)block {
 	self = [super init];
 
 	_block = [block copy];

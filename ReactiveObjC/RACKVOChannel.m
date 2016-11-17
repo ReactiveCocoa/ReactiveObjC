@@ -69,7 +69,7 @@ static NSString * const RACKVOChannelDataDictionaryKey = @"RACKVOChannelKey";
 
 #pragma mark Lifecycle
 
-- (id)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(id)nilValue {
+- (instancetype)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(id)nilValue {
 	NSCParameterAssert(keyPath.rac_keyPathComponents.count > 0);
 
 	NSObject *strongTarget = target;

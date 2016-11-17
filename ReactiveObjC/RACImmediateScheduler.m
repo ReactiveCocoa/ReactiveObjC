@@ -13,7 +13,7 @@
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	return [super initWithName:@"org.reactivecocoa.ReactiveObjC.RACScheduler.immediateScheduler"];
 }
 

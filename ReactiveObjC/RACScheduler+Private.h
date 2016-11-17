@@ -31,7 +31,7 @@ extern NSString * const RACSchedulerCurrentSchedulerKey;
 // name - The name of the scheduler. If nil, a default name will be used.
 //
 // Returns the initialized object.
-- (id)initWithName:(nullable NSString *)name;
+- (instancetype)initWithName:(nullable NSString *)name;
 
 @end
 

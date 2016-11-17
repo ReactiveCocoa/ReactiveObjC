@@ -36,7 +36,7 @@
 	return subscriber;
 }
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 
 	@unsafeify(self);
