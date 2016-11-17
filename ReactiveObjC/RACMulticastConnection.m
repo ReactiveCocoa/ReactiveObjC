@@ -35,7 +35,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithSourceSignal:(RACSignal *)source subject:(RACSubject *)subject {
+- (instancetype)initWithSourceSignal:(RACSignal *)source subject:(RACSubject *)subject {
 	NSCParameterAssert(source != nil);
 	NSCParameterAssert(subject != nil);
 

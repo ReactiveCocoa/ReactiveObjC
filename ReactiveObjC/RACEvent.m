@@ -15,7 +15,7 @@
 @property (nonatomic, strong, readonly) id object;
 
 // Initializes the receiver with the given type and object.
-- (id)initWithEventType:(RACEventType)type object:(id)object;
+- (instancetype)initWithEventType:(RACEventType)type object:(id)object;
 
 @end
 
@@ -56,7 +56,7 @@
 	return [[self alloc] initWithEventType:RACEventTypeNext object:value];
 }
 
-- (id)initWithEventType:(RACEventType)type object:(id)object {
+- (instancetype)initWithEventType:(RACEventType)type object:(id)object {
 	self = [super init];
 
 	_eventType = type;

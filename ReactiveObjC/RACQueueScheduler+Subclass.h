@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///         This argument must not be NULL.
 ///
 /// Returns the initialized object.
-- (id)initWithName:(nullable NSString *)name queue:(dispatch_queue_t)queue;
+- (instancetype)initWithName:(nullable NSString *)name queue:(dispatch_queue_t)queue;
 
 /// Converts a date into a GCD time using dispatch_walltime().
 ///

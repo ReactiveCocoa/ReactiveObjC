@@ -13,7 +13,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithName:(NSString *)name targetQueue:(dispatch_queue_t)targetQueue {
+- (instancetype)initWithName:(NSString *)name targetQueue:(dispatch_queue_t)targetQueue {
 	NSCParameterAssert(targetQueue != NULL);
 
 	if (name == nil) {

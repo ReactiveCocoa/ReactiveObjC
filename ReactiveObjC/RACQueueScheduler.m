@@ -15,7 +15,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithName:(NSString *)name queue:(dispatch_queue_t)queue {
+- (instancetype)initWithName:(NSString *)name queue:(dispatch_queue_t)queue {
 	NSCParameterAssert(queue != NULL);
 
 	self = [super initWithName:name];

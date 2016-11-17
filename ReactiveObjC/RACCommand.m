@@ -65,12 +65,12 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	NSCAssert(NO, @"Use -initWithSignalBlock: instead");
 	return nil;
 }
 
-- (id)initWithSignalBlock:(RACSignal<id> * (^)(id input))signalBlock {
+- (instancetype)initWithSignalBlock:(RACSignal<id> * (^)(id input))signalBlock {
 	return [self initWithEnabled:nil signalBlock:signalBlock];
 }
 
@@ -79,7 +79,7 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	[_allowsConcurrentExecutionSubject sendCompleted];
 }
 
-- (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal<id> * (^)(id input))signalBlock {
+- (instancetype)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal<id> * (^)(id input))signalBlock {
 	NSCParameterAssert(signalBlock != nil);
 
 	self = [super init];

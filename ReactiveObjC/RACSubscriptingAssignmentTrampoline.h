@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RACSubscriptingAssignmentTrampoline : NSObject
 
-- (nullable id)initWithTarget:(nullable id)target nilValue:(nullable id)nilValue;
+- (nullable instancetype)initWithTarget:(nullable id)target nilValue:(nullable id)nilValue;
 - (void)setObject:(RACSignal *)signal forKeyedSubscript:(NSString *)keyPath;
 
 @end

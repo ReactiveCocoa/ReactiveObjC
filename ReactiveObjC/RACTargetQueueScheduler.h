@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// targetQueue - The queue to target. Cannot be NULL.
 ///
 /// Returns the initialized object.
-- (id)initWithName:(nullable NSString *)name targetQueue:(dispatch_queue_t)targetQueue;
+- (instancetype)initWithName:(nullable NSString *)name targetQueue:(dispatch_queue_t)targetQueue;
 
 @end
 

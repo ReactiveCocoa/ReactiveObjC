@@ -52,7 +52,7 @@
 	return self.class;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
 	id value = [coder decodeObjectForKey:@keypath(self.head)];
 	return [self.class return:value];
 }
