@@ -931,7 +931,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 	return success;
 }
 
-+ (RACSignal *)defer:(RACSignal * (^)(void))block {
++ (RACSignal *)defer:(RACSignal<id> * (^)(void))block {
 	NSCParameterAssert(block != NULL);
 
 	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
