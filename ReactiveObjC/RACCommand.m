@@ -70,7 +70,7 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	return nil;
 }
 
-- (id)initWithSignalBlock:(RACSignal * (^)(id input))signalBlock {
+- (id)initWithSignalBlock:(RACSignal<id> * (^)(id input))signalBlock {
 	return [self initWithEnabled:nil signalBlock:signalBlock];
 }
 
@@ -79,7 +79,7 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	[_allowsConcurrentExecutionSubject sendCompleted];
 }
 
-- (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal * (^)(id input))signalBlock {
+- (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal<id> * (^)(id input))signalBlock {
 	NSCParameterAssert(signalBlock != nil);
 
 	self = [super init];
