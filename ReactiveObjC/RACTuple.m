@@ -30,7 +30,7 @@
 
 #pragma mark NSCoding
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
 	// Always return the singleton.
 	return self.class.tupleNil;
 }
@@ -89,7 +89,7 @@
 
 #pragma mark NSCoding
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
 	self = [self init];
 	
 	self.backingArray = [coder decodeObjectForKey:@keypath(self.backingArray)];

@@ -101,7 +101,7 @@
 
 #pragma mark NSCoding
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
 	self = [super initWithCoder:coder];
 	if (self == nil) return nil;
 

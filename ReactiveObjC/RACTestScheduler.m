@@ -29,7 +29,7 @@
 @property (nonatomic, strong, readonly) RACDisposable *disposable;
 
 // Initializes a new scheduler action.
-- (id)initWithDate:(NSDate *)date block:(void (^)(void))block;
+- (instancetype)initWithDate:(NSDate *)date block:(void (^)(void))block;
 
 @end
 
@@ -199,7 +199,7 @@ static void RACReleaseScheduledAction(CFAllocatorRef allocator, const void *ptr)
 
 #pragma mark Lifecycle
 
-- (id)initWithDate:(NSDate *)date block:(void (^)(void))block {
+- (instancetype)initWithDate:(NSDate *)date block:(void (^)(void))block {
 	NSCParameterAssert(date != nil);
 	NSCParameterAssert(block != nil);
 

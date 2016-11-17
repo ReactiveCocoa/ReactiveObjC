@@ -13,7 +13,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithQueue:(dispatch_queue_t)queue {
+- (instancetype)initWithQueue:(dispatch_queue_t)queue {
 	return [super initWithName:nil queue:queue];
 }
 

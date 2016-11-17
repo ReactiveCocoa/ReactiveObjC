@@ -85,13 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
 ///            exception if `nil` is received (which might occur if an intermediate
 ///            object is set to `nil`).
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
-- (id)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
+- (instancetype)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
 #else
 // Swift builds with OS_OBJECT_HAVE_OBJC_SUPPORT=0 for Playgrounds and LLDB :(
-- (id)initWithTarget:(NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
+- (instancetype)initWithTarget:(NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
 #endif
 
-- (id)init __attribute__((unavailable("Use -initWithTarget:keyPath:nilValue: instead")));
+- (instancetype)init __attribute__((unavailable("Use -initWithTarget:keyPath:nilValue: instead")));
 
 @end
 
