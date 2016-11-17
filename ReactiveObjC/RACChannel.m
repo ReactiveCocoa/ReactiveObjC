@@ -19,13 +19,13 @@
 // A subscriber will will send values to the other terminal.
 @property (nonatomic, strong, readonly) id<RACSubscriber> otherTerminal;
 
-- (id)initWithValues:(RACSignal *)values otherTerminal:(id<RACSubscriber>)otherTerminal;
+- (instancetype)initWithValues:(RACSignal *)values otherTerminal:(id<RACSubscriber>)otherTerminal;
 
 @end
 
 @implementation RACChannel
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 
 	// We don't want any starting value from the leadingSubject, but we do want
@@ -49,7 +49,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithValues:(RACSignal *)values otherTerminal:(id<RACSubscriber>)otherTerminal {
+- (instancetype)initWithValues:(RACSignal *)values otherTerminal:(id<RACSubscriber>)otherTerminal {
 	NSCParameterAssert(values != nil);
 	NSCParameterAssert(otherTerminal != nil);
 

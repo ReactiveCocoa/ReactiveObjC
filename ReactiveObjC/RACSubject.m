@@ -35,7 +35,7 @@
 	return [[self alloc] init];
 }
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 	if (self == nil) return nil;
 

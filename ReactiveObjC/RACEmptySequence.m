@@ -44,7 +44,7 @@
 	return self.class;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
 	// Return the singleton.
 	return self.class.empty;
 }

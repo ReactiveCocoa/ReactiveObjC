@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Do not instantiate this class directly. Create a RACChannel instead.
 @interface RACChannelTerminal : RACSignal <RACSubscriber>
 
-- (id)init __attribute__((unavailable("Instantiate a RACChannel instead")));
+- (instancetype)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 
 @end
 

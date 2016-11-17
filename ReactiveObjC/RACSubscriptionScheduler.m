@@ -21,7 +21,7 @@
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	self = [super initWithName:@"org.reactivecocoa.ReactiveObjC.RACScheduler.subscriptionScheduler"];
 
 	_backgroundScheduler = [RACScheduler scheduler];

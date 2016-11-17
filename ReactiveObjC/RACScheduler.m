@@ -31,7 +31,7 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 
 #pragma mark Initializers
 
-- (id)initWithName:(NSString *)name {
+- (instancetype)initWithName:(NSString *)name {
 	self = [super init];
 
 	if (name == nil) {
@@ -45,7 +45,7 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 
 #pragma mark Schedulers
 
-+ (instancetype)immediateScheduler {
++ (RACScheduler *)immediateScheduler {
 	static dispatch_once_t onceToken;
 	static RACScheduler *immediateScheduler;
 	dispatch_once(&onceToken, ^{
@@ -55,7 +55,7 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 	return immediateScheduler;
 }
 
-+ (instancetype)mainThreadScheduler {
++ (RACScheduler *)mainThreadScheduler {
 	static dispatch_once_t onceToken;
 	static RACScheduler *mainThreadScheduler;
 	dispatch_once(&onceToken, ^{
@@ -65,19 +65,19 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 	return mainThreadScheduler;
 }
 
-+ (instancetype)schedulerWithPriority:(RACSchedulerPriority)priority name:(NSString *)name {
++ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority name:(NSString *)name {
 	return [[RACTargetQueueScheduler alloc] initWithName:name targetQueue:dispatch_get_global_queue(priority, 0)];
 }
 
-+ (instancetype)schedulerWithPriority:(RACSchedulerPriority)priority {
++ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority {
 	return [self schedulerWithPriority:priority name:@"org.reactivecocoa.ReactiveObjC.RACScheduler.backgroundScheduler"];
 }
 
-+ (instancetype)scheduler {
++ (RACScheduler *)scheduler {
 	return [self schedulerWithPriority:RACSchedulerPriorityDefault];
 }
 
-+ (instancetype)subscriptionScheduler {
++ (RACScheduler *)subscriptionScheduler {
 	static dispatch_once_t onceToken;
 	static RACScheduler *subscriptionScheduler;
 	dispatch_once(&onceToken, ^{
@@ -91,7 +91,7 @@ NSString * const RACSchedulerCurrentSchedulerKey = @"RACSchedulerCurrentSchedule
 	return [NSOperationQueue.currentQueue isEqual:NSOperationQueue.mainQueue] || [NSThread isMainThread];
 }
 
-+ (instancetype)currentScheduler {
++ (RACScheduler *)currentScheduler {
 	RACScheduler *scheduler = NSThread.currentThread.threadDictionary[RACSchedulerCurrentSchedulerKey];
 	if (scheduler != nil) return scheduler;
 	if ([self.class isOnMainThread]) return RACScheduler.mainThreadScheduler;
