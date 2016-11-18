@@ -271,10 +271,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Examples
 ///
-///      RACSequence *numbers = @[ @1, @2, @3, @4 ].rac_sequence;
+///      RACSignal<NSNumber *> *numbers = [@[ @1, @2, @3, @4 ].rac_sequence
+///          signalWithScheduler:RACScheduler.immediateScheduler];
 ///
 ///      // Contains 1, 3, 5, 7
-///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
+///      RACSignal *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
 ///          return @(previous.integerValue + next.integerValue);
 ///      }];
 ///
