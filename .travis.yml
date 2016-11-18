@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.1
 before_install: true
 install: true
 git:
@@ -56,8 +56,6 @@ matrix:
       env:
         - JOB=CARTHAGE-watchOS
     - script:
-      - gem install cocoapods --pre
-      - pod --version
       - pod repo update --silent
       - pod lib lint ReactiveObjC.podspec
       env:

@@ -8,6 +8,8 @@
 
 #import "RACDisposable.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A disposable that calls its own -dispose when it is dealloc'd.
 @interface RACScopedDisposable : RACDisposable
 
@@ -16,3 +18,5 @@
 + (instancetype)scopedDisposableWithDisposable:(RACDisposable *)disposable;
 
 @end
+
+NS_ASSUME_NONNULL_END

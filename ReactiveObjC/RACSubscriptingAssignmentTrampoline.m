@@ -21,7 +21,7 @@
 
 @implementation RACSubscriptingAssignmentTrampoline
 
-- (id)initWithTarget:(id)target nilValue:(id)nilValue {
+- (instancetype)initWithTarget:(id)target nilValue:(id)nilValue {
 	// This is often a programmer error, but this prevents crashes if the target
 	// object has unexpectedly deallocated.
 	if (target == nil) return nil;

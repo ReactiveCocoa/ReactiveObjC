@@ -42,7 +42,6 @@ const NSUInteger RACReplaySubjectUnlimitedCapacity = NSUIntegerMax;
 
 - (instancetype)initWithCapacity:(NSUInteger)capacity {
 	self = [super init];
-	if (self == nil) return nil;
 	
 	_capacity = capacity;
 	_valuesReceived = (capacity == RACReplaySubjectUnlimitedCapacity ? [NSMutableArray array] : [NSMutableArray arrayWithCapacity:capacity]);

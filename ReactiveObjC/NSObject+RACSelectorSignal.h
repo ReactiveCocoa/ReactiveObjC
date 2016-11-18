@@ -10,6 +10,8 @@
 
 @class RACSignal<__covariant ValueType>;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The domain for any errors originating from -rac_signalForSelector:.
 extern NSString * const RACSelectorSignalErrorDomain;
 
@@ -77,3 +79,5 @@ extern const NSInteger RACSelectorSignalErrorMethodSwizzlingRace;
 - (RACSignal *)rac_signalForSelector:(SEL)selector fromProtocol:(Protocol *)protocol;
 
 @end
+
+NS_ASSUME_NONNULL_END

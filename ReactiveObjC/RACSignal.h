@@ -14,8 +14,9 @@
 @class RACSubject;
 @protocol RACSubscriber;
 
-@interface RACSignal<__covariant ValueType> : RACStream
 NS_ASSUME_NONNULL_BEGIN
+
+@interface RACSignal<__covariant ValueType> : RACStream
 
 /// Creates a new signal. This is the preferred way to create a new signal
 /// operation or behavior.
@@ -45,13 +46,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// subscribes. Any side effects within the block will thus execute once for each
 /// subscription, not necessarily on one thread, and possibly even
 /// simultaneously!
-+ (RACSignal *)createSignal:(RACDisposable * _Nullable (^)(id<RACSubscriber> subscriber))didSubscribe;
++ (RACSignal<ValueType> *)createSignal:(RACDisposable * _Nullable (^)(id<RACSubscriber> subscriber))didSubscribe;
 
 /// Returns a signal that immediately sends the given error.
-+ (RACSignal *)error:(nullable NSError *)error;
++ (RACSignal<ValueType> *)error:(nullable NSError *)error;
 
 /// Returns a signal that never completes.
-+ (RACSignal *)never;
++ (RACSignal<ValueType> *)never;
 
 /// Immediately schedules the given block on the given scheduler. The block is
 /// given a subscriber to which it can send events.
@@ -63,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a signal which will send all events sent on the subscriber given to
 /// `block`. All events will be sent on `scheduler` and it will replay any missed
 /// events to new subscribers.
-+ (RACSignal *)startEagerlyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block;
++ (RACSignal<ValueType> *)startEagerlyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block;
 
 /// Invokes the given block only on the first subscription. The block is given a
 /// subscriber to which it can send events.
@@ -81,17 +82,17 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a signal which will pass through the events sent to the subscriber
 /// given to `block` and replay any missed events to new subscribers.
-+ (RACSignal *)startLazilyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block;
++ (RACSignal<ValueType> *)startLazilyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block;
 
 @end
 
-@interface RACSignal (RACStream)
+@interface RACSignal<__covariant ValueType> (RACStream)
 
 /// Returns a signal that immediately sends the given value and then completes.
-+ (RACSignal *)return:(nullable id)value;
++ (RACSignal<ValueType> *)return:(nullable ValueType)value;
 
 /// Returns a signal that immediately completes.
-+ (RACSignal *)empty;
++ (RACSignal<ValueType> *)empty;
 
 /// Subscribes to `signal` when the source signal completes.
 - (RACSignal *)concat:(RACSignal *)signal;
@@ -161,19 +162,19 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// Additional methods to assist with debugging.
-@interface RACSignal (Debugging)
+@interface RACSignal<__covariant ValueType> (Debugging)
 
 /// Logs all events that the receiver sends.
-- (RACSignal *)logAll;
+- (RACSignal<ValueType> *)logAll;
 
 /// Logs each `next` that the receiver sends.
-- (RACSignal *)logNext;
+- (RACSignal<ValueType> *)logNext;
 
 /// Logs any error that the receiver sends.
-- (RACSignal *)logError;
+- (RACSignal<ValueType> *)logError;
 
 /// Logs any `completed` event that the receiver sends.
-- (RACSignal *)logCompleted;
+- (RACSignal<ValueType> *)logCompleted;
 
 @end
 
@@ -209,15 +210,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// `error` will be set to any error that occurred.
 - (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error;
 
-NS_ASSUME_NONNULL_END
 @end
 
-@interface RACSignal (Unavailable)
-NS_ASSUME_NONNULL_BEGIN
-
-+ (RACSignal *)start:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-+ (RACSignal *)startWithScheduler:(RACScheduler *)scheduler subjectBlock:(void (^)(RACSubject *subject))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-+ (RACSignal *)startWithScheduler:(RACScheduler *)scheduler block:(id (^)(BOOL *success, NSError * _Nullable * _Nullable error))block __attribute__((unavailable("Use +startEagerlyWithScheduler:block: instead")));
-
 NS_ASSUME_NONNULL_END
-@end

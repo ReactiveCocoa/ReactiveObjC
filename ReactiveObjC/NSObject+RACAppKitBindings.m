@@ -50,7 +50,7 @@
 // options     - Any options to pass to the binding. This may be nil.
 //
 // Returns an initialized channel proxy.
-- (id)initWithTarget:(id)target bindingName:(NSString *)bindingName options:(NSDictionary *)options;
+- (instancetype)initWithTarget:(id)target bindingName:(NSString *)bindingName options:(NSDictionary *)options;
 
 @end
 
@@ -81,12 +81,11 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithTarget:(id)target bindingName:(NSString *)bindingName options:(NSDictionary *)options {
+- (instancetype)initWithTarget:(id)target bindingName:(NSString *)bindingName options:(NSDictionary *)options {
 	NSCParameterAssert(target != nil);
 	NSCParameterAssert(bindingName != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_target = target;
 	_bindingName = [bindingName copy];

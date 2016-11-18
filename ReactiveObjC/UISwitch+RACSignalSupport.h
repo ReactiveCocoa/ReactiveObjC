@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UISwitch (RACSignalSupport)
 
 /// Creates a new RACChannel-based binding to the receiver.
@@ -20,3 +22,5 @@
 - (RACChannelTerminal *)rac_newOnChannel;
 
 @end
+
+NS_ASSUME_NONNULL_END

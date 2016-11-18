@@ -8,6 +8,8 @@
 
 #import "RACScheduler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 // The thread-specific current scheduler key.
 extern NSString * const RACSchedulerCurrentSchedulerKey;
 
@@ -29,6 +31,8 @@ extern NSString * const RACSchedulerCurrentSchedulerKey;
 // name - The name of the scheduler. If nil, a default name will be used.
 //
 // Returns the initialized object.
-- (id)initWithName:(NSString *)name;
+- (instancetype)initWithName:(nullable NSString *)name;
 
 @end
+
+NS_ASSUME_NONNULL_END

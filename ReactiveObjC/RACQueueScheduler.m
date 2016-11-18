@@ -15,11 +15,10 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithName:(NSString *)name queue:(dispatch_queue_t)queue {
+- (instancetype)initWithName:(NSString *)name queue:(dispatch_queue_t)queue {
 	NSCParameterAssert(queue != NULL);
 
 	self = [super initWithName:name];
-	if (self == nil) return nil;
 
 	_queue = queue;
 #if !OS_OBJECT_USE_OBJC

@@ -15,9 +15,8 @@
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	self.name = @"";
 	return self;

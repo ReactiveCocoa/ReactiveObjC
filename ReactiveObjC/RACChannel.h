@@ -11,6 +11,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A two-way channel.
 ///
 /// Conceptually, RACChannel can be thought of as a bidirectional connection,
@@ -65,6 +67,8 @@
 /// Do not instantiate this class directly. Create a RACChannel instead.
 @interface RACChannelTerminal : RACSignal <RACSubscriber>
 
-- (id)init __attribute__((unavailable("Instantiate a RACChannel instead")));
+- (instancetype)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -29,7 +29,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithTarget:(__weak NSObject *)target observer:(__weak NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RACKVOBlock)block {
+- (instancetype)initWithTarget:(__weak NSObject *)target observer:(__weak NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RACKVOBlock)block {
 	NSCParameterAssert(keyPath != nil);
 	NSCParameterAssert(block != nil);
 
@@ -37,7 +37,6 @@
 	if (strongTarget == nil) return nil;
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_keyPath = [keyPath copy];
 

@@ -35,12 +35,11 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithSourceSignal:(RACSignal *)source subject:(RACSubject *)subject {
+- (instancetype)initWithSourceSignal:(RACSignal *)source subject:(RACSubject *)subject {
 	NSCParameterAssert(source != nil);
 	NSCParameterAssert(subject != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_sourceSignal = source;
 	_serialDisposable = [[RACSerialDisposable alloc] init];

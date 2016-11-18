@@ -31,9 +31,8 @@
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
-	if (self == nil) return nil;
 
 	_disposeBlock = (__bridge void *)self;
 	OSMemoryBarrier();
@@ -41,11 +40,10 @@
 	return self;
 }
 
-- (id)initWithBlock:(void (^)(void))block {
+- (instancetype)initWithBlock:(void (^)(void))block {
 	NSCParameterAssert(block != nil);
 
 	self = [super init];
-	if (self == nil) return nil;
 
 	_disposeBlock = (void *)CFBridgingRetain([block copy]); 
 	OSMemoryBarrier();

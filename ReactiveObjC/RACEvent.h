@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Describes the type of a RACEvent.
 ///
 /// RACEventTypeCompleted - A `completed` event.
@@ -22,16 +24,16 @@ typedef NS_ENUM(NSUInteger, RACEventType) {
 /// Represents an event sent by a RACSignal.
 ///
 /// This corresponds to the `Notification` class in Rx.
-@interface RACEvent : NSObject <NSCopying>
+@interface RACEvent<__covariant ValueType> : NSObject <NSCopying>
 
 /// Returns a singleton RACEvent representing the `completed` event.
-+ (instancetype)completedEvent;
++ (RACEvent<ValueType> *)completedEvent;
 
 /// Returns a new event of type RACEventTypeError, containing the given error.
-+ (instancetype)eventWithError:(NSError *)error;
++ (RACEvent<ValueType> *)eventWithError:(nullable NSError *)error;
 
 /// Returns a new event of type RACEventTypeNext, containing the given value.
-+ (instancetype)eventWithValue:(id)value;
++ (RACEvent<ValueType> *)eventWithValue:(nullable ValueType)value;
 
 /// The type of event represented by the receiver.
 @property (nonatomic, assign, readonly) RACEventType eventType;
@@ -42,10 +44,12 @@ typedef NS_ENUM(NSUInteger, RACEventType) {
 
 /// The error associated with an event of type RACEventTypeError. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly, nullable) NSError *error;
 
 /// The value associated with an event of type RACEventTypeNext. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly) id value;
+@property (nonatomic, strong, readonly, nullable) ValueType value;
 
 @end
+
+NS_ASSUME_NONNULL_END
