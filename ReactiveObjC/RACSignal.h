@@ -112,6 +112,210 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// Redeclarations of operations built on the RACStream primitives with more
+/// precise ValueType information.
+///
+/// In cases where the ValueType of the result of the operation is not able to
+/// be inferred, the ValueType is erased in the result.
+///
+/// In cases where instancetype is a valid return type, the operation is not
+/// redeclared here.
+@interface RACSignal<__covariant ValueType> (RACStreamOperations)
+
+/// Maps `block` across the values in the receiver and flattens the result.
+///
+/// Note that operators applied _after_ -flattenMap: behave differently from
+/// operators _within_ -flattenMap:. See the Examples section below.
+///
+/// This corresponds to the `SelectMany` method in Rx.
+///
+/// block - A block which accepts the values in the receiver and returns a new
+///         instance of the receiver's class. Returning `nil` from this block is
+///         equivalent to returning an empty signal.
+///
+/// Examples
+///
+///   [signal flattenMap:^(id x) {
+///       // Logs each time a returned signal completes.
+///       return [[RACSignal return:x] logCompleted];
+///   }];
+///
+///   [[signal
+///       flattenMap:^(id x) {
+///           return [RACSignal return:x];
+///       }]
+///       // Logs only once, when all of the signals complete.
+///       logCompleted];
+///
+/// Returns a new signal which represents the combined streams resulting from
+/// mapping `block`.
+- (RACSignal *)flattenMap:(__kindof RACStream * _Nullable (^)(ValueType _Nullable value))block;
+
+/// Flattens a signal of streams.
+///
+/// This corresponds to the `Merge` method in Rx.
+///
+/// Returns a signal consisting of the combined streams obtained from the
+/// receiver.
+- (RACSignal *)flatten;
+
+/// Maps `block` across the values in the receiver.
+///
+/// This corresponds to the `Select` method in Rx.
+///
+/// Returns a new signal with the mapped values.
+- (RACSignal *)map:(id _Nullable (^)(ValueType _Nullable value))block;
+
+/// Replaces each value in the receiver with the given object.
+///
+/// Returns a new signal which includes the given object once for each value in
+/// the receiver.
+- (RACSignal *)mapReplace:(nullable id)object;
+
+/// Filters out values in the receiver that don't pass the given test.
+///
+/// This corresponds to the `Where` method in Rx.
+///
+/// Returns a new signal with only those values that passed.
+- (RACSignal<ValueType> *)filter:(BOOL (^)(ValueType _Nullable value))block;
+
+/// Filters out values in the receiver that equal (via -isEqual:) the provided
+/// value.
+///
+/// value - The value can be `nil`, in which case it ignores `nil` values.
+///
+/// Returns a new signal containing only the values which did not compare equal
+/// to `value`.
+- (RACSignal<ValueType> *)ignore:(nullable ValueType)value;
+
+/// Unpacks each RACTuple in the receiver and maps the values to a new value.
+///
+/// reduceBlock - The block which reduces each RACTuple's values into one value.
+///               It must take as many arguments as the number of tuple elements
+///               to process. Each argument will be an object argument. The
+///               return value must be an object. This argument cannot be nil.
+///
+/// Returns a new signal of reduced tuple values.
+- (RACSignal *)reduceEach:(id _Nullable (^)())reduceBlock;
+
+/// Returns a signal consisting of `value`, followed by the values in the
+/// receiver.
+- (RACSignal<ValueType> *)startWith:(nullable ValueType)value;
+
+/// Skips the first `skipCount` values in the receiver.
+///
+/// Returns the receiver after skipping the first `skipCount` values. If
+/// `skipCount` is greater than the number of values in the signal, an empty
+/// signal is returned.
+- (RACSignal<ValueType> *)skip:(NSUInteger)skipCount;
+
+/// Returns a signal of the first `count` values in the receiver. If `count` is
+/// greater than or equal to the number of values in the signal, a signal
+/// equivalent to the receiver is returned.
+- (RACSignal<ValueType> *)take:(NSUInteger)count;
+
+/// Combines values in the receiver from left to right using the given block.
+///
+/// The algorithm proceeds as follows:
+///
+///  1. `startingValue` is passed into the block as the `running` value, and the
+///  first element of the receiver is passed into the block as the `next` value.
+///  2. The result of the invocation is added to the returned signal.
+///  3. The result of the invocation (`running`) and the next element of the
+///  receiver (`next`) is passed into `block`.
+///  4. Steps 2 and 3 are repeated until all values have been processed.
+///
+/// startingValue - The value to be combined with the first element of the
+///                 receiver. This value may be `nil`.
+/// reduceBlock   - The block that describes how to combine values of the
+///                 receiver. If the receiver is empty, this block will never be
+///                 invoked. Cannot be nil.
+///
+/// Examples
+///
+///      RACSequence *numbers = @[ @1, @2, @3, @4 ].rac_sequence;
+///
+///      // Contains 1, 3, 6, 10
+///      RACSequence *sums = [numbers scanWithStart:@0 reduce:^(NSNumber *sum, NSNumber *next) {
+///          return @(sum.integerValue + next.integerValue);
+///      }];
+///
+/// Returns a new signal that consists of each application of `reduceBlock`. If
+/// the receiver is empty, an empty signal is returned.
+- (instancetype)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
+
+/// Combines values in the receiver from left to right using the given block
+/// which also takes zero-based index of the values.
+///
+/// startingValue - The value to be combined with the first element of the
+///                 receiver. This value may be `nil`.
+/// reduceBlock   - The block that describes how to combine values of the
+///                 receiver. This block takes zero-based index value as the last
+///                 parameter. If the receiver is empty, this block will never
+///                 be invoked. Cannot be nil.
+///
+/// Returns a new signal that consists of each application of `reduceBlock`. If
+/// the receiver is empty, an empty signal is returned.
+- (RACSignal *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock;
+
+/// Combines each previous and current value into one object.
+///
+/// This method is similar to -scanWithStart:reduce:, but only ever operates on
+/// the previous and current values (instead of the whole signal), and does not
+/// pass the return value of `reduceBlock` into the next invocation of it.
+///
+/// start       - The value passed into `reduceBlock` as `previous` for the
+///               first value.
+/// reduceBlock - The block that combines the previous value and the current
+///               value to create the reduced value. Cannot be nil.
+///
+/// Examples
+///
+///      RACSequence *numbers = @[ @1, @2, @3, @4 ].rac_sequence;
+///
+///      // Contains 1, 3, 5, 7
+///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
+///          return @(previous.integerValue + next.integerValue);
+///      }];
+///
+/// Returns a new signal consisting of the return values from each application of
+/// `reduceBlock`.
+- (RACSignal *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock;
+
+/// Takes values until the given block returns `YES`.
+///
+/// Returns a signal of the initial values in the receiver that fail `predicate`.
+/// If `predicate` never returns `YES`, a signal equivalent to the receiver is
+/// returned.
+- (RACSignal<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate;
+
+/// Takes values until the given block returns `NO`.
+///
+/// Returns a signal of the initial values in the receiver that pass `predicate`.
+/// If `predicate` never returns `NO`, a signal equivalent to the receiver is
+/// returned.
+- (RACSignal<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate;
+
+/// Skips values until the given block returns `YES`.
+///
+/// Returns a signal containing the values of the receiver that follow any
+/// initial values failing `predicate`. If `predicate` never returns `YES`,
+/// an empty signal is returned.
+- (RACSignal<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate;
+
+/// Skips values until the given block returns `NO`.
+///
+/// Returns a signal containing the values of the receiver that follow any
+/// initial values passing `predicate`. If `predicate` never returns `NO`, an
+/// empty signal is returned.
+- (RACSignal<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate;
+
+/// Returns a signal of values for which -isEqual: returns NO when compared to the
+/// previous value.
+- (RACSignal<ValueType> *)distinctUntilChanged;
+
+@end
+
 @interface RACSignal<__covariant ValueType> (Subscription)
 
 /// Subscribes `subscriber` to changes on the receiver. The receiver defines which
