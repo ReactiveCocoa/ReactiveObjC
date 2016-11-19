@@ -24,27 +24,27 @@
 
 #pragma mark Abstract methods
 
-+ (instancetype)empty {
++ (__kindof RACStream *)empty {
 	NSString *reason = [NSString stringWithFormat:@"%@ must be overridden by subclasses", NSStringFromSelector(_cmd)];
 	@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
-- (instancetype)bind:(RACStreamBindBlock (^)(void))block {
+- (__kindof RACStream *)bind:(RACStreamBindBlock (^)(void))block {
 	NSString *reason = [NSString stringWithFormat:@"%@ must be overridden by subclasses", NSStringFromSelector(_cmd)];
 	@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
-+ (instancetype)return:(id)value {
++ (__kindof RACStream *)return:(id)value {
 	NSString *reason = [NSString stringWithFormat:@"%@ must be overridden by subclasses", NSStringFromSelector(_cmd)];
 	@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
-- (instancetype)concat:(RACStream *)stream {
+- (__kindof RACStream *)concat:(RACStream *)stream {
 	NSString *reason = [NSString stringWithFormat:@"%@ must be overridden by subclasses", NSStringFromSelector(_cmd)];
 	@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
-- (instancetype)zipWith:(RACStream *)stream {
+- (__kindof RACStream *)zipWith:(RACStream *)stream {
 	NSString *reason = [NSString stringWithFormat:@"%@ must be overridden by subclasses", NSStringFromSelector(_cmd)];
 	@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
@@ -70,7 +70,7 @@
 
 @implementation RACStream (Operations)
 
-- (instancetype)flattenMap:(RACStream * (^)(id value))block {
+- (__kindof RACStream *)flattenMap:(__kindof RACStream * (^)(id value))block {
 	Class class = self.class;
 
 	return [[self bind:^{
@@ -83,13 +83,13 @@
 	}] setNameWithFormat:@"[%@] -flattenMap:", self.name];
 }
 
-- (instancetype)flatten {
+- (__kindof RACStream *)flatten {
 	return [[self flattenMap:^(id value) {
 		return value;
 	}] setNameWithFormat:@"[%@] -flatten", self.name];
 }
 
-- (instancetype)map:(id (^)(id value))block {
+- (__kindof RACStream *)map:(id (^)(id value))block {
 	NSCParameterAssert(block != nil);
 
 	Class class = self.class;
@@ -99,13 +99,13 @@
 	}] setNameWithFormat:@"[%@] -map:", self.name];
 }
 
-- (instancetype)mapReplace:(id)object {
+- (__kindof RACStream *)mapReplace:(id)object {
 	return [[self map:^(id _) {
 		return object;
 	}] setNameWithFormat:@"[%@] -mapReplace: %@", self.name, RACDescription(object)];
 }
 
-- (instancetype)combinePreviousWithStart:(id)start reduce:(id (^)(id previous, id next))reduceBlock {
+- (__kindof RACStream *)combinePreviousWithStart:(id)start reduce:(id (^)(id previous, id next))reduceBlock {
 	NSCParameterAssert(reduceBlock != NULL);
 	return [[[self
 		scanWithStart:RACTuplePack(start)
@@ -119,7 +119,7 @@
 		setNameWithFormat:@"[%@] -combinePreviousWithStart: %@ reduce:", self.name, RACDescription(start)];
 }
 
-- (instancetype)filter:(BOOL (^)(id value))block {
+- (__kindof RACStream *)filter:(BOOL (^)(id value))block {
 	NSCParameterAssert(block != nil);
 
 	Class class = self.class;
@@ -133,13 +133,13 @@
 	}] setNameWithFormat:@"[%@] -filter:", self.name];
 }
 
-- (instancetype)ignore:(id)value {
+- (__kindof RACStream *)ignore:(id)value {
 	return [[self filter:^ BOOL (id innerValue) {
 		return innerValue != value && ![innerValue isEqual:value];
 	}] setNameWithFormat:@"[%@] -ignore: %@", self.name, RACDescription(value)];
 }
 
-- (instancetype)reduceEach:(id (^)())reduceBlock {
+- (__kindof RACStream *)reduceEach:(id (^)())reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	__weak RACStream *stream __attribute__((unused)) = self;
@@ -149,13 +149,13 @@
 	}] setNameWithFormat:@"[%@] -reduceEach:", self.name];
 }
 
-- (instancetype)startWith:(id)value {
+- (__kindof RACStream *)startWith:(id)value {
 	return [[[self.class return:value]
 		concat:self]
 		setNameWithFormat:@"[%@] -startWith: %@", self.name, RACDescription(value)];
 }
 
-- (instancetype)skip:(NSUInteger)skipCount {
+- (__kindof RACStream *)skip:(NSUInteger)skipCount {
 	Class class = self.class;
 	
 	return [[self bind:^{
@@ -170,7 +170,7 @@
 	}] setNameWithFormat:@"[%@] -skip: %lu", self.name, (unsigned long)skipCount];
 }
 
-- (instancetype)take:(NSUInteger)count {
+- (__kindof RACStream *)take:(NSUInteger)count {
 	Class class = self.class;
 	
 	if (count == 0) return class.empty;
@@ -190,7 +190,7 @@
 	}] setNameWithFormat:@"[%@] -take: %lu", self.name, (unsigned long)count];
 }
 
-+ (instancetype)join:(id<NSFastEnumeration>)streams block:(RACStream * (^)(id, id))block {
++ (__kindof RACStream *)join:(id<NSFastEnumeration>)streams block:(RACStream * (^)(id, id))block {
 	RACStream *current = nil;
 
 	// Creates streams of successively larger tuples by combining the input
@@ -228,13 +228,13 @@
 	}];
 }
 
-+ (instancetype)zip:(id<NSFastEnumeration>)streams {
++ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams {
 	return [[self join:streams block:^(RACStream *left, RACStream *right) {
 		return [left zipWith:right];
 	}] setNameWithFormat:@"+zip: %@", streams];
 }
 
-+ (instancetype)zip:(id<NSFastEnumeration>)streams reduce:(id (^)())reduceBlock {
++ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams reduce:(id (^)())reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	RACStream *result = [self zip:streams];
@@ -247,7 +247,7 @@
 	return [result setNameWithFormat:@"+zip: %@ reduce:", streams];
 }
 
-+ (instancetype)concat:(id<NSFastEnumeration>)streams {
++ (__kindof RACStream *)concat:(id<NSFastEnumeration>)streams {
 	RACStream *result = self.empty;
 	for (RACStream *stream in streams) {
 		result = [result concat:stream];
@@ -256,7 +256,7 @@
 	return [result setNameWithFormat:@"+concat: %@", streams];
 }
 
-- (instancetype)scanWithStart:(id)startingValue reduce:(id (^)(id running, id next))reduceBlock {
+- (__kindof RACStream *)scanWithStart:(id)startingValue reduce:(id (^)(id running, id next))reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	return [[self
@@ -267,7 +267,7 @@
 		setNameWithFormat:@"[%@] -scanWithStart: %@ reduce:", self.name, RACDescription(startingValue)];
 }
 
-- (instancetype)scanWithStart:(id)startingValue reduceWithIndex:(id (^)(id, id, NSUInteger))reduceBlock {
+- (__kindof RACStream *)scanWithStart:(id)startingValue reduceWithIndex:(id (^)(id, id, NSUInteger))reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	Class class = self.class;
@@ -283,7 +283,7 @@
 	}] setNameWithFormat:@"[%@] -scanWithStart: %@ reduceWithIndex:", self.name, RACDescription(startingValue)];
 }
 
-- (instancetype)takeUntilBlock:(BOOL (^)(id x))predicate {
+- (__kindof RACStream *)takeUntilBlock:(BOOL (^)(id x))predicate {
 	NSCParameterAssert(predicate != nil);
 
 	Class class = self.class;
@@ -297,7 +297,7 @@
 	}] setNameWithFormat:@"[%@] -takeUntilBlock:", self.name];
 }
 
-- (instancetype)takeWhileBlock:(BOOL (^)(id x))predicate {
+- (__kindof RACStream *)takeWhileBlock:(BOOL (^)(id x))predicate {
 	NSCParameterAssert(predicate != nil);
 
 	return [[self takeUntilBlock:^ BOOL (id x) {
@@ -305,7 +305,7 @@
 	}] setNameWithFormat:@"[%@] -takeWhileBlock:", self.name];
 }
 
-- (instancetype)skipUntilBlock:(BOOL (^)(id x))predicate {
+- (__kindof RACStream *)skipUntilBlock:(BOOL (^)(id x))predicate {
 	NSCParameterAssert(predicate != nil);
 
 	Class class = self.class;
@@ -327,7 +327,7 @@
 	}] setNameWithFormat:@"[%@] -skipUntilBlock:", self.name];
 }
 
-- (instancetype)skipWhileBlock:(BOOL (^)(id x))predicate {
+- (__kindof RACStream *)skipWhileBlock:(BOOL (^)(id x))predicate {
 	NSCParameterAssert(predicate != nil);
 
 	return [[self skipUntilBlock:^ BOOL (id x) {
@@ -335,7 +335,7 @@
 	}] setNameWithFormat:@"[%@] -skipWhileBlock:", self.name];
 }
 
-- (instancetype)distinctUntilChanged {
+- (__kindof RACStream *)distinctUntilChanged {
 	Class class = self.class;
 
 	return [[self bind:^{
