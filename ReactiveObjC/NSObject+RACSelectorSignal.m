@@ -273,7 +273,7 @@ static RACSignal *NSObjectRACSignalForSelector(NSObject *self, SEL selector, Pro
 					if (dynamicImmediateMethod) {
 						IMP dynamicImmediateImpl = method_getImplementation(dynamicImmediateMethod);
 						if (dynamicImmediateImpl != _objc_msgForward) {
-							BOOL success = class_addMethod(class, interopAliasSelector, dynamicImmediateImpl, typeEncoding);
+							BOOL success __attribute__((unused)) = class_addMethod(class, interopAliasSelector, dynamicImmediateImpl, typeEncoding);
 							NSCAssert(success, @"Unexpected race condition: `%@` has already been added, and subsequent attempts should have been ignored.", NSStringFromSelector(interopAliasSelector));
 						}
 					}
