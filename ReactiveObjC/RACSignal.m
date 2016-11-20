@@ -90,7 +90,7 @@
 	return [RACReturnSignal return:value];
 }
 
-- (RACSignal *)bind:(RACStreamBindBlock (^)(void))block {
+- (RACSignal *)bind:(RACSignalBindBlock (^)(void))block {
 	NSCParameterAssert(block != NULL);
 
 	/*
@@ -106,7 +106,7 @@
 	 */
 
 	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
-		RACStreamBindBlock bindingBlock = block();
+		RACSignalBindBlock bindingBlock = block();
 
 		__block volatile int32_t signalCount = 1;   // indicates self
 

@@ -36,7 +36,7 @@
 //
 // Returns a new sequence which contains `current`, followed by the combined
 // result of all applications of `block` to the remaining values in the receiver.
-- (instancetype)bind:(RACStreamBindBlock)block passingThroughValuesFromSequence:(RACSequence *)current;
+- (RACSequence *)bind:(RACSequenceBindBlock)block passingThroughValuesFromSequence:(RACSequence *)current;
 
 @end
 
@@ -77,20 +77,20 @@
 
 #pragma mark RACStream
 
-+ (instancetype)empty {
++ (RACSequence *)empty {
 	return RACEmptySequence.empty;
 }
 
-+ (instancetype)return:(id)value {
++ (RACSequence *)return:(id)value {
 	return [RACUnarySequence return:value];
 }
 
-- (instancetype)bind:(RACStreamBindBlock (^)(void))block {
-	RACStreamBindBlock bindBlock = block();
+- (RACSequence *)bind:(RACSequenceBindBlock (^)(void))block {
+	RACSequenceBindBlock bindBlock = block();
 	return [[self bind:bindBlock passingThroughValuesFromSequence:nil] setNameWithFormat:@"[%@] -bind:", self.name];
 }
 
-- (instancetype)bind:(RACStreamBindBlock)bindBlock passingThroughValuesFromSequence:(RACSequence *)passthroughSequence {
+- (RACSequence *)bind:(RACSequenceBindBlock)bindBlock passingThroughValuesFromSequence:(RACSequence *)passthroughSequence {
 	// Store values calculated in the dependency here instead, avoiding any kind
 	// of temporary collection and boxing.
 	//
@@ -138,15 +138,15 @@
 	return sequence;
 }
 
-- (instancetype)concat:(RACStream *)stream {
-	NSCParameterAssert(stream != nil);
+- (RACSequence *)concat:(RACSequence *)sequence {
+	NSCParameterAssert(sequence != nil);
 
-	return [[[RACArraySequence sequenceWithArray:@[ self, stream ] offset:0]
+	return [[[RACArraySequence sequenceWithArray:@[ self, sequence ] offset:0]
 		flatten]
-		setNameWithFormat:@"[%@] -concat: %@", self.name, stream];
+		setNameWithFormat:@"[%@] -concat: %@", self.name, sequence];
 }
 
-- (instancetype)zipWith:(RACSequence *)sequence {
+- (RACSequence *)zipWith:(RACSequence *)sequence {
 	NSCParameterAssert(sequence != nil);
 
 	return [[RACSequence

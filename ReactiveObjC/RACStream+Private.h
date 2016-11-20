@@ -18,6 +18,6 @@
 //           values.
 //
 // Returns a combined stream.
-+ (instancetype)join:(id<NSFastEnumeration>)streams block:(RACStream * (^)(id, id))block;
++ (__kindof RACStream *)join:(id<NSFastEnumeration>)streams block:(RACStream * (^)(id, id))block;
 
 @end

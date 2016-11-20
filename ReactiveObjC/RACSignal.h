@@ -86,6 +86,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// A block which accepts a value from a RACSignal and returns a new signal.
+///
+/// Setting `stop` to `YES` will cause the bind to terminate after the returned
+/// value. Returning `nil` will result in immediate termination.
+typedef RACSignal * _Nullable (^RACSignalBindBlock)(id _Nullable value, BOOL *stop);
+
 @interface RACSignal<__covariant ValueType> (RACStream)
 
 /// Returns a signal that immediately sends the given value and then completes.
@@ -94,14 +100,27 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a signal that immediately completes.
 + (RACSignal<ValueType> *)empty;
 
+/// Lazily binds a block to the values in the receiver.
+///
+/// This should only be used if you need to terminate the bind early, or close
+/// over some state. -flattenMap: is more appropriate for all other cases.
+///
+/// block - A block returning a RACSignalBindBlock. This block will be invoked
+///         each time the bound signal is re-evaluated. This block must not be
+///         nil or return nil.
+///
+/// Returns a new signal which represents the combined result of all lazy
+/// applications of `block`.
+- (RACSignal *)bind:(RACSignalBindBlock (^)(void))block;
+
 /// Subscribes to `signal` when the source signal completes.
 - (RACSignal *)concat:(RACSignal *)signal;
 
 /// Zips the values in the receiver with those of the given signal to create
 /// RACTuples.
 ///
-/// The first `next` of each stream will be combined, then the second `next`, and
-/// so forth, until either signal completes or errors.
+/// The first `next` of each signal will be combined, then the second `next`,
+/// and so forth, until either signal completes or errors.
 ///
 /// signal - The signal to zip with. This must not be `nil`.
 ///
@@ -147,15 +166,15 @@ NS_ASSUME_NONNULL_BEGIN
 ///       // Logs only once, when all of the signals complete.
 ///       logCompleted];
 ///
-/// Returns a new signal which represents the combined streams resulting from
+/// Returns a new signal which represents the combined signals resulting from
 /// mapping `block`.
-- (RACSignal *)flattenMap:(__kindof RACStream * _Nullable (^)(ValueType _Nullable value))block;
+- (RACSignal *)flattenMap:(__kindof RACSignal * _Nullable (^)(ValueType _Nullable value))block;
 
-/// Flattens a signal of streams.
+/// Flattens a signal of signals.
 ///
 /// This corresponds to the `Merge` method in Rx.
 ///
-/// Returns a signal consisting of the combined streams obtained from the
+/// Returns a signal consisting of the combined signals obtained from the
 /// receiver.
 - (RACSignal *)flatten;
 
@@ -214,6 +233,43 @@ NS_ASSUME_NONNULL_BEGIN
 /// equivalent to the receiver is returned.
 - (RACSignal<ValueType> *)take:(NSUInteger)count;
 
+/// Zips the values in the given signals to create RACTuples.
+///
+/// The first value of each signals will be combined, then the second value, and
+/// so forth, until at least one of the signals is exhausted.
+///
+/// signals - The signals to combine. If this collection is empty, the returned
+///           signal will be empty.
+///
+/// Returns a new signal containing RACTuples of the zipped values from the
+/// signals.
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals;
+
+/// Zips signals using +zip:, then reduces the resulting tuples into a single
+/// value using -reduceEach:
+///
+/// signals     - The signals to combine. If this collection is empty, the
+///               returned signal will be empty.
+/// reduceBlock - The block which reduces the values from all the signals
+///               into one value. It must take as many arguments as the
+///               number of signals given. Each argument will be an object
+///               argument. The return value must be an object. This argument
+///               must not be nil.
+///
+/// Example:
+///
+///   [RACSignal zip:@[ stringSignal, intSignal ]
+///       reduce:^(NSString *string, NSNumber *number) {
+///           return [NSString stringWithFormat:@"%@: %@", string, number];
+///       }];
+///
+/// Returns a new signal containing the results from each invocation of
+/// `reduceBlock`.
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(id _Nullable (^)())reduceBlock;
+
+/// Returns a signal obtained by concatenating `signals` in order.
++ (RACSignal<ValueType> *)concat:(id<NSFastEnumeration>)signals;
+
 /// Combines values in the receiver from left to right using the given block.
 ///
 /// The algorithm proceeds as follows:
@@ -242,7 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a new signal that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty signal is returned.
-- (instancetype)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
+- (RACSignal *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
