@@ -91,7 +91,7 @@
 
 #pragma mark Lifecycle
 
-+ (RACSequence *)sequenceWithHeadBlock:(id (^)(void))headBlock tailBlock:(RACSequence *(^)(void))tailBlock {
++ (RACSequence *)sequenceWithHeadBlock:(id (^)(void))headBlock tailBlock:(RACSequence<id> *(^)(void))tailBlock {
 	NSCParameterAssert(headBlock != nil);
 
 	RACDynamicSequence *seq = [[RACDynamicSequence alloc] init];

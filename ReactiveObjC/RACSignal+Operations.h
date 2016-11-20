@@ -13,7 +13,7 @@
 @class RACDisposable;
 @class RACMulticastConnection;
 @class RACScheduler;
-@class RACSequence;
+@class RACSequence<__covariant ValueType>;
 @class RACSubject;
 @class RACTuple;
 @class RACEvent<__covariant ValueType>;
@@ -525,7 +525,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// Returns a sequence which provides values from the signal as they're sent.
 /// Trying to retrieve a value from the sequence which has not yet been sent will
 /// block.
-@property (nonatomic, strong, readonly) RACSequence *sequence;
+@property (nonatomic, strong, readonly) RACSequence<ValueType> *sequence;
 
 /// Creates and returns a multicast connection. This allows you to share a single
 /// subscription to the underlying signal.
@@ -651,7 +651,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 ///
 /// Returns a signal which only passes through `error` or `completed` events from
 /// the receiver.
-- (RACSignal<ValueType> *)ignoreValues;
+- (RACSignal *)ignoreValues;
 
 /// Converts each of the receiver's events into a RACEvent object.
 ///
