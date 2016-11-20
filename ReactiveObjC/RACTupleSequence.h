@@ -13,6 +13,6 @@
 
 // Returns a sequence for enumerating over the given backing array (from a
 // RACTuple), starting from the given offset.
-+ (instancetype)sequenceWithTupleBackingArray:(NSArray *)backingArray offset:(NSUInteger)offset;
++ (RACSequence *)sequenceWithTupleBackingArray:(NSArray *)backingArray offset:(NSUInteger)offset;
 
 @end

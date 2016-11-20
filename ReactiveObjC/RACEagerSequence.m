@@ -14,11 +14,11 @@
 
 #pragma mark RACStream
 
-+ (instancetype)return:(id)value {
++ (RACSequence *)return:(id)value {
 	return [[self sequenceWithArray:@[ value ] offset:0] setNameWithFormat:@"+return: %@", RACDescription(value)];
 }
 
-- (instancetype)bind:(RACStreamBindBlock (^)(void))block {
+- (RACSequence *)bind:(RACSequenceBindBlock (^)(void))block {
 	NSCParameterAssert(block != nil);
 	RACStreamBindBlock bindBlock = block();
 	NSArray *currentArray = self.array;
@@ -39,7 +39,7 @@
 	return [[self.class sequenceWithArray:resultArray offset:0] setNameWithFormat:@"[%@] -bind:", self.name];
 }
 
-- (instancetype)concat:(RACSequence *)sequence {
+- (RACSequence *)concat:(RACSequence *)sequence {
 	NSCParameterAssert(sequence != nil);
 	NSCParameterAssert([sequence isKindOfClass:RACSequence.class]);
 
