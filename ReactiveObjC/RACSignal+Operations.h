@@ -507,7 +507,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// Returns a signal which passes through `next`s and `error`s from `trueSignal`
 /// and/or `falseSignal`, and sends `completed` when both `boolSignal` and the
 /// last switched signal complete.
-+ (RACSignal<ValueType> *)if:(RACSignal *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal;
++ (RACSignal<ValueType> *)if:(RACSignal<NSNumber *> *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal;
 
 /// Adds every `next` to an array. Nils are represented by NSNulls. Note that
 /// this is a blocking call.
