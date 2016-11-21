@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACSequence;
+@class RACSequence<__covariant ValueType>;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// composed character sequence in the receiver.
 ///
 /// Mutating the receiver will not affect the sequence after it's been created.
-@property (nonatomic, copy, readonly) RACSequence *rac_sequence;
+@property (nonatomic, copy, readonly) RACSequence<NSString *> *rac_sequence;
 
 @end
 
