@@ -149,12 +149,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// A block which accepts a value from a RACSequence and returns a new sequence.
-///
-/// Setting `stop` to `YES` will cause the bind to terminate after the returned
-/// value. Returning `nil` will result in immediate termination.
-typedef RACSequence * _Nullable (^RACSequenceBindBlock)(id _Nullable value, BOOL *stop);
-
 @interface RACSequence<__covariant ValueType> (RACStream)
 
 /// Returns a sequence that immediately sends the given value and then completes.
@@ -162,6 +156,12 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(id _Nullable value, BOOL
 
 /// Returns a sequence that immediately completes.
 + (RACSequence<ValueType> *)empty;
+
+/// A block which accepts a value from a RACSequence and returns a new sequence.
+///
+/// Setting `stop` to `YES` will cause the bind to terminate after the returned
+/// value. Returning `nil` will result in immediate termination.
+typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
