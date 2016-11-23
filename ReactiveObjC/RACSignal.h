@@ -86,12 +86,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// A block which accepts a value from a RACSignal and returns a new signal.
-///
-/// Setting `stop` to `YES` will cause the bind to terminate after the returned
-/// value. Returning `nil` will result in immediate termination.
-typedef RACSignal * _Nullable (^RACSignalBindBlock)(id _Nullable value, BOOL *stop);
-
 @interface RACSignal<__covariant ValueType> (RACStream)
 
 /// Returns a signal that immediately sends the given value and then completes.
@@ -99,6 +93,12 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(id _Nullable value, BOOL *st
 
 /// Returns a signal that immediately completes.
 + (RACSignal<ValueType> *)empty;
+
+/// A block which accepts a value from a RACSignal and returns a new signal.
+///
+/// Setting `stop` to `YES` will cause the bind to terminate after the returned
+/// value. Returning `nil` will result in immediate termination.
+typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
