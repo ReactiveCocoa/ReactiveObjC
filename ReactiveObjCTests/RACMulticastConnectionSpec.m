@@ -45,15 +45,16 @@ qck_describe(@"-connect", ^{
 		expect(@(subscriptionCount)).to(equal(@1));
 	});
 
-	qck_it(@"shouldn't reconnect after disposal", ^{
+	qck_it(@"should reconnect after disposal", ^{
 		RACDisposable *disposable1 = [connection connect];
 		expect(@(subscriptionCount)).to(equal(@1));
 
 		[disposable1 dispose];
 		
 		RACDisposable *disposable2 = [connection connect];
-		expect(@(subscriptionCount)).to(equal(@1));
-		expect(disposable1).to(equal(disposable2));
+		expect(@(subscriptionCount)).to(equal(@2));
+		
+		[disposable2 dispose];
 	});
 
 	qck_it(@"shouldn't race when connecting", ^{
@@ -114,14 +115,38 @@ qck_describe(@"-autoconnect", ^{
 		expect(@(disposed)).to(beTruthy());
 	});
 
-	qck_it(@"shouldn't reconnect after disposal", ^{
+	qck_it(@"should reconnect after disposal", ^{
 		RACDisposable *disposable = [autoconnectedSignal subscribeNext:^(id x) {}];
 		expect(@(subscriptionCount)).to(equal(@1));
 		[disposable dispose];
 
 		disposable = [autoconnectedSignal subscribeNext:^(id x) {}];
-		expect(@(subscriptionCount)).to(equal(@1));
+		expect(@(subscriptionCount)).to(equal(@2));
 		[disposable dispose];
+	});
+	
+	qck_it(@"shouldn't dispose immediately when reconnecting", ^{
+		__block NSUInteger sub = 0;
+		__block NSUInteger unsub = 0;
+		RACSignal *signal = [[[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
+			sub++;
+			return [RACDisposable disposableWithBlock:^{
+				unsub++;
+			}];
+		}] publish] autoconnect];
+		
+		RACDisposable *disposable = [signal subscribeNext:^(id x) {}];
+		expect(@(unsub)).to(equal(@0));
+		
+		[disposable dispose];
+		expect(@(unsub)).to(equal(@1));
+		
+		disposable = [signal subscribeNext:^(id x) {}];
+		expect(@(sub)).to(equal(@2));
+		expect(@(unsub)).to(equal(@1));
+		
+		[disposable dispose];
+		expect(@(unsub)).to(equal(@2));
 	});
 
 	qck_it(@"should replay values after disposal when multicasted to a replay subject", ^{
