@@ -1681,6 +1681,96 @@ qck_describe(@"+merge:", ^{
 	});
 });
 
+qck_describe(@"-amb:", ^{
+	__block RACSubject *sub1;
+	__block RACSubject *sub2;
+	__block RACSignal *ambed;
+	
+	qck_beforeEach(^{
+		sub1 = [RACSubject subject];
+		sub2 = [RACSubject subject];
+		ambed = [sub1 amb:sub2];
+	});
+	
+	qck_it(@"should send all values from first signal to emit a value or a notification", ^{
+		__block NSUInteger nextCount = 0;
+		[ambed subscribeNext:^(id _Nullable _) {
+			nextCount++;
+		}];
+		
+		[sub1 sendNext:nil];
+		[sub2 sendNext:nil];
+		[sub1 sendNext:nil];
+		[sub2 sendNext:nil];
+		
+		expect(@(nextCount)).to(equal(@2));
+	});
+	
+	qck_it(@"should complete if the first signal completes", ^{
+		__block BOOL hasCompleted = NO;
+		__block NSUInteger nextCount = 0;
+		[ambed subscribeNext:^(id _Nullable _) {
+			nextCount++;
+		} completed:^{
+			hasCompleted = YES;
+		}];
+		
+		[sub1 sendCompleted];
+		[sub2 sendNext:nil];
+		
+		expect(@(hasCompleted)).to(beTruthy());
+		expect(@(nextCount)).to(equal(@0));
+	});
+	
+	qck_it(@"should error if the first signal errors", ^{
+		__block BOOL hasError = NO;
+		__block NSUInteger nextCount = 0;
+		[ambed subscribeNext:^(id _Nullable _) {
+			nextCount++;
+		} error:^(NSError * _) {
+			hasError = YES;
+		}];
+		
+		[sub1 sendError:nil];
+		[sub2 sendNext:nil];
+		
+		expect(@(hasError)).to(beTruthy());
+		expect(@(nextCount)).to(equal(@0));
+	});
+	
+	qck_it(@"should not complete if the second signal completes", ^{
+		__block BOOL hasCompleted = NO;
+		__block NSUInteger nextCount = 0;
+		[ambed subscribeNext:^(id _Nullable _) {
+			nextCount++;
+		} completed:^{
+			hasCompleted = YES;
+		}];
+		
+		[sub1 sendNext:nil];
+		[sub2 sendCompleted];
+		
+		expect(@(hasCompleted)).to(beFalsy());
+		expect(@(nextCount)).to(equal(@1));
+	});
+	
+	qck_it(@"should not error if the second signal errors", ^{
+		__block BOOL hasError = NO;
+		__block NSUInteger nextCount = 0;
+		[ambed subscribeNext:^(id _Nullable _) {
+			nextCount++;
+		} error:^(NSError * _) {
+			hasError = YES;
+		}];
+		
+		[sub1 sendNext:nil];
+		[sub2 sendError:nil];
+		
+		expect(@(hasError)).to(beFalsy());
+		expect(@(nextCount)).to(equal(@1));
+	});
+});
+
 qck_describe(@"-flatten:", ^{
 	__block BOOL subscribedTo1 = NO;
 	__block BOOL subscribedTo2 = NO;

@@ -208,6 +208,15 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// the returned signal sends `error` immediately.
 + (RACSignal<ValueType> *)merge:(id<NSFastEnumeration>)signals;
 
+/// Emits all of the items from only the first of the receiver or the given signal
+/// to emit an item or notification.
+///
+/// `amb` will pass through the emissions and notifications of exactly one of the receiver
+/// or given signal : the first one that sends a notification to `amb`, either by emitting an
+/// item or sending an onError or onCompleted notification. `amb` will ignore and discard the
+/// emissions and notifications of the other source signals.
+- (RACSignal<ValueType> *)amb:(RACSignal<ValueType> *)signal;
+
 /// Merges the signals sent by the receiver into a flattened signal, but only
 /// subscribes to `maxConcurrent` number of signals at a time. New signals are
 /// queued and subscribed to as other signals complete.
