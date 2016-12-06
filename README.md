@@ -533,7 +533,6 @@ are some resources related to FRP:
 * [What is FRP? - Elm Language](http://elm-lang.org/learn/What-is-FRP.elm)
 * [What is Functional Reactive Programming - Stack Overflow](http://stackoverflow.com/questions/1028250/what-is-functional-reactive-programming/1030631#1030631)
 * [Specification for a Functional Reactive Language - Stack Overflow](http://stackoverflow.com/questions/5875929/specification-for-a-functional-reactive-programming-language#5878525)
-* [Escape from Callback Hell](http://elm-lang.org/learn/Escape-from-Callback-Hell.elm)
 * [Principles of Reactive Programming on Coursera](https://www.coursera.org/course/reactive)
 
 [ReactiveCocoa]: https://github.com/ReactiveCocoa/ReactiveCocoa
