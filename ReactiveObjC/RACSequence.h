@@ -126,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// block - The block predicate used to check each item. Cannot be nil.
 ///
 /// Returns an object that passes the block or nil if no objects passed.
-- (id)objectPassingTest:(BOOL (^)(ValueType _Nullable value))block;
+- (nullable ValueType)objectPassingTest:(BOOL (^)(ValueType _Nullable value))block;
 
 /// Creates a sequence that dynamically generates its values.
 ///
