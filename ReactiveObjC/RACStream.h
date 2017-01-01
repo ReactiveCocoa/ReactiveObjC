@@ -12,13 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// A block which accepts a value from a RACStream and returns a new instance
-/// of the same stream class.
-///
-/// Setting `stop` to `YES` will cause the bind to terminate after the returned
-/// value. Returning `nil` will result in immediate termination.
-typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *stop);
-
 /// An abstract class representing any stream of values.
 ///
 /// This class represents a monad, upon which many stream-based operations can
@@ -26,15 +19,22 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// When subclassing RACStream, only the methods in the main @interface body need
 /// to be overridden.
-@interface RACStream : NSObject
+@interface RACStream<__covariant ValueType> : NSObject
 
 /// Returns an empty stream.
-+ (__kindof RACStream *)empty;
++ (__kindof RACStream<ValueType> *)empty;
 
 /// Lifts `value` into the stream monad.
 ///
 /// Returns a stream containing only the given value.
-+ (__kindof RACStream *)return:(nullable id)value;
++ (__kindof RACStream<ValueType> *)return:(nullable ValueType)value;
+
+/// A block which accepts a value from a RACStream and returns a new instance
+/// of the same stream class.
+///
+/// Setting `stop` to `YES` will cause the bind to terminate after the returned
+/// value. Returning `nil` will result in immediate termination.
+typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
@@ -95,7 +95,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// These methods do not need to be overridden, although subclasses may
 /// occasionally gain better performance from doing so.
-@interface RACStream (Operations)
+@interface RACStream<__covariant ValueType> (Operations)
 
 /// Maps `block` across the values in the receiver and flattens the result.
 ///
@@ -124,7 +124,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream which represents the combined streams resulting from
 /// mapping `block`.
-- (__kindof RACStream *)flattenMap:(__kindof RACStream * _Nullable (^)(id _Nullable value))block;
+- (__kindof RACStream *)flattenMap:(__kindof RACStream * _Nullable (^)(ValueType _Nullable value))block;
 
 /// Flattens a stream of streams.
 ///
@@ -139,7 +139,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 /// This corresponds to the `Select` method in Rx.
 ///
 /// Returns a new stream with the mapped values.
-- (__kindof RACStream *)map:(id _Nullable (^)(id _Nullable value))block;
+- (__kindof RACStream *)map:(id _Nullable (^)(ValueType _Nullable value))block;
 
 /// Replaces each value in the receiver with the given object.
 ///
@@ -152,7 +152,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 /// This corresponds to the `Where` method in Rx.
 ///
 /// Returns a new stream with only those values that passed.
-- (__kindof RACStream *)filter:(BOOL (^)(id _Nullable value))block;
+- (__kindof RACStream<ValueType> *)filter:(BOOL (^)(ValueType _Nullable value))block;
 
 /// Filters out values in the receiver that equal (via -isEqual:) the provided value.
 ///
@@ -160,7 +160,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream containing only the values which did not compare equal
 /// to `value`.
-- (__kindof RACStream *)ignore:(nullable id)value;
+- (__kindof RACStream<ValueType> *)ignore:(nullable ValueType)value;
 
 /// Unpacks each RACTuple in the receiver and maps the values to a new value.
 ///
@@ -174,19 +174,19 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 
 /// Returns a stream consisting of `value`, followed by the values in the
 /// receiver.
-- (__kindof RACStream *)startWith:(nullable id)value;
+- (__kindof RACStream<ValueType> *)startWith:(nullable ValueType)value;
 
 /// Skips the first `skipCount` values in the receiver.
 ///
 /// Returns the receiver after skipping the first `skipCount` values. If
 /// `skipCount` is greater than the number of values in the stream, an empty
 /// stream is returned.
-- (__kindof RACStream *)skip:(NSUInteger)skipCount;
+- (__kindof RACStream<ValueType> *)skip:(NSUInteger)skipCount;
 
 /// Returns a stream of the first `count` values in the receiver. If `count` is
 /// greater than or equal to the number of values in the stream, a stream
 /// equivalent to the receiver is returned.
-- (__kindof RACStream *)take:(NSUInteger)count;
+- (__kindof RACStream<ValueType> *)take:(NSUInteger)count;
 
 /// Zips the values in the given streams to create RACTuples.
 ///
@@ -199,7 +199,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream containing RACTuples of the zipped values from the
 /// streams.
-+ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams;
++ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams;
 
 /// Zips streams using +zip:, then reduces the resulting tuples into a single
 /// value using -reduceEach:
@@ -221,10 +221,10 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream containing the results from each invocation of
 /// `reduceBlock`.
-+ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams reduce:(id _Nullable (^)())reduceBlock;
++ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(id _Nullable (^)())reduceBlock;
 
 /// Returns a stream obtained by concatenating `streams` in order.
-+ (__kindof RACStream *)concat:(id<NSFastEnumeration>)streams;
++ (__kindof RACStream<ValueType> *)concat:(id<NSFastEnumeration>)streams;
 
 /// Combines values in the receiver from left to right using the given block.
 ///
@@ -254,7 +254,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream that consists of each application of `reduceBlock`. If the
 /// receiver is empty, an empty stream is returned.
-- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, id _Nullable next))reduceBlock;
+- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
@@ -268,7 +268,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream that consists of each application of `reduceBlock`. If the
 /// receiver is empty, an empty stream is returned.
-- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, id _Nullable next, NSUInteger index))reduceBlock;
+- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock;
 
 /// Combines each previous and current value into one object.
 ///
@@ -292,39 +292,39 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(id _Nullable value, BOOL *st
 ///
 /// Returns a new stream consisting of the return values from each application of
 /// `reduceBlock`.
-- (__kindof RACStream *)combinePreviousWithStart:(nullable id)start reduce:(id _Nullable (^)(id _Nullable previous, id _Nullable current))reduceBlock;
+- (__kindof RACStream *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock;
 
 /// Takes values until the given block returns `YES`.
 ///
 /// Returns a stream of the initial values in the receiver that fail `predicate`.
 /// If `predicate` never returns `YES`, a stream equivalent to the receiver is
 /// returned.
-- (__kindof RACStream *)takeUntilBlock:(BOOL (^)(id _Nullable x))predicate;
+- (__kindof RACStream<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate;
 
 /// Takes values until the given block returns `NO`.
 ///
 /// Returns a stream of the initial values in the receiver that pass `predicate`.
 /// If `predicate` never returns `NO`, a stream equivalent to the receiver is
 /// returned.
-- (__kindof RACStream *)takeWhileBlock:(BOOL (^)(id _Nullable x))predicate;
+- (__kindof RACStream<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate;
 
 /// Skips values until the given block returns `YES`.
 ///
 /// Returns a stream containing the values of the receiver that follow any
 /// initial values failing `predicate`. If `predicate` never returns `YES`,
 /// an empty stream is returned.
-- (__kindof RACStream *)skipUntilBlock:(BOOL (^)(id _Nullable x))predicate;
+- (__kindof RACStream<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate;
 
 /// Skips values until the given block returns `NO`.
 ///
 /// Returns a stream containing the values of the receiver that follow any
 /// initial values passing `predicate`. If `predicate` never returns `NO`, an
 /// empty stream is returned.
-- (__kindof RACStream *)skipWhileBlock:(BOOL (^)(id _Nullable x))predicate;
+- (__kindof RACStream<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate;
 
 /// Returns a stream of values for which -isEqual: returns NO when compared to the
 /// previous value.
-- (__kindof RACStream *)distinctUntilChanged;
+- (__kindof RACStream<ValueType> *)distinctUntilChanged;
 
 @end
 
