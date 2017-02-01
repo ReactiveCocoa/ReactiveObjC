@@ -534,8 +534,6 @@ subscriptions and disposal:
  * The [RAC()][RAC] or [RACChannelTo()][RACChannelTo] macros can be used to bind
    a signal to a property, instead of performing manual updates when changes
    occur.
- * The [-rac_liftSelector:withSignals:][NSObject+RACLifting] method can be used
-   to automatically invoke a selector when one or more signals fire.
  * Operators like [-takeUntil:][RACSignal+Operations] can be used to
    automatically dispose of a subscription when an event occurs (like a "Cancel"
    button being pressed in the UI).
