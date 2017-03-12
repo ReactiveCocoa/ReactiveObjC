@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// multicasted signal.
 ///
 /// Returns the autoconnecting signal.
-- (RACSignal<ValueType> *)autoconnect;
+- (RACSignal<ValueType> *)autoconnect __attribute__((warn_unused_result));
 
 @end
 
