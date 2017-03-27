@@ -32,7 +32,7 @@
 
 #pragma mark Lifecycle
 
-+ (instancetype)empty {
++ (RACSignal *)empty {
 #ifdef DEBUG
 	// Create multiple instances of this class in DEBUG so users can set custom
 	// names on each.
