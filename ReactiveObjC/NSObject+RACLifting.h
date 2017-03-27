@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RACSignal<__covariant ValueType>;
+@class RACTuple;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,11 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Like -rac_liftSelector:withSignals:, but accepts an array instead of
 /// a variadic list of arguments.
-- (RACSignal *)rac_liftSelector:(SEL)selector withSignalsFromArray:(NSArray *)signals;
+- (RACSignal *)rac_liftSelector:(SEL)selector withSignalsFromArray:(NSArray<RACSignal *> *)signals;
 
 /// Like -rac_liftSelector:withSignals:, but accepts a signal sending tuples of
 /// arguments instead of a variadic list of arguments.
-- (RACSignal *)rac_liftSelector:(SEL)selector withSignalOfArguments:(RACSignal *)arguments;
+- (RACSignal *)rac_liftSelector:(SEL)selector withSignalOfArguments:(RACSignal<RACTuple *> *)arguments;
 
 @end
 
