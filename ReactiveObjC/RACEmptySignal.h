@@ -12,6 +12,6 @@
 // subscribers.
 @interface RACEmptySignal : RACSignal
 
-+ (RACSignal *)empty;
++ (instancetype)empty;
 
 @end
