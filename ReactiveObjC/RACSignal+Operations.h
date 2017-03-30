@@ -14,7 +14,7 @@
 @class RACMulticastConnection<__covariant ValueType>;
 @class RACScheduler;
 @class RACSequence<__covariant ValueType>;
-@class RACSubject;
+@class RACSubject<__covariant ValueType>;
 @class RACTuple;
 @class RACEvent<__covariant ValueType>;
 @protocol RACSubscriber;
@@ -534,7 +534,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// Creates and returns a multicast connection that pushes values into the given
 /// subject. This allows you to share a single subscription to the underlying
 /// signal.
-- (RACMulticastConnection<ValueType> *)multicast:(RACSubject *)subject;
+- (RACMulticastConnection<ValueType> *)multicast:(RACSubject<ValueType> *)subject;
 
 /// Multicasts the signal to a RACReplaySubject of unlimited capacity, and
 /// immediately connects to the resulting RACMulticastConnection.

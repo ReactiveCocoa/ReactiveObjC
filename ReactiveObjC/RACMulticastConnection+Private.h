@@ -8,7 +8,7 @@
 
 #import "RACMulticastConnection.h"
 
-@class RACSubject;
+@class RACSubject<__covariant ValueType>;
 
 @interface RACMulticastConnection<__covariant ValueType> ()
 
