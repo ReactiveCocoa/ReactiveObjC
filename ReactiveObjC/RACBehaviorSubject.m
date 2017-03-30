@@ -10,10 +10,10 @@
 #import "RACDisposable.h"
 #import "RACScheduler+Private.h"
 
-@interface RACBehaviorSubject ()
+@interface RACBehaviorSubject<__covariant ValueType> ()
 
 // This property should only be used while synchronized on self.
-@property (nonatomic, strong) id currentValue;
+@property (nonatomic, strong) ValueType currentValue;
 
 @end
 
