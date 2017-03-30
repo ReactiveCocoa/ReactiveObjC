@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a new subject.
 + (instancetype)subject;
 
+// Redeclaration of the RACSubscriber method, in order to specify a generic type.
+- (void)sendNext:(nullable ValueType)value;
+
 @end
 
 NS_ASSUME_NONNULL_END
