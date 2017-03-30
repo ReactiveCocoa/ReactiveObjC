@@ -17,6 +17,7 @@
 @class RACSubject;
 @class RACTuple;
 @class RACEvent<__covariant ValueType>;
+@class RACGroupedSignal;
 @protocol RACSubscriber;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -161,7 +162,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 ///
 /// Returns a signal which sends RACTuples of the combined values, forwards any
 /// `error` events, and completes when both input signals complete.
-- (RACSignal *)combineLatestWith:(RACSignal *)signal;
+- (RACSignal<RACTuple *> *)combineLatestWith:(RACSignal *)signal;
 
 /// Combines the latest values from the given signals into RACTuples, once all
 /// the signals have sent at least one `next`.
@@ -174,7 +175,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 ///
 /// Returns a signal which sends RACTuples of the combined values, forwards any
 /// `error` events, and completes when all input signals complete.
-+ (RACSignal<ValueType> *)combineLatest:(id<NSFastEnumeration>)signals;
++ (RACSignal<RACTuple *> *)combineLatest:(id<NSFastEnumeration>)signals;
 
 /// Combines signals using +combineLatest:, then reduces the resulting tuples
 /// into a single value using -reduceEach:.
@@ -416,7 +417,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// Returns a signal which passes through all the values of the receiver. If
 /// `tryBlock` fails for any value, the returned signal will error using the
 /// `NSError` passed out from the block.
-- (RACSignal *)try:(BOOL (^)(id _Nullable value, NSError **errorPtr))tryBlock;
+- (RACSignal<ValueType> *)try:(BOOL (^)(id _Nullable value, NSError **errorPtr))tryBlock;
 
 /// Runs `mapBlock` against each of the receiver's values, mapping values until
 /// `mapBlock` returns nil, or the receiver completes.
@@ -608,10 +609,10 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// with the object. If `transformBlock` is nil, it sends the original object.
 ///
 /// The returned signal is a signal of RACGroupedSignal.
-- (RACSignal *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock transform:(nullable id _Nullable (^)(id _Nullable object))transformBlock;
+- (RACSignal<RACGroupedSignal *> *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock transform:(nullable id _Nullable (^)(id _Nullable object))transformBlock;
 
 /// Calls -[RACSignal groupBy:keyBlock transform:nil].
-- (RACSignal *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock;
+- (RACSignal<RACGroupedSignal *> *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock;
 
 /// Sends an [NSNumber numberWithBool:YES] if the receiving signal sends any
 /// objects.
