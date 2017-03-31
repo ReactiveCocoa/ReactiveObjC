@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RACAnnotations.h"
 #import "RACStream.h"
 
 @class RACDisposable;
@@ -46,13 +47,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// subscribes. Any side effects within the block will thus execute once for each
 /// subscription, not necessarily on one thread, and possibly even
 /// simultaneously!
-+ (RACSignal<ValueType> *)createSignal:(RACDisposable * _Nullable (^)(id<RACSubscriber> subscriber))didSubscribe __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)createSignal:(RACDisposable * _Nullable (^)(id<RACSubscriber> subscriber))didSubscribe RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal that immediately sends the given error.
-+ (RACSignal<ValueType> *)error:(nullable NSError *)error __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)error:(nullable NSError *)error RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal that never completes.
-+ (RACSignal<ValueType> *)never __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)never RAC_WARN_UNUSED_RESULT;
 
 /// Immediately schedules the given block on the given scheduler. The block is
 /// given a subscriber to which it can send events.
@@ -82,17 +83,17 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a signal which will pass through the events sent to the subscriber
 /// given to `block` and replay any missed events to new subscribers.
-+ (RACSignal<ValueType> *)startLazilyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)startLazilyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block RAC_WARN_UNUSED_RESULT;
 
 @end
 
 @interface RACSignal<__covariant ValueType> (RACStream)
 
 /// Returns a signal that immediately sends the given value and then completes.
-+ (RACSignal<ValueType> *)return:(nullable ValueType)value __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)return:(nullable ValueType)value RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal that immediately completes.
-+ (RACSignal<ValueType> *)empty __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)empty RAC_WARN_UNUSED_RESULT;
 
 /// A block which accepts a value from a RACSignal and returns a new signal.
 ///
@@ -111,10 +112,10 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal which represents the combined result of all lazy
 /// applications of `block`.
-- (RACSignal *)bind:(RACSignalBindBlock (^)(void))block __attribute__((warn_unused_result));
+- (RACSignal *)bind:(RACSignalBindBlock (^)(void))block RAC_WARN_UNUSED_RESULT;
 
 /// Subscribes to `signal` when the source signal completes.
-- (RACSignal *)concat:(RACSignal *)signal __attribute__((warn_unused_result));
+- (RACSignal *)concat:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
 
 /// Zips the values in the receiver with those of the given signal to create
 /// RACTuples.
@@ -127,7 +128,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 /// Returns a new signal of RACTuples, representing the combined values of the
 /// two signals. Any error from one of the original signals will be forwarded on
 /// the returned signal.
-- (RACSignal *)zipWith:(RACSignal *)signal __attribute__((warn_unused_result));
+- (RACSignal *)zipWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
 
 @end
 
@@ -168,7 +169,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal which represents the combined signals resulting from
 /// mapping `block`.
-- (RACSignal *)flattenMap:(__kindof RACSignal * _Nullable (^)(ValueType _Nullable value))block __attribute__((warn_unused_result));
+- (RACSignal *)flattenMap:(__kindof RACSignal * _Nullable (^)(ValueType _Nullable value))block RAC_WARN_UNUSED_RESULT;
 
 /// Flattens a signal of signals.
 ///
@@ -176,27 +177,27 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a signal consisting of the combined signals obtained from the
 /// receiver.
-- (RACSignal *)flatten __attribute__((warn_unused_result));
+- (RACSignal *)flatten RAC_WARN_UNUSED_RESULT;
 
 /// Maps `block` across the values in the receiver.
 ///
 /// This corresponds to the `Select` method in Rx.
 ///
 /// Returns a new signal with the mapped values.
-- (RACSignal *)map:(id _Nullable (^)(ValueType _Nullable value))block __attribute__((warn_unused_result));
+- (RACSignal *)map:(id _Nullable (^)(ValueType _Nullable value))block RAC_WARN_UNUSED_RESULT;
 
 /// Replaces each value in the receiver with the given object.
 ///
 /// Returns a new signal which includes the given object once for each value in
 /// the receiver.
-- (RACSignal *)mapReplace:(nullable id)object __attribute__((warn_unused_result));
+- (RACSignal *)mapReplace:(nullable id)object RAC_WARN_UNUSED_RESULT;
 
 /// Filters out values in the receiver that don't pass the given test.
 ///
 /// This corresponds to the `Where` method in Rx.
 ///
 /// Returns a new signal with only those values that passed.
-- (RACSignal<ValueType> *)filter:(BOOL (^)(ValueType _Nullable value))block __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)filter:(BOOL (^)(ValueType _Nullable value))block RAC_WARN_UNUSED_RESULT;
 
 /// Filters out values in the receiver that equal (via -isEqual:) the provided
 /// value.
@@ -205,7 +206,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing only the values which did not compare equal
 /// to `value`.
-- (RACSignal<ValueType> *)ignore:(nullable ValueType)value __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)ignore:(nullable ValueType)value RAC_WARN_UNUSED_RESULT;
 
 /// Unpacks each RACTuple in the receiver and maps the values to a new value.
 ///
@@ -215,23 +216,23 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///               return value must be an object. This argument cannot be nil.
 ///
 /// Returns a new signal of reduced tuple values.
-- (RACSignal *)reduceEach:(id _Nullable (^)())reduceBlock __attribute__((warn_unused_result));
+- (RACSignal *)reduceEach:(id _Nullable (^)())reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal consisting of `value`, followed by the values in the
 /// receiver.
-- (RACSignal<ValueType> *)startWith:(nullable ValueType)value __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)startWith:(nullable ValueType)value RAC_WARN_UNUSED_RESULT;
 
 /// Skips the first `skipCount` values in the receiver.
 ///
 /// Returns the receiver after skipping the first `skipCount` values. If
 /// `skipCount` is greater than the number of values in the signal, an empty
 /// signal is returned.
-- (RACSignal<ValueType> *)skip:(NSUInteger)skipCount __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)skip:(NSUInteger)skipCount RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal of the first `count` values in the receiver. If `count` is
 /// greater than or equal to the number of values in the signal, a signal
 /// equivalent to the receiver is returned.
-- (RACSignal<ValueType> *)take:(NSUInteger)count __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)take:(NSUInteger)count RAC_WARN_UNUSED_RESULT;
 
 /// Zips the values in the given signals to create RACTuples.
 ///
@@ -243,7 +244,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing RACTuples of the zipped values from the
 /// signals.
-+ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
 
 /// Zips signals using +zip:, then reduces the resulting tuples into a single
 /// value using -reduceEach:
@@ -265,10 +266,10 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing the results from each invocation of
 /// `reduceBlock`.
-+ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(id _Nullable (^)())reduceBlock __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(id _Nullable (^)())reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal obtained by concatenating `signals` in order.
-+ (RACSignal<ValueType> *)concat:(id<NSFastEnumeration>)signals __attribute__((warn_unused_result));
++ (RACSignal<ValueType> *)concat:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
 
 /// Combines values in the receiver from left to right using the given block.
 ///
@@ -298,7 +299,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty signal is returned.
-- (RACSignal *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock __attribute__((warn_unused_result));
+- (RACSignal *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
@@ -312,7 +313,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty signal is returned.
-- (RACSignal *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock __attribute__((warn_unused_result));
+- (RACSignal *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Combines each previous and current value into one object.
 ///
@@ -337,39 +338,39 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal consisting of the return values from each application of
 /// `reduceBlock`.
-- (RACSignal *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock __attribute__((warn_unused_result));
+- (RACSignal *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Takes values until the given block returns `YES`.
 ///
 /// Returns a signal of the initial values in the receiver that fail `predicate`.
 /// If `predicate` never returns `YES`, a signal equivalent to the receiver is
 /// returned.
-- (RACSignal<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
 
 /// Takes values until the given block returns `NO`.
 ///
 /// Returns a signal of the initial values in the receiver that pass `predicate`.
 /// If `predicate` never returns `NO`, a signal equivalent to the receiver is
 /// returned.
-- (RACSignal<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
 
 /// Skips values until the given block returns `YES`.
 ///
 /// Returns a signal containing the values of the receiver that follow any
 /// initial values failing `predicate`. If `predicate` never returns `YES`,
 /// an empty signal is returned.
-- (RACSignal<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
 
 /// Skips values until the given block returns `NO`.
 ///
 /// Returns a signal containing the values of the receiver that follow any
 /// initial values passing `predicate`. If `predicate` never returns `NO`, an
 /// empty signal is returned.
-- (RACSignal<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal of values for which -isEqual: returns NO when compared to the
 /// previous value.
-- (RACSignal<ValueType> *)distinctUntilChanged __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)distinctUntilChanged RAC_WARN_UNUSED_RESULT;
 
 @end
 
@@ -426,16 +427,16 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 @interface RACSignal<__covariant ValueType> (Debugging)
 
 /// Logs all events that the receiver sends.
-- (RACSignal<ValueType> *)logAll __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)logAll RAC_WARN_UNUSED_RESULT;
 
 /// Logs each `next` that the receiver sends.
-- (RACSignal<ValueType> *)logNext __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)logNext RAC_WARN_UNUSED_RESULT;
 
 /// Logs any error that the receiver sends.
-- (RACSignal<ValueType> *)logError __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)logError RAC_WARN_UNUSED_RESULT;
 
 /// Logs any `completed` event that the receiver sends.
-- (RACSignal<ValueType> *)logCompleted __attribute__((warn_unused_result));
+- (RACSignal<ValueType> *)logCompleted RAC_WARN_UNUSED_RESULT;
 
 @end
 
