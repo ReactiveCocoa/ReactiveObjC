@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RACAnnotations.h"
 
 @class RACDisposable;
 @class RACSignal<__covariant ValueType>;
@@ -46,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// multicasted signal.
 ///
 /// Returns the autoconnecting signal.
-- (RACSignal<ValueType> *)autoconnect RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)autoconnect;
 
 @end
 
