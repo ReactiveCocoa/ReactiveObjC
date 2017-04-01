@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		314304171ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		314304181ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 314304161ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m */; };
+		3A17B4A61E8EFDD500C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A17B4A71E8EFDD800C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A17B4A81E8EFDDA00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A17B4A91E8EFDDF00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57A4D1B21BA13D7A00F7D4B1 /* RACCompoundDisposableProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D037646A19EDA41200A782A9 /* RACCompoundDisposableProvider.d */; };
 		57A4D1B31BA13D7A00F7D4B1 /* RACSignalProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D03764A319EDA41200A782A9 /* RACSignalProvider.d */; };
 		57A4D1C11BA13D7A00F7D4B1 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D037666819EDA57100A782A9 /* EXTRuntimeExtensions.m */; };
@@ -760,6 +764,7 @@
 /* Begin PBXFileReference section */
 		314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+RACSignalSupport.h"; sourceTree = "<group>"; };
 		314304161ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+RACSignalSupport.m"; sourceTree = "<group>"; };
+		3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RACAnnotations.h; sourceTree = "<group>"; };
 		57A4D2411BA13D7A00F7D4B1 /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Application.xcconfig"; sourceTree = "<group>"; };
 		57A4D2451BA13F9700F7D4B1 /* tvOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Base.xcconfig"; sourceTree = "<group>"; };
@@ -1178,7 +1183,6 @@
 		D04725EC19E49ED7006002AA /* ReactiveObjC */ = {
 			isa = PBXGroup;
 			children = (
-				D04725EF19E49ED7006002AA /* ReactiveObjC.h */,
 				D037666519EDA57100A782A9 /* extobjc */,
 				314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */,
 				314304161ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m */,
@@ -1232,6 +1236,7 @@
 				D037645919EDA41200A782A9 /* NSURLConnection+RACSupport.m */,
 				D037645A19EDA41200A782A9 /* NSUserDefaults+RACSupport.h */,
 				D037645B19EDA41200A782A9 /* NSUserDefaults+RACSupport.m */,
+				3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */,
 				D037645C19EDA41200A782A9 /* RACArraySequence.h */,
 				D037645D19EDA41200A782A9 /* RACArraySequence.m */,
 				D037646019EDA41200A782A9 /* RACBehaviorSubject.h */,
@@ -1332,6 +1337,8 @@
 				D03764BF19EDA41200A782A9 /* RACUnit.m */,
 				D03764C019EDA41200A782A9 /* RACValueTransformer.h */,
 				D03764C119EDA41200A782A9 /* RACValueTransformer.m */,
+				D04725EF19E49ED7006002AA /* ReactiveObjC.h */,
+				D04725ED19E49ED7006002AA /* Supporting Files */,
 				D03764C219EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h */,
 				D03764C319EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m */,
 				D03764C419EDA41200A782A9 /* UIAlertView+RACSignalSupport.h */,
@@ -1370,7 +1377,6 @@
 				D03764E519EDA41200A782A9 /* UITextField+RACSignalSupport.m */,
 				D03764E619EDA41200A782A9 /* UITextView+RACSignalSupport.h */,
 				D03764E719EDA41200A782A9 /* UITextView+RACSignalSupport.m */,
-				D04725ED19E49ED7006002AA /* Supporting Files */,
 			);
 			path = ReactiveObjC;
 			sourceTree = "<group>";
@@ -1591,6 +1597,7 @@
 				57A4D2331BA13D7A00F7D4B1 /* RACSubject.h in Headers */,
 				57A4D2341BA13D7A00F7D4B1 /* RACSubscriber.h in Headers */,
 				57A4D2351BA13D7A00F7D4B1 /* RACSubscriptingAssignmentTrampoline.h in Headers */,
+				3A17B4A91E8EFDDF00C8999E /* RACAnnotations.h in Headers */,
 				57A4D2361BA13D7A00F7D4B1 /* RACTargetQueueScheduler.h in Headers */,
 				57A4D2371BA13D7A00F7D4B1 /* RACTestScheduler.h in Headers */,
 				57A4D2381BA13D7A00F7D4B1 /* RACTuple.h in Headers */,
@@ -1627,6 +1634,7 @@
 				A9B315EA1B3940AB0001CB9C /* RACBehaviorSubject.h in Headers */,
 				A9B315EC1B3940AB0001CB9C /* RACChannel.h in Headers */,
 				A9B315ED1B3940AC0001CB9C /* RACCommand.h in Headers */,
+				3A17B4A81E8EFDDA00C8999E /* RACAnnotations.h in Headers */,
 				A9B315EE1B3940AC0001CB9C /* RACCompoundDisposable.h in Headers */,
 				A9B315F01B3940AC0001CB9C /* RACDisposable.h in Headers */,
 				A9B315F71B3940AC0001CB9C /* RACEvent.h in Headers */,
@@ -1678,6 +1686,7 @@
 				BEBDD6E81CDC292F009A75A9 /* RACDelegateProxy.h in Headers */,
 				D037652419EDA41200A782A9 /* NSObject+RACPropertySubscribing.h in Headers */,
 				D037650019EDA41200A782A9 /* NSFileHandle+RACSupport.h in Headers */,
+				3A17B4A61E8EFDD500C8999E /* RACAnnotations.h in Headers */,
 				D037653019EDA41200A782A9 /* NSSet+RACSequenceAdditions.h in Headers */,
 				D037654019EDA41200A782A9 /* NSText+RACSignalSupport.h in Headers */,
 				D03765E019EDA41200A782A9 /* RACStream.h in Headers */,
@@ -1744,6 +1753,7 @@
 				D037663519EDA41200A782A9 /* UIDatePicker+RACSignalSupport.h in Headers */,
 				D037667419EDA57100A782A9 /* metamacros.h in Headers */,
 				D03764FD19EDA41200A782A9 /* NSEnumerator+RACSequenceAdditions.h in Headers */,
+				3A17B4A71E8EFDD800C8999E /* RACAnnotations.h in Headers */,
 				D037652119EDA41200A782A9 /* NSObject+RACLifting.h in Headers */,
 				D037665919EDA41200A782A9 /* UITableViewHeaderFooterView+RACSignalSupport.h in Headers */,
 				D037656519EDA41200A782A9 /* RACCompoundDisposable.h in Headers */,
