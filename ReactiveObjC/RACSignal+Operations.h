@@ -14,7 +14,7 @@
 @class RACMulticastConnection<__covariant ValueType>;
 @class RACScheduler;
 @class RACSequence<__covariant ValueType>;
-@class RACSubject<__covariant ValueType>;
+@class RACSubject<ValueType>;
 @class RACTuple;
 @class RACEvent<__covariant ValueType>;
 @protocol RACSubscriber;
