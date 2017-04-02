@@ -10,7 +10,7 @@
 
 // A private `RACSignal` subclasses that synchronously sends completed to any
 // subscribers.
-@interface RACEmptySignal<ValueType> : RACSignal<ValueType>
+@interface RACEmptySignal<__covariant ValueType> : RACSignal<ValueType>
 
 + (RACSignal<ValueType> *)empty;
 
