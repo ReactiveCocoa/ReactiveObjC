@@ -10,6 +10,8 @@
 
 @class RACChannelTerminal;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIControl (RACSignalSupportPrivate)
 
 // Adds a RACChannel-based interface to the receiver for the given
@@ -27,3 +29,5 @@
 - (RACChannelTerminal *)rac_channelForControlEvents:(UIControlEvents)controlEvents key:(NSString *)key nilValue:(id)nilValue;
 
 @end
+
+NS_ASSUME_NONNULL_END

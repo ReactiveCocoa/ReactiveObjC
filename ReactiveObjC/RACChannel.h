@@ -9,7 +9,7 @@
 #import "RACSignal.h"
 #import "RACSubscriber.h"
 
-@class RACChannelTerminal;
+@class RACChannelTerminal<__covariant ValueType>;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,14 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// on the `followingTerminal`, and received in the model from the
 /// `leadingTerminal`. However, the initial value of the view is not received
 /// from the `leadingTerminal` (only future changes).
-@interface RACChannel : NSObject
+@interface RACChannel<__covariant ValueType> : NSObject
 
 /// The terminal which "leads" the channel, by sending its latest value
 /// immediately to new subscribers of the `followingTerminal`.
 ///
 /// New subscribers to this terminal will not receive a starting value, but will
 /// receive all future values that are sent to the `followingTerminal`.
-@property (nonatomic, strong, readonly) RACChannelTerminal *leadingTerminal;
+@property (nonatomic, strong, readonly) RACChannelTerminal<ValueType> *leadingTerminal;
 
 /// The terminal which "follows" the lead of the other terminal, only sending
 /// _future_ values to the subscribers of the `leadingTerminal`.
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The latest value sent to the `leadingTerminal` (if any) will be sent
 /// immediately to new subscribers of this terminal, and then all future values
 /// as well.
-@property (nonatomic, strong, readonly) RACChannelTerminal *followingTerminal;
+@property (nonatomic, strong, readonly) RACChannelTerminal<ValueType> *followingTerminal;
 
 @end
 
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// terminals.
 ///
 /// Do not instantiate this class directly. Create a RACChannel instead.
-@interface RACChannelTerminal : RACSignal <RACSubscriber>
+@interface RACChannelTerminal<__covariant ValueType> : RACSignal <RACSubscriber>
 
 - (instancetype)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 
