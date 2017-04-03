@@ -120,4 +120,93 @@ qck_describe(@"-tupleByAddingObject:", ^{
 	});
 });
 
+qck_describe(@"RACTuple subclasses", ^{
+	qck_describe(@"equality to RACTuple", ^{
+		qck_context(@"RACTwoTuple", ^{
+			qck_it(@"should be equal", ^{
+				RACTwoTuple *tupleSubclass = [RACTwoTuple pack:@"foo" :@"bar"];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo", @"bar" ]];
+				expect(tupleSubclass).to(equal(tuple));
+				expect(tuple).to(equal(tupleSubclass));
+			});
+		});
+
+		qck_context(@"RACThreeTuple", ^{
+			qck_it(@"should be equal", ^{
+				RACThreeTuple *tupleSubclass = [RACThreeTuple pack:@"foo" :@"bar" :@"buzz" ];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo", @"bar", @"buzz" ]];
+				expect(tupleSubclass).to(equal(tuple));
+				expect(tuple).to(equal(tupleSubclass));
+			});
+		});
+
+		qck_context(@"RACFourTuple", ^{
+			qck_it(@"should be equal", ^{
+				RACFourTuple *tupleSubclass = [RACFourTuple pack:@"foo" :@"bar" :@"buzz" :@"fizz"];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo", @"bar", @"buzz", @"fizz" ]];
+				expect(tupleSubclass).to(equal(tuple));
+				expect(tuple).to(equal(tupleSubclass));
+			});
+		});
+
+		qck_context(@"RACFiveTuple", ^{
+			qck_it(@"should be equal", ^{
+				RACFiveTuple *tupleSubclass = [RACFiveTuple pack:@"foo" :@"bar" :@"buzz" :@"fizz" :@"bizz"];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo", @"bar", @"buzz", @"fizz", @"bizz" ]];
+				expect(tupleSubclass).to(equal(tuple));
+				expect(tuple).to(equal(tupleSubclass));
+			});
+		});
+	});
+
+	qck_describe(@"RACTuplePack", ^{
+		qck_context(@"RACTwoTuple", ^{
+			qck_it(@"should be produced by packing", ^{
+				expect(RACTuplePack(@"foo", @"bar")).to(beAnInstanceOf(RACTwoTuple.class));
+			});
+		});
+
+		qck_context(@"RACThreeTuple", ^{
+			qck_it(@"should be produced by packing", ^{
+				expect(RACTuplePack(@"foo", @"bar", @"buzz")).to(beAnInstanceOf(RACThreeTuple.class));
+			});
+		});
+
+		qck_context(@"RACFourTuple", ^{
+			qck_it(@"should be produced by packing", ^{
+				expect(RACTuplePack(@"foo", @"bar", @"buzz", @"fizz")).to(beAnInstanceOf(RACFourTuple.class));
+			});
+		});
+
+		qck_context(@"RACFiveTuple", ^{
+			qck_it(@"should be produced by packing", ^{
+				expect(RACTuplePack(@"foo", @"bar", @"buzz", @"fizz", @"bizz")).to(beAnInstanceOf(RACFiveTuple.class));
+			});
+		});
+	});
+
+	qck_describe(@"-tupleByAddingObject:", ^{
+		qck_context(@"RACTwoTuple", ^{
+			qck_it(@"should produce a RACThreeTuple", ^{
+				RACThreeTuple *tuple = [RACTuplePack(@"foo", @"bar") tupleByAddingObject:@"buzz"];
+				expect(tuple).to(beAnInstanceOf(RACThreeTuple.class));
+			});
+		});
+
+		qck_context(@"RACThreeTuple", ^{
+			qck_it(@"should produce a RACFourTuple", ^{
+				RACFourTuple *tuple = [RACTuplePack(@"foo", @"bar", @"buzz") tupleByAddingObject:@"fizz"];
+				expect(tuple).to(beAnInstanceOf(RACFourTuple.class));
+			});
+		});
+
+		qck_context(@"RACFourTuple", ^{
+			qck_it(@"should produce a RACFiveTuple", ^{
+				RACFiveTuple *tuple = [RACTuplePack(@"foo", @"bar", @"buzz", @"fizz") tupleByAddingObject:@"bizz"];
+				expect(tuple).to(beAnInstanceOf(RACFiveTuple.class));
+			});
+		});
+	});
+});
+
 QuickSpecEnd

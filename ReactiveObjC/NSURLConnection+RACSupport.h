@@ -8,22 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@class RACTuple;
+@class RACTwoTuple<__covariant First, __covariant Second>;
 @class RACSignal<__covariant ValueType>;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSURLConnection (RACSupport)
 
-// Lazily loads data for the given request in the background.
-//
-// request - The URL request to load. This must not be nil.
-//
-// Returns a signal which will begin loading the request upon each subscription,
-// then send a `RACTuple` of the received `NSURLResponse` and downloaded
-// `NSData`, and complete on a background thread. If any errors occur, the
-// returned signal will error out.
-+ (RACSignal<RACTuple *> *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
+/// Lazily loads data for the given request in the background.
+///
+/// request - The URL request to load. This must not be nil.
+///
+/// Returns a signal which will begin loading the request upon each subscription,
+/// then send a tuple of the received response and downloaded data, and complete
+/// on a background thread. If any errors occur, the returned signal will error
+/// out.
++ (RACSignal<RACTwoTuple<NSURLResponse *, NSData *> *> *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
 
 @end
 
