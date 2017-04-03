@@ -11,15 +11,15 @@
 #import "RACReplaySubject.h"
 #import "RACSignal+Operations.h"
 
-@interface RACChannelTerminal ()
+@interface RACChannelTerminal<__covariant ValueType> ()
 
 // The values for this terminal.
-@property (nonatomic, strong, readonly) RACSignal *values;
+@property (nonatomic, strong, readonly) RACSignal<ValueType> *values;
 
 // A subscriber will will send values to the other terminal.
 @property (nonatomic, strong, readonly) id<RACSubscriber> otherTerminal;
 
-- (instancetype)initWithValues:(RACSignal *)values otherTerminal:(id<RACSubscriber>)otherTerminal;
+- (instancetype)initWithValues:(RACSignal<ValueType> *)values otherTerminal:(id<RACSubscriber>)otherTerminal;
 
 @end
 
