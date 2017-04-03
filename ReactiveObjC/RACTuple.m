@@ -42,8 +42,11 @@
 
 
 @interface RACTuple ()
+
 - (instancetype)initWithBackingArray:(NSArray *)backingArray NS_DESIGNATED_INITIALIZER;
-@property (nonatomic, strong) NSArray *backingArray;
+
+@property (nonatomic, readonly) NSArray *backingArray;
+
 @end
 
 
@@ -76,13 +79,11 @@
 	return self.backingArray.hash;
 }
 
-
 #pragma mark NSFastEnumeration
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len {
 	return [self.backingArray countByEnumeratingWithState:state objects:buffer count:len];
 }
-
 
 #pragma mark NSCopying
 
@@ -90,7 +91,6 @@
 	// we're immutable, bitches!
 	return self;
 }
-
 
 #pragma mark NSCoding
 
