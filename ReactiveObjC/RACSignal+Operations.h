@@ -16,6 +16,7 @@
 @class RACSequence<__covariant ValueType>;
 @class RACSubject<ValueType>;
 @class RACTuple;
+@class RACTwoTuple<__covariant First, __covariant Second>;
 @class RACEvent<__covariant ValueType>;
 @class RACGroupedSignal;
 @protocol RACSubscriber;
@@ -153,7 +154,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 - (RACSignal<ValueType> *)takeLast:(NSUInteger)count RAC_WARN_UNUSED_RESULT;
 
 /// Combines the latest values from the receiver and the given signal into
-/// RACTuples, once both have sent at least one `next`.
+/// 2-tuples, once both have sent at least one `next`.
 ///
 /// Any additional `next`s will result in a new RACTuple with the latest values
 /// from both signals.
@@ -162,7 +163,7 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 ///
 /// Returns a signal which sends RACTuples of the combined values, forwards any
 /// `error` events, and completes when both input signals complete.
-- (RACSignal<RACTuple *> *)combineLatestWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
+- (RACSignal<RACTwoTuple<ValueType, id> *> *)combineLatestWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
 
 /// Combines the latest values from the given signals into RACTuples, once all
 /// the signals have sent at least one `next`.
