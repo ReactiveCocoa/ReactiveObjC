@@ -69,6 +69,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 
+// Redeclaration of the RACSubscriber method. Made in order to specify a generic type.
+- (void)sendNext:(nullable ValueType)value;
+
 @end
 
 NS_ASSUME_NONNULL_END
