@@ -237,7 +237,7 @@
 }
 
 + (instancetype)pack:(id)first {
-    return [self tupleWithObjectsFromArray:@[
+	return [self tupleWithObjectsFromArray:@[
 		first ?: RACTupleNil.tupleNil,
 	]];
 }
@@ -272,7 +272,7 @@
 }
 
 + (instancetype)pack:(id)first :(id)second {
-    return [self tupleWithObjectsFromArray:@[
+	return [self tupleWithObjectsFromArray:@[
 		first ?: RACTupleNil.tupleNil,
 		second ?: RACTupleNil.tupleNil,
 	]];
@@ -309,7 +309,7 @@
 }
 
 + (instancetype)pack:(id)first :(id)second :(id)third {
-    return [self tupleWithObjectsFromArray:@[
+	return [self tupleWithObjectsFromArray:@[
 		first ?: RACTupleNil.tupleNil,
 		second ?: RACTupleNil.tupleNil,
 		third ?: RACTupleNil.tupleNil,
@@ -348,7 +348,7 @@
 }
 
 + (instancetype)pack:(id)first :(id)second :(id)third :(id)fourth {
-    return [self tupleWithObjectsFromArray:@[
+	return [self tupleWithObjectsFromArray:@[
 		first ?: RACTupleNil.tupleNil,
 		second ?: RACTupleNil.tupleNil,
 		third ?: RACTupleNil.tupleNil,
@@ -384,7 +384,7 @@
 }
 
 + (instancetype)pack:(id)first :(id)second :(id)third :(id)fourth :(id)fifth {
-    return [self tupleWithObjectsFromArray:@[
+	return [self tupleWithObjectsFromArray:@[
 		first ?: RACTupleNil.tupleNil,
 		second ?: RACTupleNil.tupleNil,
 		third ?: RACTupleNil.tupleNil,
