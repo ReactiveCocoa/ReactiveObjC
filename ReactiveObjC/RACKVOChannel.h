@@ -63,7 +63,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// A RACChannel that observes a KVO-compliant key path for changes.
-@interface RACKVOChannel : RACChannel
+@interface RACKVOChannel<ValueType> : RACChannel<ValueType>
 
 /// Initializes a channel that will observe the given object and key path.
 ///
@@ -85,10 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///            exception if `nil` is received (which might occur if an intermediate
 ///            object is set to `nil`).
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
-- (instancetype)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
+- (instancetype)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable ValueType)nilValue;
 #else
 // Swift builds with OS_OBJECT_HAVE_OBJC_SUPPORT=0 for Playgrounds and LLDB :(
-- (instancetype)initWithTarget:(NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable id)nilValue;
+- (instancetype)initWithTarget:(NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable ValueType)nilValue;
 #endif
 
 - (instancetype)init __attribute__((unavailable("Use -initWithTarget:keyPath:nilValue: instead")));
