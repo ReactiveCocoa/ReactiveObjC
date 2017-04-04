@@ -220,6 +220,41 @@
 
 @end
 
+@implementation RACOneTuple
+
+- (instancetype)init {
+	return [self initWithBackingArray:@[ RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 1);
+	return [super initWithBackingArray:backingArray];
+}
+
+- (RACTwoTuple *)tupleByAddingObject:(id)obj {
+	NSArray *newArray = [self.backingArray arrayByAddingObject:obj ?: RACTupleNil.tupleNil];
+	return [RACTwoTuple tupleWithObjectsFromArray:newArray];
+}
+
++ (instancetype)pack:(id)first {
+    return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+
+@end
+
 @implementation RACTwoTuple
 
 - (instancetype)init {

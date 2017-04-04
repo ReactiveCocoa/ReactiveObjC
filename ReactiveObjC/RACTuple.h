@@ -43,6 +43,7 @@
 #define RACTupleUnpack(...) \
         RACTupleUnpack_(__VA_ARGS__)
 
+@class RACTwoTuple<__covariant First, __covariant Second>;
 @class RACThreeTuple<__covariant First, __covariant Second, __covariant Third>;
 @class RACFourTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth>;
 @class RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth, __covariant Fifth>;
@@ -113,6 +114,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns the object at that index or nil if the number of objects is less
 /// than the index.
 - (nullable id)objectAtIndexedSubscript:(NSUInteger)idx;
+@end
+
+/// A tuple with exactly one generic value.
+@interface RACOneTuple<__covariant First> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack: instead.")));
+
+- (RACTwoTuple<First, id> *)tupleByAddingObject:(nullable id)obj;
+
+/// Creates a new tuple with the given values.
++ (RACOneTuple<First> *)pack:(First)first;
+
+@property (nonatomic, readonly, nullable) First first;
+
 @end
 
 /// A tuple with exactly two generic values.
@@ -191,7 +206,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns the class that should be used to create a tuple with the provided
 /// variadic arguments to RACTuplePack_(). Supports up to 20 arguments.
 #define RACTuplePack_class_name(...) \
-        metamacro_at(20, __VA_ARGS__, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACFiveTuple, RACFourTuple, RACThreeTuple, RACTwoTuple, RACTuple)
+        metamacro_at(20, __VA_ARGS__, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACFiveTuple, RACFourTuple, RACThreeTuple, RACTwoTuple, RACOneTuple)
 
 #define RACTupleUnpack_(...) \
     metamacro_foreach(RACTupleUnpack_decl,, __VA_ARGS__) \
