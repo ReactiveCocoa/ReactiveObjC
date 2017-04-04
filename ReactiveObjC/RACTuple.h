@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (RACThreeTuple<First, Second, id> *)tupleByAddingObject:(nullable id)obj;
 
-/// Creates a new tuple with the given values.
+/// Creates a new tuple with the given value.
 + (RACTwoTuple<First, Second> *)pack:(First)first :(Second)second;
 
 @property (nonatomic, readonly, nullable) First first;
