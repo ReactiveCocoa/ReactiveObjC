@@ -63,7 +63,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// A RACChannel that observes a KVO-compliant key path for changes.
-@interface RACKVOChannel<__covariant ValueType> : RACChannel<ValueType>
+@interface RACKVOChannel<ValueType> : RACChannel<ValueType>
 
 /// Initializes a channel that will observe the given object and key path.
 ///
