@@ -22,11 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 //                 event fires and when a value is sent to the
 //                 RACChannelTerminal respectively.
 // nilValue      - The value to be assigned to the key when `nil` is sent to the
-//                 RACChannelTerminal.
+//                 RACChannelTerminal. This value can itself be nil.
 //
 // Returns a RACChannelTerminal which will send future values from the receiver,
 // and update the receiver when values are sent to the terminal.
-- (RACChannelTerminal *)rac_channelForControlEvents:(UIControlEvents)controlEvents key:(NSString *)key nilValue:(id)nilValue;
+- (RACChannelTerminal *)rac_channelForControlEvents:(UIControlEvents)controlEvents key:(NSString *)key nilValue:(nullable id)nilValue;
 
 @end
 
