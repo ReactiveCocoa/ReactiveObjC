@@ -111,7 +111,7 @@ QuickConfigurationBegin(RACPropertySignalExampleGroups)
 			setupBlock(testObject, @keypath(testObject.integerValue), @42, subject);
 
 			__block BOOL setNilValueForKeyInvoked = NO;
-			[[testObject rac_signalForSelector:@selector(setNilValueForKey:)] subscribeNext:^(NSString *key) {
+			[[testObject rac_signalForSelector:@selector(setNilValueForKey:)] subscribeNext:^(RACTuple *arguments) {
 				setNilValueForKeyInvoked = YES;
 			}];
 
@@ -130,7 +130,7 @@ QuickConfigurationBegin(RACPropertySignalExampleGroups)
 			testObject.catchSetNilValueForKey = YES;
 
 			__block BOOL setNilValueForKeyInvoked = NO;
-			[[testObject rac_signalForSelector:@selector(setNilValueForKey:)] subscribeNext:^(NSString *key) {
+			[[testObject rac_signalForSelector:@selector(setNilValueForKey:)] subscribeNext:^(RACTuple *arguments) {
 				setNilValueForKeyInvoked = YES;
 			}];
 
