@@ -122,6 +122,15 @@ qck_describe(@"-tupleByAddingObject:", ^{
 
 qck_describe(@"RACTuple subclasses", ^{
 	qck_describe(@"equality to RACTuple", ^{
+		qck_context(@"RACOneTuple", ^{
+			qck_it(@"should be equal", ^{
+				RACOneTuple *tupleSubclass = [RACOneTuple pack:@"foo"];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo" ]];
+				expect(tupleSubclass).to(equal(tuple));
+				expect(tuple).to(equal(tupleSubclass));
+			});
+		});
+
 		qck_context(@"RACTwoTuple", ^{
 			qck_it(@"should be equal", ^{
 				RACTwoTuple *tupleSubclass = [RACTwoTuple pack:@"foo" :@"bar"];
@@ -133,7 +142,7 @@ qck_describe(@"RACTuple subclasses", ^{
 
 		qck_context(@"RACThreeTuple", ^{
 			qck_it(@"should be equal", ^{
-				RACThreeTuple *tupleSubclass = [RACThreeTuple pack:@"foo" :@"bar" :@"buzz" ];
+				RACThreeTuple *tupleSubclass = [RACThreeTuple pack:@"foo" :@"bar" :@"buzz"];
 				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:@[ @"foo", @"bar", @"buzz" ]];
 				expect(tupleSubclass).to(equal(tuple));
 				expect(tuple).to(equal(tupleSubclass));
@@ -160,6 +169,12 @@ qck_describe(@"RACTuple subclasses", ^{
 	});
 
 	qck_describe(@"RACTuplePack", ^{
+		qck_context(@"RACOneTuple", ^{
+			qck_it(@"should be produced by packing", ^{
+				expect(RACTuplePack(@"foo")).to(beAnInstanceOf(RACOneTuple.class));
+			});
+		});
+
 		qck_context(@"RACTwoTuple", ^{
 			qck_it(@"should be produced by packing", ^{
 				expect(RACTuplePack(@"foo", @"bar")).to(beAnInstanceOf(RACTwoTuple.class));
@@ -186,6 +201,13 @@ qck_describe(@"RACTuple subclasses", ^{
 	});
 
 	qck_describe(@"-tupleByAddingObject:", ^{
+		qck_context(@"RACOneTuple", ^{
+			qck_it(@"should produce a RACTwoTuple", ^{
+				RACTwoTuple *tuple = [RACTuplePack(@"foo") tupleByAddingObject:@"buzz"];
+				expect(tuple).to(beAnInstanceOf(RACTwoTuple.class));
+			});
+		});
+
 		qck_context(@"RACTwoTuple", ^{
 			qck_it(@"should produce a RACThreeTuple", ^{
 				RACThreeTuple *tuple = [RACTuplePack(@"foo", @"bar") tupleByAddingObject:@"buzz"];
