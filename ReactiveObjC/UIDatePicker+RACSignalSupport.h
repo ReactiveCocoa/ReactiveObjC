@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACChannelTerminal;
+@class RACChannelTerminal<ValueType>;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a RACChannelTerminal that sends the receiver's date whenever the
 /// UIControlEventValueChanged control event is fired, and sets the date to the
 /// values it receives.
-- (RACChannelTerminal *)rac_newDateChannelWithNilValue:(nullable NSDate *)nilValue;
+- (RACChannelTerminal<NSDate *> *)rac_newDateChannelWithNilValue:(nullable NSDate *)nilValue;
 
 @end
 
