@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACChannelTerminal<__covariant ValueType>;
+@class RACChannelTerminal<ValueType>;
 @class RACSignal<__covariant ValueType>;
 
 NS_ASSUME_NONNULL_BEGIN

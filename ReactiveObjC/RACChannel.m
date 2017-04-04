@@ -11,7 +11,7 @@
 #import "RACReplaySubject.h"
 #import "RACSignal+Operations.h"
 
-@interface RACChannelTerminal<__covariant ValueType> ()
+@interface RACChannelTerminal<ValueType> ()
 
 // The values for this terminal.
 @property (nonatomic, strong, readonly) RACSignal<ValueType> *values;
