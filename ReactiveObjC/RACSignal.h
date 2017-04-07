@@ -13,6 +13,8 @@
 @class RACDisposable;
 @class RACScheduler;
 @class RACSubject;
+@class RACTuple;
+@class RACTwoTuple<__covariant First, __covariant Second>;
 @protocol RACSubscriber;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -128,7 +130,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 /// Returns a new signal of RACTuples, representing the combined values of the
 /// two signals. Any error from one of the original signals will be forwarded on
 /// the returned signal.
-- (RACSignal *)zipWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
+- (RACSignal<RACTwoTuple<ValueType, id> *> *)zipWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
 
 @end
 
@@ -244,7 +246,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing RACTuples of the zipped values from the
 /// signals.
-+ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
++ (RACSignal<RACTuple *> *)zip:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
 
 /// Zips signals using +zip:, then reduces the resulting tuples into a single
 /// value using -reduceEach:
