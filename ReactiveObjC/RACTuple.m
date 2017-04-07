@@ -42,16 +42,24 @@
 
 
 @interface RACTuple ()
-@property (nonatomic, strong) NSArray *backingArray;
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray NS_DESIGNATED_INITIALIZER;
+
+@property (nonatomic, readonly) NSArray *backingArray;
+
 @end
 
 
 @implementation RACTuple
 
 - (instancetype)init {
+	return [self initWithBackingArray:@[]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
 	self = [super init];
 	
-	self.backingArray = [NSArray array];
+	_backingArray = [backingArray copy];
 	
 	return self;
 }
@@ -71,13 +79,11 @@
 	return self.backingArray.hash;
 }
 
-
 #pragma mark NSFastEnumeration
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len {
 	return [self.backingArray countByEnumeratingWithState:state objects:buffer count:len];
 }
-
 
 #pragma mark NSCopying
 
@@ -86,20 +92,19 @@
 	return self;
 }
 
-
 #pragma mark NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
 	self = [self init];
 	
-	self.backingArray = [coder decodeObjectForKey:@keypath(self.backingArray)];
+	_backingArray = [coder decodeObjectForKey:@keypath(self.backingArray)];
+
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
 	if (self.backingArray != nil) [coder encodeObject:self.backingArray forKey:@keypath(self.backingArray)];
 }
-
 
 #pragma mark API
 
@@ -108,25 +113,19 @@
 }
 
 + (instancetype)tupleWithObjectsFromArray:(NSArray *)array convertNullsToNils:(BOOL)convert {
-	RACTuple *tuple = [[self alloc] init];
-	
-	if (convert) {
-		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:array.count];
-		for (id object in array) {
-			[newArray addObject:(object == NSNull.null ? RACTupleNil.tupleNil : object)];
-		}
-		
-		tuple.backingArray = newArray;
-	} else {
-		tuple.backingArray = [array copy];
+	if (!convert) {
+		return [[self alloc] initWithBackingArray:array];
 	}
-	
-	return tuple;
+
+	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:array.count];
+	for (id object in array) {
+		[newArray addObject:(object == NSNull.null ? RACTupleNil.tupleNil : object)];
+	}
+
+	return [[self alloc] initWithBackingArray:newArray];
 }
 
 + (instancetype)tupleWithObjects:(id)object, ... {
-	RACTuple *tuple = [[self alloc] init];
-
 	va_list args;
 	va_start(args, object);
 
@@ -138,8 +137,7 @@
 	va_end(args);
 
 	if (count == 0) {
-		tuple.backingArray = @[];
-		return tuple;
+		return [[self alloc] init];
 	}
 	
 	NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:count];
@@ -150,9 +148,8 @@
 	}
 
 	va_end(args);
-	
-	tuple.backingArray = objects;
-	return tuple;
+
+	return [[self alloc] initWithBackingArray:objects];
 }
 
 - (id)objectAtIndex:(NSUInteger)index {
@@ -223,6 +220,195 @@
 
 @end
 
+@implementation RACOneTuple
+
+- (instancetype)init {
+	return [self initWithBackingArray:@[ RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 1);
+	return [super initWithBackingArray:backingArray];
+}
+
+- (RACTwoTuple *)tupleByAddingObject:(id)obj {
+	NSArray *newArray = [self.backingArray arrayByAddingObject:obj ?: RACTupleNil.tupleNil];
+	return [RACTwoTuple tupleWithObjectsFromArray:newArray];
+}
+
++ (instancetype)pack:(id)first {
+	return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+
+@end
+
+@implementation RACTwoTuple
+
+- (instancetype)init {
+	return [self initWithBackingArray:@[ RACTupleNil.tupleNil, RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 2);
+	return [super initWithBackingArray:backingArray];
+}
+
+- (RACThreeTuple *)tupleByAddingObject:(id)obj {
+	NSArray *newArray = [self.backingArray arrayByAddingObject:obj ?: RACTupleNil.tupleNil];
+	return [RACThreeTuple tupleWithObjectsFromArray:newArray];
+}
+
++ (instancetype)pack:(id)first :(id)second {
+	return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+		second ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+@dynamic second;
+
+@end
+
+@implementation RACThreeTuple
+
+- (instancetype)init {
+	return [super initWithBackingArray:@[ RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 3);
+	return [super initWithBackingArray:backingArray];
+}
+
+- (RACFourTuple *)tupleByAddingObject:(id)obj {
+	NSArray *newArray = [self.backingArray arrayByAddingObject:obj ?: RACTupleNil.tupleNil];
+	return [RACFourTuple tupleWithObjectsFromArray:newArray];
+}
+
++ (instancetype)pack:(id)first :(id)second :(id)third {
+	return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+		second ?: RACTupleNil.tupleNil,
+		third ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+@dynamic second;
+@dynamic third;
+
+@end
+
+@implementation RACFourTuple
+
+- (instancetype)init {
+	return [self initWithBackingArray:@[ RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 4);
+	return [super initWithBackingArray:backingArray];
+}
+
+- (RACFiveTuple *)tupleByAddingObject:(id)obj {
+	NSArray *newArray = [self.backingArray arrayByAddingObject:obj ?: RACTupleNil.tupleNil];
+	return [RACFiveTuple tupleWithObjectsFromArray:newArray];
+}
+
++ (instancetype)pack:(id)first :(id)second :(id)third :(id)fourth {
+	return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+		second ?: RACTupleNil.tupleNil,
+		third ?: RACTupleNil.tupleNil,
+		fourth ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+@dynamic second;
+@dynamic third;
+@dynamic fourth;
+
+@end
+
+@implementation RACFiveTuple
+
+- (instancetype)init {
+	return [self initWithBackingArray:@[ RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil, RACTupleNil.tupleNil ]];
+}
+
+- (instancetype)initWithBackingArray:(NSArray *)backingArray {
+	NSParameterAssert(backingArray.count == 5);
+	return [super initWithBackingArray:backingArray];
+}
+
++ (instancetype)pack:(id)first :(id)second :(id)third :(id)fourth :(id)fifth {
+	return [self tupleWithObjectsFromArray:@[
+		first ?: RACTupleNil.tupleNil,
+		second ?: RACTupleNil.tupleNil,
+		third ?: RACTupleNil.tupleNil,
+		fourth ?: RACTupleNil.tupleNil,
+		fifth ?: RACTupleNil.tupleNil,
+	]];
+}
+
+- (BOOL)isEqual:(RACTuple *)object {
+	if (object == self) return YES;
+
+	// We consider a RACTuple with an identical backing array as equal.
+	if (![object isKindOfClass:RACTuple.class]) return NO;
+	
+	return [self.backingArray isEqual:object.backingArray];
+}
+
+@dynamic first;
+@dynamic second;
+@dynamic third;
+@dynamic fourth;
+@dynamic fifth;
+
+@end
 
 @implementation RACTupleUnpackingTrampoline
 

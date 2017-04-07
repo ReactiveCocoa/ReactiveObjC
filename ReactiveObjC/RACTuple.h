@@ -43,6 +43,11 @@
 #define RACTupleUnpack(...) \
         RACTupleUnpack_(__VA_ARGS__)
 
+@class RACTwoTuple<__covariant First, __covariant Second>;
+@class RACThreeTuple<__covariant First, __covariant Second, __covariant Third>;
+@class RACFourTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth>;
+@class RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth, __covariant Fifth>;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// A sentinel object that represents nils in the tuple.
@@ -94,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// obj - The object to add to the tuple. This argument may be nil.
 ///
 /// Returns a new tuple.
-- (instancetype)tupleByAddingObject:(nullable id)obj;
+- (__kindof RACTuple *)tupleByAddingObject:(nullable id)obj;
 
 @end
 
@@ -111,14 +116,97 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)objectAtIndexedSubscript:(NSUInteger)idx;
 @end
 
+/// A tuple with exactly one generic value.
+@interface RACOneTuple<__covariant First> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack: instead.")));
+
+- (RACTwoTuple<First, id> *)tupleByAddingObject:(nullable id)obj;
+
+/// Creates a new tuple with the given values.
++ (RACOneTuple<First> *)pack:(First)first;
+
+@property (nonatomic, readonly, nullable) First first;
+
+@end
+
+/// A tuple with exactly two generic values.
+@interface RACTwoTuple<__covariant First, __covariant Second> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack:: instead.")));
+
+- (RACThreeTuple<First, Second, id> *)tupleByAddingObject:(nullable id)obj;
+
+/// Creates a new tuple with the given value.
++ (RACTwoTuple<First, Second> *)pack:(First)first :(Second)second;
+
+@property (nonatomic, readonly, nullable) First first;
+@property (nonatomic, readonly, nullable) Second second;
+
+@end
+
+/// A tuple with exactly three generic values.
+@interface RACThreeTuple<__covariant First, __covariant Second, __covariant Third> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack::: instead.")));
+
+- (RACFourTuple<First, Second, Third, id> *)tupleByAddingObject:(nullable id)obj;
+
+/// Creates a new tuple with the given values.
++ (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third;
+
+@property (nonatomic, readonly, nullable) First first;
+@property (nonatomic, readonly, nullable) Second second;
+@property (nonatomic, readonly, nullable) Third third;
+
+@end
+
+/// A tuple with exactly four generic values.
+@interface RACFourTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack:::: instead.")));
+
+- (RACFiveTuple<First, Second, Third, Fourth, id> *)tupleByAddingObject:(nullable id)obj;
+
+/// Creates a new tuple with the given values.
++ (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third :(nullable Fourth)fourth;
+
+@property (nonatomic, readonly, nullable) First first;
+@property (nonatomic, readonly, nullable) Second second;
+@property (nonatomic, readonly, nullable) Third third;
+@property (nonatomic, readonly, nullable) Fourth fourth;
+
+@end
+
+/// A tuple with exactly five generic values.
+@interface RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth, __covariant Fifth> : RACTuple
+
++ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack::::: instead.")));
+
+/// Creates a new tuple with the given values.
++ (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third :(nullable Fourth)fourth :(nullable Fifth)fifth;
+
+@property (nonatomic, readonly, nullable) First first;
+@property (nonatomic, readonly, nullable) Second second;
+@property (nonatomic, readonly, nullable) Third third;
+@property (nonatomic, readonly, nullable) Fourth fourth;
+@property (nonatomic, readonly, nullable) Fifth fifth;
+
+@end
+
 /// This and everything below is for internal use only.
 ///
 /// See RACTuplePack() and RACTupleUnpack() instead.
 #define RACTuplePack_(...) \
-    ([RACTuple tupleWithObjectsFromArray:@[ metamacro_foreach(RACTuplePack_object_or_ractuplenil,, __VA_ARGS__) ]])
+    ([RACTuplePack_class_name(__VA_ARGS__) tupleWithObjectsFromArray:@[ metamacro_foreach(RACTuplePack_object_or_ractuplenil,, __VA_ARGS__) ]])
 
 #define RACTuplePack_object_or_ractuplenil(INDEX, ARG) \
     (ARG) ?: RACTupleNil.tupleNil,
+
+/// Returns the class that should be used to create a tuple with the provided
+/// variadic arguments to RACTuplePack_(). Supports up to 20 arguments.
+#define RACTuplePack_class_name(...) \
+        metamacro_at(20, __VA_ARGS__, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACFiveTuple, RACFourTuple, RACThreeTuple, RACTwoTuple, RACOneTuple)
 
 #define RACTupleUnpack_(...) \
     metamacro_foreach(RACTupleUnpack_decl,, __VA_ARGS__) \
