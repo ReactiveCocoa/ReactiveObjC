@@ -461,6 +461,8 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns the first value received, or `defaultValue` if no value is received
 /// before the signal finishes or the method times out.
+- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error timeout:(NSTimeInterval)timeout;
+
 - (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error;
 
 /// Spins the main run loop for a short while, waiting for the receiver to complete.
@@ -472,6 +474,8 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns whether the signal completed successfully before timing out. If NO,
 /// `error` will be set to any error that occurred.
+- (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error timeout:(NSTimeInterval)timeout;
+
 - (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error;
 
 @end
