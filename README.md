@@ -45,7 +45,7 @@ declaratively, without the need for code that continually observes and updates
 values.
 
 For example, a text field can be bound to the latest time, even as it changes,
-instead of using additional code that watches the clock and updates the
+instead of using additional code that watches the block and updates the
 text field every second.  It works much like KVO, but with blocks instead of
 overriding `-observeValueForKeyPath:ofObject:change:context:`.
 
