@@ -193,6 +193,77 @@
 	}] setNameWithFormat:@"[%@] -concat: %@", self.name, signal];
 }
 
++ (instancetype)zip:(id<NSFastEnumeration>)signals {
+	return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+		RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
+
+		NSMutableArray<RACSignal *> *signalsArray = [NSMutableArray array];
+		for (RACSignal *signal in signals) {
+			[signalsArray addObject:signal];
+		}
+
+		NSUInteger signalsCount = signalsArray.count;
+		if (!signalsCount) {
+			[subscriber sendCompleted];
+			return nil;
+		}
+
+		// BOOL value indicates if the signal at index has completed.
+		__block NSMutableArray *completed = [NSMutableArray arrayWithCapacity:signalsCount];
+		// Array of arrays of values sent.
+		__block NSMutableArray *values = [NSMutableArray arrayWithCapacity:signalsCount];
+		for (NSUInteger i = 0; i < signalsCount; ++i) {
+			[completed addObject:@NO];
+			[values addObject:[NSMutableArray array]];
+		}
+
+		void (^sendCompletedIfNecessary)(void) = ^{
+			for (NSUInteger i = 0; i < signalsCount; ++i) {
+				if (![values[i] count] && [completed[i] boolValue]) {
+					[subscriber sendCompleted];
+					return;
+				}
+			}
+		};
+
+		for (NSUInteger i = 0; i < signalsArray.count; ++i) {
+			RACDisposable *innerDisposable = [signalsArray[i] subscribeNext:^(id x) {
+				@synchronized (values) {
+					[values[i] addObject:x ?: RACTupleNil.tupleNil];
+
+					for (NSArray *sentValues in values) {
+						if (!sentValues.count) {
+							return;
+						}
+					}
+
+					NSMutableArray *valuesToSend = [NSMutableArray arrayWithCapacity:signalsCount];
+					for (NSMutableArray *sentValues in values) {
+						[valuesToSend addObject:sentValues.firstObject];
+						[sentValues removeObjectAtIndex:0];
+					}
+
+					RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:valuesToSend];
+
+					[subscriber sendNext:tuple];
+					sendCompletedIfNecessary();
+				}
+			} error:^(NSError *error) {
+				[subscriber sendError:error];
+			} completed:^{
+				@synchronized (values) {
+					completed[i] = @YES;
+					sendCompletedIfNecessary();
+				}
+			}];
+			
+			[disposable addDisposable:innerDisposable];
+		}
+
+		return disposable;
+	}] setNameWithFormat:@"+zip: %@", signals];
+}
+
 - (RACSignal *)zipWith:(RACSignal *)signal {
 	NSCParameterAssert(signal != nil);
 
