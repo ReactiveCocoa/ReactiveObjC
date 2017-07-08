@@ -145,7 +145,7 @@
 	__weak RACStream *stream __attribute__((unused)) = self;
 	return [[self map:^(RACTuple *t) {
 		NSCAssert([t isKindOfClass:RACTuple.class], @"Value from stream %@ is not a tuple: %@", stream, t);
-		return [RACBlockTrampoline invokeBlock:reduceBlock withArguments:t];
+		return RACInvokeBlock(reduceBlock, t);
 	}] setNameWithFormat:@"[%@] -reduceEach:", self.name];
 }
 
