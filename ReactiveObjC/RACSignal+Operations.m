@@ -1200,6 +1200,8 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		NSLock *lock = [[NSLock alloc] init];
 		__block id lastValue;
 		__block BOOL hasValue = NO;
+		__block BOOL selfCompleted = NO;
+		__block BOOL samplerCompleted = NO;
 
 		RACSerialDisposable *samplerDisposable = [[RACSerialDisposable alloc] init];
 		RACDisposable *sourceDisposable = [self subscribeNext:^(id x) {
@@ -1211,8 +1213,16 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 			[samplerDisposable dispose];
 			[subscriber sendError:error];
 		} completed:^{
-			[samplerDisposable dispose];
-			[subscriber sendCompleted];
+			BOOL shouldComplete = NO;
+			[lock lock];
+			selfCompleted = YES;
+			shouldComplete = samplerCompleted;
+			[lock unlock];
+
+			if (shouldComplete) {
+				[samplerDisposable dispose];
+				[subscriber sendCompleted];
+			}
 		}];
 
 		samplerDisposable.disposable = [sampler subscribeNext:^(id _) {
@@ -1230,8 +1240,16 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 			[sourceDisposable dispose];
 			[subscriber sendError:error];
 		} completed:^{
-			[sourceDisposable dispose];
-			[subscriber sendCompleted];
+			BOOL shouldComplete = NO;
+			[lock lock];
+			samplerCompleted = YES;
+			shouldComplete = selfCompleted;
+			[lock unlock];
+
+			if (shouldComplete) {
+				[sourceDisposable dispose];
+				[subscriber sendCompleted];
+			}
 		}];
 
 		return [RACDisposable disposableWithBlock:^{

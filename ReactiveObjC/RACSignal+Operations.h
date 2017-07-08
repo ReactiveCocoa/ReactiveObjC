@@ -643,7 +643,8 @@ extern const NSInteger RACSignalErrorNoMatchingCase;
 /// Sends the latest value from the receiver only when `sampler` sends a value.
 /// The returned signal could repeat values if `sampler` fires more often than
 /// the receiver. Values from `sampler` are ignored before the receiver sends
-/// its first value.
+/// its first value. The signal completes once both the receiver and `sampler`
+/// complete or errs if either the recevier or `sampler` err.
 ///
 /// sampler - The signal that controls when the latest value from the receiver
 ///           is sent. Cannot be nil.

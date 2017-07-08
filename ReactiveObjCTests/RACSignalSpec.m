@@ -3215,10 +3215,17 @@ qck_describe(@"+zip:", ^{
 });
 
 qck_describe(@"-sample:", ^{
+	__block RACSubject *subject;
+	__block RACSubject *sampleSubject;
+	__block RACSignal *sampled;
+
+	qck_beforeEach(^{
+		subject = [RACSubject subject];
+		sampleSubject = [RACSubject subject];
+		sampled = [subject sample:sampleSubject];
+	});
+
 	qck_it(@"should send the latest value when the sampler signal fires", ^{
-		RACSubject *subject = [RACSubject subject];
-		RACSubject *sampleSubject = [RACSubject subject];
-		RACSignal *sampled = [subject sample:sampleSubject];
 		NSMutableArray *values = [NSMutableArray array];
 		[sampled subscribeNext:^(id x) {
 			[values addObject:x];
@@ -3245,6 +3252,32 @@ qck_describe(@"-sample:", ^{
 		[sampleSubject sendNext:RACUnit.defaultUnit];
 		expected = @[ @2, @3, @3 ];
 		expect(values).to(equal(expected));
+	});
+
+	qck_it(@"should not complete before sampler completes", ^{
+		__block BOOL hasCompleted = NO;
+		[sampled subscribeCompleted:^{
+			hasCompleted = YES;
+		}];
+
+		[subject sendCompleted];
+		expect(@(hasCompleted)).to(beFalsy());
+
+		[sampleSubject sendCompleted];
+		expect(@(hasCompleted)).to(beTruthy());
+	});
+
+	qck_it(@"should not complete before the receiver completes", ^{
+		__block BOOL hasCompleted = NO;
+		[sampled subscribeCompleted:^{
+			hasCompleted = YES;
+		}];
+
+		[sampleSubject sendCompleted];
+		expect(@(hasCompleted)).to(beFalsy());
+
+		[subject sendCompleted];
+		expect(@(hasCompleted)).to(beTruthy());
 	});
 });
 
