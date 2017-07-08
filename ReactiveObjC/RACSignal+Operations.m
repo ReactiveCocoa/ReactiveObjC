@@ -451,8 +451,57 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 }
 
 + (RACSignal *)combineLatest:(id<NSFastEnumeration>)signals {
-	return [[self join:signals block:^(RACSignal *left, RACSignal *right) {
-		return [left combineLatestWith:right];
+	return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+		NSMutableArray<RACSignal *> *signalsArray = [NSMutableArray array];
+		for (RACSignal *signal in signals) {
+			[signalsArray addObject:signal];
+		}
+
+		NSUInteger signalsCount = signalsArray.count;
+		if (!signalsCount) {
+			[subscriber sendCompleted];
+			return nil;
+		}
+
+		// Number of signals that completed.
+		__block NSUInteger completedCount = 0;
+		// Set of signal indices that already sent at least one value.
+		__block NSMutableSet<NSNumber *> *sentValues = [NSMutableSet set];
+		// Last value that was sent by each signal.
+		__block NSMutableArray *lastValues = [NSMutableArray arrayWithCapacity:signalsCount];
+		for (NSUInteger i = 0; i < signalsCount; ++i) {
+			[lastValues addObject:[NSNull null]];
+		}
+
+		void (^sendNext)() = ^() {
+			if (sentValues.count < signalsCount) return;
+			[subscriber sendNext:[RACTuple tupleWithObjectsFromArray:lastValues]];
+		};
+
+		RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
+
+		for (NSUInteger i = 0; i < signalsArray.count; ++i) {
+			RACDisposable *innerDisposable = [signalsArray[i] subscribeNext:^(id x) {
+				@synchronized (disposable) {
+					[sentValues addObject:@(i)];
+					lastValues[i] = x ?: RACTupleNil.tupleNil;
+					sendNext();
+				}
+			} error:^(NSError *error) {
+				[subscriber sendError:error];
+			} completed:^{
+				@synchronized (disposable) {
+					++completedCount;
+					if (completedCount == signalsCount) {
+						[subscriber sendCompleted];
+					}
+				}
+			}];
+
+			[disposable addDisposable:innerDisposable];
+		}
+
+		return disposable;
 	}] setNameWithFormat:@"+combineLatest: %@", signals];
 }
 
