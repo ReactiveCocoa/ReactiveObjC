@@ -36,13 +36,19 @@ static void RACUseDelegateProxy(UITextView *self) {
 
 - (RACSignal *)rac_textSignal {
 	@weakify(self);
-	RACSignal *signal = [[[[[RACSignal
+	RACSignal *signal = [[[[[[[RACSignal
 		defer:^{
 			@strongify(self);
 			return [RACSignal return:RACTuplePack(self)];
 		}]
 		concat:[self.rac_delegateProxy signalForSelector:@selector(textViewDidChange:)]]
 		reduceEach:^(UITextView *x) {
+			return x;
+		}]
+		filter:^BOOL(UITextView *x) {
+			return !x.markedTextRange;
+		}]
+		map:^(UITextView *x) {
 			return x.text;
 		}]
 		takeUntil:self.rac_willDeallocSignal]

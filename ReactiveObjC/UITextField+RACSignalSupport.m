@@ -19,12 +19,15 @@
 
 - (RACSignal *)rac_textSignal {
 	@weakify(self);
-	return [[[[[RACSignal
+	return [[[[[[RACSignal
 		defer:^{
 			@strongify(self);
 			return [RACSignal return:self];
 		}]
 		concat:[self rac_signalForControlEvents:UIControlEventAllEditingEvents]]
+		filter:^BOOL(UITextField *x) {
+			return !x.markedTextRange;
+		}]
 		map:^(UITextField *x) {
 			return x.text;
 		}]
