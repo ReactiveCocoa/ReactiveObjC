@@ -148,6 +148,10 @@
 		57DC89A61C50675F00E367B7 /* UITextView+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764E619EDA41200A782A9 /* UITextView+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57DC89A71C50679700E367B7 /* UIButton+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C819EDA41200A782A9 /* UIButton+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57DC89A81C50679E00E367B7 /* UICollectionReusableView+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764CA19EDA41200A782A9 /* UICollectionReusableView+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C6AE5C61F67CFA50053EA0C /* UITextField+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C6AE5C71F67CFA50053EA0C /* UITextField+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C6AE5C81F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */; };
+		5C6AE5C91F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */; };
 		7A7065811A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065821A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065841A3F8967001E8354 /* RACKVOProxySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */; };
@@ -770,6 +774,8 @@
 		57A4D2451BA13F9700F7D4B1 /* tvOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Base.xcconfig"; sourceTree = "<group>"; };
 		57A4D2461BA13F9700F7D4B1 /* tvOS-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		57A4D2471BA13F9700F7D4B1 /* tvOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+RACCommandSupport.h"; sourceTree = "<group>"; };
+		5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+RACCommandSupport.m"; sourceTree = "<group>"; };
 		7A70657D1A3F88B8001E8354 /* RACKVOProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACKVOProxy.h; sourceTree = "<group>"; };
 		7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxy.m; sourceTree = "<group>"; };
 		7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxySpec.m; sourceTree = "<group>"; };
@@ -1375,6 +1381,8 @@
 				D03764E319EDA41200A782A9 /* UITableViewHeaderFooterView+RACSignalSupport.m */,
 				D03764E419EDA41200A782A9 /* UITextField+RACSignalSupport.h */,
 				D03764E519EDA41200A782A9 /* UITextField+RACSignalSupport.m */,
+				5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */,
+				5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */,
 				D03764E619EDA41200A782A9 /* UITextView+RACSignalSupport.h */,
 				D03764E719EDA41200A782A9 /* UITextView+RACSignalSupport.m */,
 			);
@@ -1579,6 +1587,7 @@
 				57A4D2281BA13D7A00F7D4B1 /* RACQueueScheduler.h in Headers */,
 				57DC89A51C50675700E367B7 /* UITextField+RACSignalSupport.h in Headers */,
 				57A4D2291BA13D7A00F7D4B1 /* RACQueueScheduler+Subclass.h in Headers */,
+				5C6AE5C71F67CFA50053EA0C /* UITextField+RACCommandSupport.h in Headers */,
 				57A4D22A1BA13D7A00F7D4B1 /* RACReplaySubject.h in Headers */,
 				57DC89A21C50673C00E367B7 /* UISegmentedControl+RACSignalSupport.h in Headers */,
 				57A4D22B1BA13D7A00F7D4B1 /* RACScheduler.h in Headers */,
@@ -1733,6 +1742,7 @@
 				D037666419EDA43C00A782A9 /* ReactiveObjC.h in Headers */,
 				D037652519EDA41200A782A9 /* NSObject+RACPropertySubscribing.h in Headers */,
 				D03765B119EDA41200A782A9 /* RACQueueScheduler.h in Headers */,
+				5C6AE5C61F67CFA50053EA0C /* UITextField+RACCommandSupport.h in Headers */,
 				D037662519EDA41200A782A9 /* UIButton+RACCommandSupport.h in Headers */,
 				D037672819EDA63500A782A9 /* RACBehaviorSubject.h in Headers */,
 				D037660119EDA41200A782A9 /* RACTestScheduler.h in Headers */,
@@ -2133,6 +2143,7 @@
 				57A4D2011BA13D7A00F7D4B1 /* RACTuple.m in Sources */,
 				57A4D2021BA13D7A00F7D4B1 /* RACTupleSequence.m in Sources */,
 				57A4D2031BA13D7A00F7D4B1 /* RACUnarySequence.m in Sources */,
+				5C6AE5C91F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */,
 				57A4D2041BA13D7A00F7D4B1 /* RACUnit.m in Sources */,
 				57A4D2051BA13D7A00F7D4B1 /* RACValueTransformer.m in Sources */,
 			);
@@ -2469,6 +2480,7 @@
 				D037658919EDA41200A782A9 /* RACErrorSignal.m in Sources */,
 				D03765F719EDA41200A782A9 /* RACSubscriptingAssignmentTrampoline.m in Sources */,
 				D037661319EDA41200A782A9 /* RACUnit.m in Sources */,
+				5C6AE5C81F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */,
 				D037662319EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				D03765A119EDA41200A782A9 /* RACKVOTrampoline.m in Sources */,
 				D037665B19EDA41200A782A9 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */,
