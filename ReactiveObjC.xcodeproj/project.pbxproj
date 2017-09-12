@@ -152,6 +152,8 @@
 		5C6AE5C71F67CFA50053EA0C /* UITextField+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C6AE5C81F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */; };
 		5C6AE5C91F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */; };
+		5C6AE5D01F67E2E90053EA0C /* RACTestUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */; };
+		5C6AE5D11F67E2EA0053EA0C /* RACTestUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */; };
 		7A7065811A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065821A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065841A3F8967001E8354 /* RACKVOProxySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */; };
@@ -776,6 +778,8 @@
 		57A4D2471BA13F9700F7D4B1 /* tvOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
 		5C6AE5C41F67CFA50053EA0C /* UITextField+RACCommandSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+RACCommandSupport.h"; sourceTree = "<group>"; };
 		5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+RACCommandSupport.m"; sourceTree = "<group>"; };
+		5C6AE5CA1F67E2BF0053EA0C /* RACTestUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACTestUITextField.h; sourceTree = "<group>"; };
+		5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACTestUITextField.m; sourceTree = "<group>"; };
 		7A70657D1A3F88B8001E8354 /* RACKVOProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACKVOProxy.h; sourceTree = "<group>"; };
 		7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxy.m; sourceTree = "<group>"; };
 		7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxySpec.m; sourceTree = "<group>"; };
@@ -1460,6 +1464,8 @@
 				D0C3131B19EF2D9700984962 /* RACTestSchedulerSpec.m */,
 				D0C3131C19EF2D9700984962 /* RACTestUIButton.h */,
 				D0C3131D19EF2D9700984962 /* RACTestUIButton.m */,
+				5C6AE5CA1F67E2BF0053EA0C /* RACTestUITextField.h */,
+				5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */,
 				D04725FA19E49ED7006002AA /* Supporting Files */,
 			);
 			path = ReactiveObjCTests;
@@ -2165,6 +2171,7 @@
 				7DFBED3E1CDB8DE300EE435B /* RACBlockTrampolineSpec.m in Sources */,
 				7DFBED401CDB8DE300EE435B /* RACChannelExamples.m in Sources */,
 				7DFBED411CDB8DE300EE435B /* RACChannelSpec.m in Sources */,
+				5C6AE5D11F67E2EA0053EA0C /* RACTestUITextField.m in Sources */,
 				7DFBED421CDB8DE300EE435B /* RACCommandSpec.m in Sources */,
 				7DFBED431CDB8DE300EE435B /* RACCompoundDisposableSpec.m in Sources */,
 				7DFBED451CDB8DE300EE435B /* RACControlCommandExamples.m in Sources */,
@@ -2552,6 +2559,7 @@
 				D03766E619EDA60000A782A9 /* RACDisposableSpec.m in Sources */,
 				D03766D419EDA60000A782A9 /* NSUserDefaultsRACSupportSpec.m in Sources */,
 				D03766DC19EDA60000A782A9 /* RACChannelSpec.m in Sources */,
+				5C6AE5D01F67E2E90053EA0C /* RACTestUITextField.m in Sources */,
 				D037671A19EDA60000A782A9 /* UIActionSheetRACSupportSpec.m in Sources */,
 				D03766DA19EDA60000A782A9 /* RACChannelExamples.m in Sources */,
 				D03766F619EDA60000A782A9 /* RACSequenceExamples.m in Sources */,
