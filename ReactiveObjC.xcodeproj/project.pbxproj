@@ -154,6 +154,8 @@
 		5C6AE5C91F67CFA50053EA0C /* UITextField+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */; };
 		5C6AE5D01F67E2E90053EA0C /* RACTestUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */; };
 		5C6AE5D11F67E2EA0053EA0C /* RACTestUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */; };
+		5C6AE5D31F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5D21F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m */; };
+		5C6AE5D41F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6AE5D21F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m */; };
 		7A7065811A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065821A3F88B8001E8354 /* RACKVOProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */; };
 		7A7065841A3F8967001E8354 /* RACKVOProxySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */; };
@@ -780,6 +782,7 @@
 		5C6AE5C51F67CFA50053EA0C /* UITextField+RACCommandSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+RACCommandSupport.m"; sourceTree = "<group>"; };
 		5C6AE5CA1F67E2BF0053EA0C /* RACTestUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACTestUITextField.h; sourceTree = "<group>"; };
 		5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACTestUITextField.m; sourceTree = "<group>"; };
+		5C6AE5D21F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextFieldRACSupportSpec.m; sourceTree = "<group>"; };
 		7A70657D1A3F88B8001E8354 /* RACKVOProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACKVOProxy.h; sourceTree = "<group>"; };
 		7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxy.m; sourceTree = "<group>"; };
 		7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxySpec.m; sourceTree = "<group>"; };
@@ -1466,6 +1469,7 @@
 				D0C3131D19EF2D9700984962 /* RACTestUIButton.m */,
 				5C6AE5CA1F67E2BF0053EA0C /* RACTestUITextField.h */,
 				5C6AE5CB1F67E2BF0053EA0C /* RACTestUITextField.m */,
+				5C6AE5D21F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m */,
 				D04725FA19E49ED7006002AA /* Supporting Files */,
 			);
 			path = ReactiveObjCTests;
@@ -2194,6 +2198,7 @@
 				7DFBED5A1CDB8DE300EE435B /* RACSubjectSpec.m in Sources */,
 				7DFBED5C1CDB8DE300EE435B /* RACSubscriberExamples.m in Sources */,
 				7DFBED5D1CDB8DE300EE435B /* RACSubscriberSpec.m in Sources */,
+				5C6AE5D41F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m in Sources */,
 				7DFBED5E1CDB8DE300EE435B /* RACSubscriptingAssignmentTrampolineSpec.m in Sources */,
 				7DFBED5F1CDB8DE300EE435B /* RACTargetQueueSchedulerSpec.m in Sources */,
 				7DFBED601CDB8DE300EE435B /* RACTupleSpec.m in Sources */,
@@ -2550,6 +2555,7 @@
 				D037670619EDA60000A782A9 /* RACSubscriberExamples.m in Sources */,
 				D03766D819EDA60000A782A9 /* RACBlockTrampolineSpec.m in Sources */,
 				D037670019EDA60000A782A9 /* RACStreamExamples.m in Sources */,
+				5C6AE5D31F67E5DD0053EA0C /* UITextFieldRACSupportSpec.m in Sources */,
 				D03766CC19EDA60000A782A9 /* NSObjectRACSelectorSignalSpec.m in Sources */,
 				D03766E219EDA60000A782A9 /* RACControlCommandExamples.m in Sources */,
 				D03766C019EDA60000A782A9 /* NSNotificationCenterRACSupportSpec.m in Sources */,
