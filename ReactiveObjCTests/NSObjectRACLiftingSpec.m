@@ -366,7 +366,7 @@ qck_describe(@"-rac_liftSelector:withSignalsFromArray:", ^{
 			}];
 
 			[subject sendNext:testBlock];
-			expect(result).notTo(beNil());
+			expect((id)result).notTo(beNil());
 
 			result();
 			expect(@(blockInvoked)).to(beTruthy());
