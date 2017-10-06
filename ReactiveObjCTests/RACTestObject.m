@@ -15,6 +15,10 @@
 	free((void *)_constCharPointerValue);
 }
 
+- (void)setObjectValue:(id)objectValue {
+	_objectValue = objectValue;
+}
+
 - (void)setNilValueForKey:(NSString *)key {
 	if (!self.catchSetNilValueForKey) [super setNilValueForKey:key];
 }
