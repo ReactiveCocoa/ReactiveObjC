@@ -170,7 +170,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///               return value must be an object. This argument cannot be nil.
 ///
 /// Returns a new stream of reduced tuple values.
-- (__kindof RACStream *)reduceEach:(id _Nullable (^)())reduceBlock;
+- (__kindof RACStream *)reduceEach:(id _Nullable (^)(void))reduceBlock;
 
 /// Returns a stream consisting of `value`, followed by the values in the
 /// receiver.
@@ -221,7 +221,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream containing the results from each invocation of
 /// `reduceBlock`.
-+ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(id _Nullable (^)())reduceBlock;
++ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(id _Nullable (^)(void))reduceBlock;
 
 /// Returns a stream obtained by concatenating `streams` in order.
 + (__kindof RACStream<ValueType> *)concat:(id<NSFastEnumeration>)streams;
