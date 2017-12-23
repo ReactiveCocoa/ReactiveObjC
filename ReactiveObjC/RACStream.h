@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wstrict-prototypes\"") \
-typedef id _Nullable (^RACReduceBlock)();
-typedef ValueType _Nullable (^RACGenericReduceBlock)();
+typedef id _Nonnull (^RACReduceBlock)();
+typedef ValueType _Nonnull (^RACGenericReduceBlock)();
 _Pragma("clang diagnostic pop")
 
 /// Returns an empty stream.
@@ -227,7 +227,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream containing the results from each invocation of
 /// `reduceBlock`.
-+ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(RACReduceBlock)reduceBlock;
++ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(RACGenericReduceBlock)reduceBlock;
 
 /// Returns a stream obtained by concatenating `streams` in order.
 + (__kindof RACStream<ValueType> *)concat:(id<NSFastEnumeration>)streams;

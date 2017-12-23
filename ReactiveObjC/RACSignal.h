@@ -268,7 +268,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing the results from each invocation of
 /// `reduceBlock`.
-+ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(RACReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(RACGenericReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal obtained by concatenating `signals` in order.
 + (RACSignal<ValueType> *)concat:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
