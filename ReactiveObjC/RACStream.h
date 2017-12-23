@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wstrict-prototypes\"") \
 typedef id _Nullable (^RACReduceBlock)();
-typedef ValueType _Nullable (^RACReduceBlock2)();
+typedef ValueType _Nullable (^RACGenericReduceBlock)();
 _Pragma("clang diagnostic pop")
 
 /// Returns an empty stream.
