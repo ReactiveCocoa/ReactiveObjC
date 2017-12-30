@@ -139,7 +139,7 @@
 	}] setNameWithFormat:@"[%@] -ignore: %@", self.name, RACDescription(value)];
 }
 
-- (__kindof RACStream *)reduceEach:(id (^)())reduceBlock {
+- (__kindof RACStream *)reduceEach:(RACReduceBlock)reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	__weak RACStream *stream __attribute__((unused)) = self;
@@ -234,7 +234,7 @@
 	}] setNameWithFormat:@"+zip: %@", streams];
 }
 
-+ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams reduce:(id (^)())reduceBlock {
++ (__kindof RACStream *)zip:(id<NSFastEnumeration>)streams reduce:(RACGenericReduceBlock)reduceBlock {
 	NSCParameterAssert(reduceBlock != nil);
 
 	RACStream *result = [self zip:streams];
