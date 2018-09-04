@@ -63,28 +63,9 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 
 #if TARGET_OS_WATCH
 #elif TARGET_OS_IOS || TARGET_OS_TV
-	#import <ReactiveObjC/UIBarButtonItem+RACCommandSupport.h>
-	#import <ReactiveObjC/UIButton+RACCommandSupport.h>
-	#import <ReactiveObjC/UICollectionReusableView+RACSignalSupport.h>
-	#import <ReactiveObjC/UIControl+RACSignalSupport.h>
-	#import <ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h>
-	#import <ReactiveObjC/UISegmentedControl+RACSignalSupport.h>
-	#import <ReactiveObjC/UITableViewCell+RACSignalSupport.h>
-	#import <ReactiveObjC/UITableViewHeaderFooterView+RACSignalSupport.h>
-	#import <ReactiveObjC/UITextField+RACSignalSupport.h>
-	#import <ReactiveObjC/UITextView+RACSignalSupport.h>
 
 	#if TARGET_OS_IOS
 		#import <ReactiveObjC/NSURLConnection+RACSupport.h>
-		#import <ReactiveObjC/UIStepper+RACSignalSupport.h>
-		#import <ReactiveObjC/UIDatePicker+RACSignalSupport.h>
-		#import <ReactiveObjC/UIAlertView+RACSignalSupport.h>
-		#import <ReactiveObjC/UIActionSheet+RACSignalSupport.h>
-		#import <ReactiveObjC/MKAnnotationView+RACSignalSupport.h>
-		#import <ReactiveObjC/UIImagePickerController+RACSignalSupport.h>
-		#import <ReactiveObjC/UIRefreshControl+RACCommandSupport.h>
-		#import <ReactiveObjC/UISlider+RACSignalSupport.h>
-		#import <ReactiveObjC/UISwitch+RACSignalSupport.h>
 	#endif
 #elif TARGET_OS_MAC
 	#import <ReactiveObjC/NSControl+RACCommandSupport.h>
