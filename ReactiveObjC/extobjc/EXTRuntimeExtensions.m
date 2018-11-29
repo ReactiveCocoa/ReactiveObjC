@@ -7,7 +7,7 @@
 //  Released under the MIT license.
 //
 
-#import <ReactiveObjC/EXTRuntimeExtensions.h>
+#import "EXTRuntimeExtensions.h"
 
 #import <ctype.h>
 #import <Foundation/Foundation.h>
