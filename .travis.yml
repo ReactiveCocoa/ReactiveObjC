@@ -24,7 +24,7 @@ matrix:
       env:
         - XCODE_SDK=appletvsimulator
         - XCODE_ACTION="build-for-testing test-without-building"
-        - XCODE_DESTINATION="platform=tvOS Simulator,name=Apple TV 1080p"
+        - XCODE_DESTINATION="platform=tvOS Simulator,name=Apple TV 4K"
     - xcode_scheme: ReactiveObjC-watchOS
       env:
         - XCODE_SDK=watchsimulator
