@@ -328,7 +328,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		RACSerialDisposable *timerDisposable = [[RACSerialDisposable alloc] init];
 		NSMutableArray *values = [NSMutableArray array];
 
-		void (^flushValues)() = ^{
+		void (^flushValues)(void) = ^{
 			@synchronized (values) {
 				[timerDisposable.disposable dispose];
 
