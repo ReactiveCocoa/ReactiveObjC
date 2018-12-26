@@ -13,6 +13,9 @@
 		3A17B4A71E8EFDD800C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A17B4A81E8EFDDA00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A17B4A91E8EFDDF00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4AC5B3B221D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
+		4AC5B3B321D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
+		4AC5B3B421D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
 		57A4D1B21BA13D7A00F7D4B1 /* RACCompoundDisposableProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D037646A19EDA41200A782A9 /* RACCompoundDisposableProvider.d */; };
 		57A4D1B31BA13D7A00F7D4B1 /* RACSignalProvider.d in Sources */ = {isa = PBXBuildFile; fileRef = D03764A319EDA41200A782A9 /* RACSignalProvider.d */; };
 		57A4D1C11BA13D7A00F7D4B1 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D037666819EDA57100A782A9 /* EXTRuntimeExtensions.m */; };
@@ -765,6 +768,7 @@
 		314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+RACSignalSupport.h"; sourceTree = "<group>"; };
 		314304161ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+RACSignalSupport.m"; sourceTree = "<group>"; };
 		3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RACAnnotations.h; sourceTree = "<group>"; };
+		4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RACSwiftBridgingSpec.swift; sourceTree = "<group>"; };
 		57A4D2411BA13D7A00F7D4B1 /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Application.xcconfig"; sourceTree = "<group>"; };
 		57A4D2451BA13F9700F7D4B1 /* tvOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "tvOS-Base.xcconfig"; sourceTree = "<group>"; };
@@ -1438,6 +1442,7 @@
 				D03766A519EDA60000A782A9 /* RACSubscriberExamples.m */,
 				D03766A619EDA60000A782A9 /* RACSubscriberSpec.m */,
 				D03766A719EDA60000A782A9 /* RACSubscriptingAssignmentTrampolineSpec.m */,
+				4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */,
 				D03766A819EDA60000A782A9 /* RACTargetQueueSchedulerSpec.m */,
 				D03766B019EDA60000A782A9 /* RACTupleSpec.m */,
 				D03766B219EDA60000A782A9 /* UIActionSheetRACSupportSpec.m */,
@@ -1948,7 +1953,7 @@
 					};
 					7DFBED021CDB8C9500EE435B = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					A9B315531B3940610001CB9C = {
 						CreatedOnToolsVersion = 7.0;
@@ -1960,7 +1965,7 @@
 					};
 					D04725F419E49ED7006002AA = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					D047260B19E49F82006002AA = {
 						CreatedOnToolsVersion = 6.1;
@@ -1968,7 +1973,7 @@
 					};
 					D047261519E49F82006002AA = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -2179,6 +2184,7 @@
 				7DFBED5E1CDB8DE300EE435B /* RACSubscriptingAssignmentTrampolineSpec.m in Sources */,
 				7DFBED5F1CDB8DE300EE435B /* RACTargetQueueSchedulerSpec.m in Sources */,
 				7DFBED601CDB8DE300EE435B /* RACTupleSpec.m in Sources */,
+				4AC5B3B421D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */,
 				7DFBED631CDB8DE300EE435B /* UIBarButtonItemRACSupportSpec.m in Sources */,
 				7DFBED641CDB8DE300EE435B /* UIButtonRACSupportSpec.m in Sources */,
 				7DFBED671CDB8DE300EE435B /* RACTestExampleScheduler.m in Sources */,
@@ -2386,6 +2392,7 @@
 				D03766DF19EDA60000A782A9 /* RACCompoundDisposableSpec.m in Sources */,
 				D03766E519EDA60000A782A9 /* RACDisposableSpec.m in Sources */,
 				D0C3132019EF2D9700984962 /* RACTestObject.m in Sources */,
+				4AC5B3B221D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */,
 				D03766D319EDA60000A782A9 /* NSUserDefaultsRACSupportSpec.m in Sources */,
 				D03766C119EDA60000A782A9 /* NSObjectRACAppKitBindingsSpec.m in Sources */,
 				D03766DB19EDA60000A782A9 /* RACChannelSpec.m in Sources */,
@@ -2537,6 +2544,7 @@
 				D037670419EDA60000A782A9 /* RACSubjectSpec.m in Sources */,
 				D03766F219EDA60000A782A9 /* RACSchedulerSpec.m in Sources */,
 				D03766E019EDA60000A782A9 /* RACCompoundDisposableSpec.m in Sources */,
+				4AC5B3B321D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */,
 				D03766E619EDA60000A782A9 /* RACDisposableSpec.m in Sources */,
 				D03766D419EDA60000A782A9 /* NSUserDefaultsRACSupportSpec.m in Sources */,
 				D03766DC19EDA60000A782A9 /* RACChannelSpec.m in Sources */,
@@ -2632,6 +2640,7 @@
 			baseConfigurationReference = 57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2640,6 +2649,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -2648,6 +2659,7 @@
 			baseConfigurationReference = 57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2656,6 +2668,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Test;
 		};
@@ -2664,6 +2678,7 @@
 			baseConfigurationReference = 57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2672,6 +2687,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -2680,6 +2697,7 @@
 			baseConfigurationReference = 57A4D2441BA13F9700F7D4B1 /* tvOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2688,6 +2706,7 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Profile;
 		};
@@ -2828,6 +2847,7 @@
 			baseConfigurationReference = D047263719E49FE8006002AA /* Mac-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
@@ -2835,6 +2855,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -2843,6 +2865,7 @@
 			baseConfigurationReference = D047263719E49FE8006002AA /* Mac-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
@@ -2850,6 +2873,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -2884,9 +2909,12 @@
 			baseConfigurationReference = D047263219E49FE8006002AA /* iOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -2895,9 +2923,12 @@
 			baseConfigurationReference = D047263219E49FE8006002AA /* iOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -2941,6 +2972,7 @@
 			baseConfigurationReference = D047263719E49FE8006002AA /* Mac-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
@@ -2948,6 +2980,7 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Profile;
 		};
@@ -2969,9 +3002,11 @@
 			baseConfigurationReference = D047263219E49FE8006002AA /* iOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Profile;
 		};
@@ -3015,6 +3050,7 @@
 			baseConfigurationReference = D047263719E49FE8006002AA /* Mac-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
@@ -3022,6 +3058,8 @@
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Test;
 		};
@@ -3043,9 +3081,12 @@
 			baseConfigurationReference = D047263219E49FE8006002AA /* iOS-Application.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Test;
 		};
