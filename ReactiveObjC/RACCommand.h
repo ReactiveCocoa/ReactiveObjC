@@ -13,10 +13,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The domain for errors originating within `RACCommand`.
-extern NSString * const RACCommandErrorDomain;
+extern NSErrorDomain const RACCommandErrorDomain;
 
-/// -execute: was invoked while the command was disabled.
-extern const NSInteger RACCommandErrorNotEnabled;
+typedef NS_ERROR_ENUM(RACCommandErrorDomain, RACCommandError) {
+	/// -execute: was invoked while the command was disabled.
+	RACCommandErrorNotEnabled = 1,
+};
 
 /// A `userInfo` key for an error, associated with the `RACCommand` that the
 /// error originated from.

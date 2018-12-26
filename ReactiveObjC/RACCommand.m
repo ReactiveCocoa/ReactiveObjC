@@ -19,10 +19,8 @@
 #import "RACSignal+Operations.h"
 #import <libkern/OSAtomic.h>
 
-NSString * const RACCommandErrorDomain = @"RACCommandErrorDomain";
+NSErrorDomain const RACCommandErrorDomain = @"RACCommandErrorDomain";
 NSString * const RACUnderlyingCommandErrorKey = @"RACUnderlyingCommandErrorKey";
-
-const NSInteger RACCommandErrorNotEnabled = 1;
 
 @interface RACCommand () {
 	// Atomic backing variable for `allowsConcurrentExecution`.
