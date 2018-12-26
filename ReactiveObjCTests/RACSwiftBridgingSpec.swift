@@ -4,6 +4,13 @@ import ReactiveObjC
 
 final class RACSwiftBridgingSpec: QuickSpec {
 	override func spec() {
+		describe("RACCommandError") {
+			it("bridges RACCommandErrorNotEnabled to a Swift error code") {
+				let error: Error = NSError(domain: RACCommandErrorDomain, code: 1)
+				expect(RACCommandError.notEnabled ~= error).to(beTrue())
+			}
+		}
+
 		describe("RACSignalError") {
 			it("bridges RACSignalErrorTimedOut to a Swift error code") {
 				let error: Error = NSError(domain: RACSignalErrorDomain, code: 1)

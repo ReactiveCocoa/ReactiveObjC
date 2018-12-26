@@ -6,6 +6,9 @@
 //  Copyright © 2018 GitHub. All rights reserved.
 //
 
+@available(*, deprecated, renamed: "RACSignalError.notEnabled")
+public let RACCommandErrorNotEnabled = RACCommandError.notEnabled.rawValue
+
 @available(*, deprecated, renamed: "RACSignalError.noMatchingCase")
 public let RACSignalErrorNoMatchingCase = RACSignalError.noMatchingCase.rawValue
 
