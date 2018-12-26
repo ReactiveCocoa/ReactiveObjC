@@ -11,6 +11,13 @@ final class RACSwiftBridgingSpec: QuickSpec {
 			}
 		}
 
+		describe("RACSelectorSignalError") {
+			it("bridges RACSelectorSignalErrorMethodSwizzlingRace to a Swift error code") {
+				let error: Error = NSError(domain: RACSelectorSignalErrorDomain, code: 1)
+				expect(RACSelectorSignalError.methodSwizzlingRace ~= error).to(beTrue())
+			}
+		}
+
 		describe("RACSignalError") {
 			it("bridges RACSignalErrorTimedOut to a Swift error code") {
 				let error: Error = NSError(domain: RACSignalErrorDomain, code: 1)
