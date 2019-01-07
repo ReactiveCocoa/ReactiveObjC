@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode10
 before_install: true
 install: true
 branches:
@@ -24,7 +24,7 @@ matrix:
       env:
         - XCODE_SDK=appletvsimulator
         - XCODE_ACTION="build-for-testing test-without-building"
-        - XCODE_DESTINATION="platform=tvOS Simulator,name=Apple TV 1080p"
+        - XCODE_DESTINATION="platform=tvOS Simulator,name=Apple TV 4K"
     - xcode_scheme: ReactiveObjC-watchOS
       env:
         - XCODE_SDK=watchsimulator
@@ -55,6 +55,7 @@ matrix:
       env:
         - JOB=CARTHAGE-watchOS
     - script:
+      - gem install cocoapods --pre
       - pod repo update --silent
       - pod lib lint ReactiveObjC.podspec
       env:
