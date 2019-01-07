@@ -54,7 +54,7 @@
 
 			BOOL isObject = attributes->objectClass != nil || strstr(attributes->type, @encode(id)) == attributes->type;
 			BOOL isProtocol = attributes->objectClass == NSClassFromString(@"Protocol");
-			BOOL isBlock = strcmp(attributes->type, @encode(void(^)())) == 0;
+			BOOL isBlock = strcmp(attributes->type, @encode(void(^)(void))) == 0;
 			BOOL isWeak = attributes->weak;
 
 			// If this property isn't actually an object (or is a Class object),

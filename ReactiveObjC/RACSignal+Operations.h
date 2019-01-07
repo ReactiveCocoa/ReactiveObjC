@@ -24,14 +24,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The domain for errors originating in RACSignal operations.
-extern NSString * const RACSignalErrorDomain;
+extern NSErrorDomain const RACSignalErrorDomain;
 
-/// The error code used with -timeout:.
-extern const NSInteger RACSignalErrorTimedOut;
-
-/// The error code used when a value passed into +switch:cases:default: does not
-/// match any of the cases, and no default was given.
-extern const NSInteger RACSignalErrorNoMatchingCase;
+typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
+	/// The error code used with -timeout:.
+	RACSignalErrorTimedOut = 1,
+	/// The error code used when a value passed into +switch:cases:default: does not
+	/// match any of the cases, and no default was given.
+	RACSignalErrorNoMatchingCase = 2,
+};
 
 @interface RACSignal<__covariant ValueType> (Operations)
 

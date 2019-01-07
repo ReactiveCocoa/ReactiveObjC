@@ -28,7 +28,7 @@
 + (id)invokeBlock:(id)block withArguments:(RACTuple *)arguments {
 	NSCParameterAssert(block != NULL);
 
-	RACBlockTrampoline *trampoline = [[self alloc] initWithBlock:block];
+	RACBlockTrampoline *trampoline = [(RACBlockTrampoline *)[self alloc] initWithBlock:block];
 	return [trampoline invokeWithArguments:arguments];
 }
 
