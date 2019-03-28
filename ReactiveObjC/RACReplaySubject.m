@@ -85,11 +85,12 @@ const NSUInteger RACReplaySubjectUnlimitedCapacity = NSUIntegerMax;
 - (void)sendNext:(id)value {
 	@synchronized (self) {
 		[self.valuesReceived addObject:value ?: RACTupleNil.tupleNil];
-		[super sendNext:value];
 		
 		if (self.capacity != RACReplaySubjectUnlimitedCapacity && self.valuesReceived.count > self.capacity) {
 			[self.valuesReceived removeObjectsInRange:NSMakeRange(0, self.valuesReceived.count - self.capacity)];
 		}
+		
+		[super sendNext:value];
 	}
 }
 

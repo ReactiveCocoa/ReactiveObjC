@@ -96,6 +96,21 @@ qck_describe(@"RACReplaySubject", ^{
 		qck_beforeEach(^{
 			subject = [RACReplaySubject replaySubjectWithCapacity:1];
 		});
+		
+		qck_it(@"should send same latest value to multiple subscribers in another subscription", ^{
+			__block NSMutableArray *values = [NSMutableArray array];
+			
+			[subject subscribeNext:^(id  _Nullable item1) {
+				[values addObject:item1];
+				[[subject take:1] subscribeNext:^(id  _Nullable item2) {
+					[values addObject:item2];
+				}];
+			}];
+			[subject sendNext:@1];
+			[subject sendNext:@2];
+			
+			expect(values).to(equal(@[@1, @1, @2, @2]));
+		});
 
 		qck_it(@"should send the last value", ^{
 			id firstValue = @"blah";
