@@ -2906,6 +2906,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -2923,6 +2924,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -3038,6 +3040,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_VERSION = 4.2;
 			};
@@ -3121,6 +3124,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
