@@ -122,11 +122,18 @@ static CFMutableArrayRef RACCreateDisposablesArray(void) {
 	}
 	#endif
 
+    CFArrayRef disposablesArray = NULL;
+    
+    pthread_mutex_lock(&_mutex);
 	if (_disposables != NULL) {
-		CFRelease(_disposables);
+        disposablesArray = _disposables;
 		_disposables = NULL;
 	}
+    pthread_mutex_unlock(&_mutex);
 
+    if(disposablesArray != NULL) {
+        CFRelease(disposablesArray);
+    }
 	const int result __attribute__((unused)) = pthread_mutex_destroy(&_mutex);
 	NSCAssert(0 == result, @"Failed to destroy mutex with error %d.", result);
 }
