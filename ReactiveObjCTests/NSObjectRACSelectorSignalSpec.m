@@ -9,8 +9,12 @@
 @import Quick;
 @import Nimble;
 
+#import <objc/message.h>
+
 #import "RACTestObject.h"
 #import "RACSubclassObject.h"
+
+#import <ReactiveObjC/EXTScope.h>
 
 #import "NSObject+RACDeallocating.h"
 #import "NSObject+RACPropertySubscribing.h"
@@ -193,7 +197,7 @@ qck_describe(@"RACTestObject", ^{
 
 		expect(@([object respondsToSelector:selector])).to(beTruthy());
 	});
-
+	
 	qck_it(@"should properly implement -respondsToSelector: when called on signalForSelector'd receiver that has subsequently been KVO'd", ^{
 		RACTestObject *object = [[RACTestObject alloc] init];
 
@@ -303,6 +307,123 @@ qck_describe(@"RACTestObject", ^{
 		
 		[object setObjectValue:@YES andSecondObjectValue:@"Winner"];
 		expect(@(invokedMethodBefore)).to(beTruthy());
+	});
+});
+
+qck_describe(@"hotpatch with dynamic subclassing", ^{
+	__block BOOL patchApplied;
+	__block RACTestObject * object;
+	__block Class originalClass;
+
+	qck_beforeEach(^{
+		patchApplied = NO;
+		object = [[RACTestObject alloc] init];
+		originalClass = RACTestObject.class;
+	});
+
+	qck_it(@"should perform hot-patch successfully on a dynamic subclassed class", ^{
+		// A dynamic subclass created by KVO and `signalForSelector:`.
+		[[RACObserve(object, objectValue) publish] connect];
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		// Simulator of hotpatch: disable a selector then re-implementing it in forwardInvocation:
+		SEL selectorPatched = @selector(methodHotpatch);
+		
+		//   Step 1: disable original selector
+		Method method = class_getInstanceMethod(originalClass, selectorPatched);
+		const char *typeDescription = (char *)method_getTypeEncoding(method);
+		IMP originalImp = class_replaceMethod(originalClass, selectorPatched, _objc_msgForward, typeDescription);
+		@onExit { // restore hotpatch
+			class_replaceMethod(originalClass, selectorPatched, originalImp, typeDescription);
+		};
+		
+		//   Step 2: re-implementing it in forwardInvocation: (similar process as jsPatch)
+		id patchForwardInvocationBlock = ^(id self, NSInvocation *invocation) {
+			if (invocation.selector == selectorPatched) {
+				expect(@(patchApplied)).to(beFalsy());
+				patchApplied = YES;
+			}
+		};
+		IMP hpForwardInvocation = imp_implementationWithBlock(patchForwardInvocationBlock);
+		
+		//   Step 3: applying newly patched selector
+		IMP originalForwardImp = class_replaceMethod(originalClass, @selector(forwardInvocation:), hpForwardInvocation, "v@:@");
+		@onExit { // restore hotpatch
+			class_replaceMethod(originalClass, @selector(forwardInvocation:), originalForwardImp, "v@:@");
+		};
+		
+		// Calling patched method
+		[object methodHotpatch];
+		
+		expect(@(patchApplied)).to(beTruthy());
+	});
+	
+	qck_it(@"should perform hot-patch successfully on a selector intercepted by rac_signalForSelector:", ^{
+		// A dynamic subclass created by `signalForSelector:`.
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		// Simulator of hotpatch: disable a selector then re-implementing it in forwardInvocation:
+		SEL selectorPatched = @selector(lifeIsGood:);
+		
+		//   Step 1: disable original selector
+		Method method = class_getInstanceMethod(originalClass, selectorPatched);
+		const char *typeDescription = (char *)method_getTypeEncoding(method);
+		IMP originalImp = class_replaceMethod(originalClass, selectorPatched, _objc_msgForward, typeDescription);
+		@onExit { // restore
+			class_replaceMethod(originalClass, selectorPatched, originalImp, typeDescription);
+		};
+		
+		//   Step 2: re-implementing it in forwardInvocation: (similar process as jsPatch)
+		id patchForwardInvocationBlock = ^(id self, NSInvocation *invocation) {
+			if (invocation.selector == selectorPatched) {
+				expect(@(patchApplied)).to(beFalsy());
+				patchApplied = YES;
+			}
+		};
+		IMP hpForwardInvocation = imp_implementationWithBlock(patchForwardInvocationBlock);
+		
+		//   Step 3: applying newly patched selector
+		IMP originalForwardImp = class_replaceMethod(originalClass, @selector(forwardInvocation:), hpForwardInvocation, "v@:@");
+		@onExit { // restore
+			class_replaceMethod(originalClass, @selector(forwardInvocation:), originalForwardImp, "v@:@");
+		};
+		
+		// Calling patched method
+		[object lifeIsGood:nil];
+		
+		expect(@(patchApplied)).to(beTruthy());
+	});
+
+	qck_it(@"should perform method-swizzling successfully on a selector intercepted by rac_signalForSelector:", ^{
+		// A dynamic subclass created by `signalForSelector:`.
+		[object rac_signalForSelector:@selector(lifeIsGood:)];
+		
+		// Simulator of hotpatch: disable a selector then re-implementing it in forwardInvocation:
+		SEL selectorPatched = @selector(lifeIsGood:);
+		
+		//   Step 1: typeDescription on original selector
+		Method method = class_getInstanceMethod(originalClass, selectorPatched);
+		const char *typeDescription = (char *)method_getTypeEncoding(method);
+		
+		//   Step 2: re-implementing method
+		id methodSwizzlingBlock = ^(id self, NSInvocation *invocation) {
+			if (invocation.selector == selectorPatched) {
+				expect(@(patchApplied)).to(beFalsy());
+				patchApplied = YES;
+			}
+		};
+		IMP methodSwizzlingInvocation = imp_implementationWithBlock(methodSwizzlingBlock);
+		
+		//   Step 3: applying newly patched selector
+		IMP originalImp = class_replaceMethod(originalClass, selectorPatched, methodSwizzlingInvocation, typeDescription);
+		@onExit { // restore
+			class_replaceMethod(originalClass, selectorPatched, originalImp, typeDescription);
+		};
+		
+		// Calling patched method
+		[object lifeIsGood:nil];
+		
+		expect(@(patchApplied)).to(beTruthy());
 	});
 });
 
