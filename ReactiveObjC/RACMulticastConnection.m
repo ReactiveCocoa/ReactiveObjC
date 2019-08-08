@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, readonly, strong) RACSignal *sourceSignal;
-@property (strong) RACSerialDisposable *serialDisposable;
+@property (atomic, strong) RACSerialDisposable *serialDisposable;
 @end
 
 @implementation RACMulticastConnection
@@ -51,10 +51,19 @@
 #pragma mark Connecting
 
 - (RACDisposable *)connect {
-	BOOL shouldConnect = OSAtomicCompareAndSwap32Barrier(0, 1, &_hasConnected);
+	int32_t volatile *hasConnected = &_hasConnected;
+	BOOL shouldConnect = OSAtomicCompareAndSwap32Barrier(0, 1, hasConnected);
 
 	if (shouldConnect) {
-		self.serialDisposable.disposable = [self.sourceSignal subscribe:_signal];
+		if ([self.serialDisposable isDisposed]) {
+			self.serialDisposable = [[RACSerialDisposable alloc] init];
+		}
+        
+		RACDisposable *d = [self.sourceSignal subscribe:_signal];
+		self.serialDisposable.disposable = [RACDisposable disposableWithBlock:^{
+			OSAtomicCompareAndSwap32Barrier(1, 0, hasConnected);
+			[d dispose];
+		}];
 	}
 
 	return self.serialDisposable;
