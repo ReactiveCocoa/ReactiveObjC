@@ -56,12 +56,12 @@
 #define RACObserve(TARGET, KEYPATH) _RACObserve(TARGET, KEYPATH)
 #else
 #define RACObserve(TARGET, KEYPATH) \
-({ \
+( \
 	_Pragma("clang diagnostic push") \
 	_Pragma("clang diagnostic ignored \"-Wreceiver-is-weak\"") \
 	_RACObserve(TARGET, KEYPATH) \
 	_Pragma("clang diagnostic pop") \
-})
+)
 #endif
 
 @class RACDisposable;
