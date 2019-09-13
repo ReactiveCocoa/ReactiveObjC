@@ -4,6 +4,8 @@ _NOTE: This is legacy introduction to the Objective-C ReactiveCocoa, which is
 now known as ReactiveObjC. For the updated version that uses Swift, please see
 [ReactiveCocoa][] or [ReactiveSwift][]_
 
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](#carthage) [![CocoaPods compatible](https://img.shields.io/cocoapods/v/ReactiveObjC.svg)](#cocoapods) [![GitHub release](https://img.shields.io/github/release/ReactiveCocoa/ReactiveObjC.svg)](https://github.com/ReactiveCocoa/ReactiveObjC/releases) ![platforms](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS-lightgrey.svg)
+
 ReactiveObjC (formally ReactiveCocoa or RAC) is an Objective-C framework
 inspired by [Functional Reactive Programming][]. It provides APIs for
 **composing and transforming streams of values**.
@@ -484,9 +486,9 @@ RACSequence *results = [[strings.rac_sequence
 	}];
 ```
 
-## System Requirements
+## Getting started
 
-ReactiveObjC supports OS X 10.8+ and iOS 8.0+.
+ReactiveObjC supports macOS 10.9+, iOS 8.0+, watchOS 2.0+ and tvOS 9.0+.
 
 ## Importing ReactiveObjC
 
@@ -512,6 +514,26 @@ To add RAC to your application:
 
 To see a project already set up with RAC, check out [C-41][] or [GroceryList][],
 which are real iOS apps written using ReactiveObjC.
+
+#### Carthage
+
+If you use [Carthage][] to manage your dependencies, simply add
+ReactiveObjC to your `Cartfile`:
+
+```
+github "ReactiveCocoa/ReactiveObjC" ~> 3.0
+```
+
+If you use Carthage to build your dependencies, make sure you have added `ReactiveObjC.framework` to the "_Linked Frameworks and Libraries_" section of your target, and have included them in your Carthage framework copying build phase.
+
+#### CocoaPods
+
+If you use [CocoaPods][] to manage your dependencies, simply add
+ReactiveObjC to your `Podfile`:
+
+```
+pod 'ReactiveObjC', '~> 3.0'
+```
 
 ## More Info
 
@@ -545,3 +567,5 @@ are some resources related to FRP:
 [RACSignal]: ReactiveOjC/RACSignal.h
 [futures and promises]: http://en.wikipedia.org/wiki/Futures_and_promises
 [C-41]: https://github.com/AshFurrow/C-41
+[Carthage]: https://github.com/Carthage/Carthage/
+[CocoaPods]: https://cocoapods.org/
