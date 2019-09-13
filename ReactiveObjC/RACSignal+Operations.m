@@ -491,6 +491,65 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		setNameWithFormat:@"+merge: %@", copiedSignals];
 }
 
+- (RACSignal *)amb:(RACSignal *)signal {
+	NSParameterAssert(signal);
+	
+	return [[RACSignal
+		createSignal:^(id<RACSubscriber> subscriber) {
+			__block RACDisposable *d = nil;
+			__block BOOL hasChosen = NO;
+			NSRecursiveLock *lock = NSRecursiveLock.new;
+			
+			RACDisposable * (^decide)(RACSignal *, RACDisposable *) = ^(RACSignal *s, RACDisposable *disposeMe) {
+				return [s subscribeNext:^(id _Nullable value) {
+					[lock lock];
+					
+					if (!hasChosen)	{
+						hasChosen = YES;
+						[disposeMe dispose];
+						[subscriber sendNext:value];
+						d = [s subscribe:subscriber];
+					}
+					
+					[lock unlock];
+				} error:^(NSError *error) {
+					[lock lock];
+					
+					if (!hasChosen)	{
+						hasChosen = YES;
+						[disposeMe dispose];
+						[subscriber sendError:error];
+					}
+					
+					[lock unlock];
+				} completed:^{
+					[lock lock];
+					
+					if (!hasChosen)	{
+						hasChosen = YES;
+						[disposeMe dispose];
+						[subscriber sendCompleted];
+					}
+					
+					[lock unlock];
+				}];
+			};
+			
+			RACSerialDisposable *d1 = [RACSerialDisposable serialDisposableWithDisposable:nil];
+			RACSerialDisposable *d2 = [RACSerialDisposable serialDisposableWithDisposable:nil];
+			
+			d1.disposable = decide(self, d2);
+			d2.disposable = decide(signal, d1);
+			
+			return [RACDisposable disposableWithBlock:^{
+				[d dispose];
+				[d1 dispose];
+				[d2 dispose];
+			}];
+		}]
+		setNameWithFormat:@"[%@] -amb: %@", self.name, signal];
+}
+
 - (RACSignal *)flatten:(NSUInteger)maxConcurrent {
 	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
 		RACCompoundDisposable *compoundDisposable = [[RACCompoundDisposable alloc] init];
