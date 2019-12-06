@@ -440,7 +440,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal which transforms all the values of the receiver. If
 /// `mapBlock` returns nil for any value, the returned signal will error using
 /// the `NSError` passed out from the block.
-- (RACSignal *)tryMap:(id (^)(id _Nullable value, NSError **errorPtr))mapBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)tryMap:(id _Nullable (^)(id _Nullable value, NSError **errorPtr))mapBlock RAC_WARN_UNUSED_RESULT;
 
 /// Returns the first `next`. Note that this is a blocking call.
 - (nullable ValueType)first;
