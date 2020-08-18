@@ -26,7 +26,7 @@
 #import "RACSubscriber.h"
 #import "RACTuple.h"
 #import "RACUnit.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 #import <objc/runtime.h>
 
 NSErrorDomain const RACSignalErrorDomain = @"RACSignalErrorDomain";
@@ -646,7 +646,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 	// Purposely not retaining 'object', since we want to tear down the binding
 	// when it deallocates normally.
-	__block void * volatile objectPtr = (__bridge void *)object;
+	__block _Atomic(void *) objectPtr = (__bridge void *)object;
 
 	RACDisposable *subscriptionDisposable = [self subscribeNext:^(id x) {
 		// Possibly spec, possibly compiler bug, but this __bridge cast does not
@@ -698,7 +698,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 		while (YES) {
 			void *ptr = objectPtr;
-			if (OSAtomicCompareAndSwapPtrBarrier(ptr, NULL, &objectPtr)) {
+			if (atomic_compare_exchange_strong(&objectPtr, &ptr, NULL)) {
 				break;
 			}
 		}
@@ -1048,17 +1048,17 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 - (RACSignal *)deliverOnMainThread {
 	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
-		__block volatile int32_t queueLength = 0;
+		__block atomic_int queueLength = 0;
 		
 		void (^performOnMainThread)(dispatch_block_t) = ^(dispatch_block_t block) {
-			int32_t queued = OSAtomicIncrement32(&queueLength);
+			int32_t queued = atomic_fetch_add(&queueLength, 1) + 1;
 			if (NSThread.isMainThread && queued == 1) {
 				block();
-				OSAtomicDecrement32(&queueLength);
+				atomic_fetch_sub(&queueLength, 1);
 			} else {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					block();
-					OSAtomicDecrement32(&queueLength);
+					atomic_fetch_sub(&queueLength, 1);
 				});
 			}
 		};
