@@ -2601,6 +2601,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -2620,6 +2621,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Test;
@@ -2639,6 +2641,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
@@ -2658,6 +2661,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 			};
 			name = Profile;
 		};
@@ -2673,6 +2677,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2690,6 +2695,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2707,6 +2713,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2724,6 +2731,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 			};
 			name = Profile;
@@ -2743,6 +2751,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -2762,6 +2771,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Test;
@@ -2781,6 +2791,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
@@ -2800,6 +2811,7 @@
 					"DTRACE_PROBES_DISABLED=1",
 				);
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 			};
 			name = Profile;
 		};
@@ -2873,6 +2885,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -2889,6 +2902,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -2906,6 +2920,7 @@
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2923,6 +2938,7 @@
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2939,6 +2955,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -2955,6 +2972,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -2967,6 +2985,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2979,6 +2998,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3023,6 +3043,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
 			name = Profile;
@@ -3039,6 +3060,7 @@
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 			};
 			name = Profile;
@@ -3054,6 +3076,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
 			name = Profile;
@@ -3065,6 +3088,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 			};
 			name = Profile;
@@ -3108,6 +3132,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -3125,6 +3150,7 @@
 				);
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3141,6 +3167,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				MACH_O_TYPE = staticlib;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -3153,6 +3180,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
