@@ -5,6 +5,7 @@ install: true
 branches:
   only:
     - master
+    - main
 script:
   - script/build
 xcode_workspace: ReactiveObjC.xcworkspace
