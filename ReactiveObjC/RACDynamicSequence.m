@@ -116,7 +116,7 @@
 - (void)dealloc {
 	static atomic_int directDeallocCount = 0;
 
-	if (atomic_fetch_add(&directDeallocCount, 1) >= DEALLOC_OVERFLOW_GUARD) {
+	if (atomic_fetch_add(&directDeallocCount, 1) + 1 >= DEALLOC_OVERFLOW_GUARD) {
 		atomic_fetch_add(&directDeallocCount, -DEALLOC_OVERFLOW_GUARD);
 
 		// Put this sequence's tail onto the autorelease pool so we stop
