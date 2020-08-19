@@ -5,6 +5,7 @@
 //  Created by Dave Lee on 2013-06-22.
 //  Copyright (c) 2013 GitHub, Inc. All rights reserved.
 //
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_9_0
 
 #import "UIActionSheet+RACSignalSupport.h"
 #import "RACDelegateProxy.h"
@@ -47,3 +48,5 @@ static void RACUseDelegateProxy(UIActionSheet *self) {
 }
 
 @end
+
+#endif 
