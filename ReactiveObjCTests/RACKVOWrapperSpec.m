@@ -571,6 +571,8 @@ qck_describe(@"rac_addObserver:forKeyPath:options:block:", ^{
 			__weak id identifier = nil;
 
 			@autoreleasepool {
+				expect(targetClass).notTo(beNil());
+				
 				// Create an observable target that we control the memory management of.
 				CFTypeRef target = CFBridgingRetain([[targetClass alloc] init]);
 				expect((__bridge id)target).notTo(beNil());
