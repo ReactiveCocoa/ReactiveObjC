@@ -1,3 +1,4 @@
+os: osx
 language: objective-c
 osx_image: xcode11.6
 before_install: true
@@ -9,7 +10,7 @@ branches:
 script:
   - script/build
 xcode_workspace: ReactiveObjC.xcworkspace
-matrix:
+jobs:
   include:
     - xcode_scheme: ReactiveObjC-macOS
       env:
