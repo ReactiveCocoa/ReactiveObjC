@@ -1,4 +1,5 @@
 # ReactiveObjC
+[![Build Status](https://travis-ci.org/ReactiveCocoa/ReactiveObjC.svg?branch=master)](https://travis-ci.org/ReactiveCocoa/ReactiveObjC)
 
 _NOTE: This is legacy introduction to the Objective-C ReactiveCocoa, which is
 now known as ReactiveObjC. For the updated version that uses Swift, please see
