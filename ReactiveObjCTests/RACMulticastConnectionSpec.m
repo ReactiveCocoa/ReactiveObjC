@@ -15,7 +15,6 @@
 #import "RACSubscriber.h"
 #import "RACReplaySubject.h"
 #import "RACScheduler.h"
-#import <libkern/OSAtomic.h>
 
 QuickSpecBegin(RACMulticastConnectionSpec)
 

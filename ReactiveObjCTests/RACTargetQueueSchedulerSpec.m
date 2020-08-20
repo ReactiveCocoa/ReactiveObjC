@@ -10,7 +10,7 @@
 @import Nimble;
 
 #import "RACTargetQueueScheduler.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 QuickSpecBegin(RACTargetQueueSchedulerSpec)
 
@@ -28,20 +28,20 @@ qck_it(@"should have a valid current scheduler", ^{
 qck_it(@"should schedule blocks FIFO even when given a concurrent queue", ^{
 	dispatch_queue_t queue = dispatch_queue_create("test-queue", DISPATCH_QUEUE_CONCURRENT);
 	RACScheduler *scheduler = [[RACTargetQueueScheduler alloc] initWithName:@"test-scheduler" targetQueue:queue];
-	__block volatile int32_t startedCount = 0;
-	__block volatile uint32_t waitInFirst = 1;
+	__block atomic_int startedCount = 0;
+	__block atomic_uint waitInFirst = 1;
 	[scheduler schedule:^{
-		OSAtomicIncrement32Barrier(&startedCount);
+		atomic_fetch_add(&startedCount, 1);
 		while (waitInFirst == 1) ;
 	}];
 
 	[scheduler schedule:^{
-		OSAtomicIncrement32Barrier(&startedCount);
+		atomic_fetch_add(&startedCount, 1);
 	}];
 
 	expect(@(startedCount)).toEventually(equal(@1));
 
-	OSAtomicAnd32Barrier(0, &waitInFirst);
+	atomic_fetch_and(&waitInFirst, 0);
 
 	expect(@(startedCount)).toEventually(equal(@2));
 });

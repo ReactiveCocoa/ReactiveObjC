@@ -11,7 +11,6 @@
 
 #import <ctype.h>
 #import <Foundation/Foundation.h>
-#import <libkern/OSAtomic.h>
 #import <objc/message.h>
 #import <pthread.h>
 #import <stdio.h>

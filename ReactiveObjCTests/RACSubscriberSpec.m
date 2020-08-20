@@ -13,15 +13,15 @@
 
 #import "RACSubscriber.h"
 #import "RACSubscriber+Private.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 QuickSpecBegin(RACSubscriberSpec)
 
 __block RACSubscriber *subscriber;
 __block NSMutableArray *values;
 
-__block volatile BOOL finished;
-__block volatile int32_t nextsAfterFinished;
+__block _Atomic(BOOL) finished;
+__block atomic_int nextsAfterFinished;
 
 __block BOOL success;
 __block NSError *error;
@@ -36,7 +36,7 @@ qck_beforeEach(^{
 	error = nil;
 
 	subscriber = [RACSubscriber subscriberWithNext:^(id value) {
-		if (finished) OSAtomicIncrement32Barrier(&nextsAfterFinished);
+		if (finished) atomic_fetch_add(&nextsAfterFinished, 1);
 
 		[values addObject:value];
 	} error:^(NSError *e) {
@@ -111,7 +111,7 @@ qck_describe(@"finishing", ^{
 			[subscriber sendCompleted];
 
 			finished = YES;
-			OSMemoryBarrier();
+			atomic_thread_fence(memory_order_seq_cst);
 		});
 	});
 
@@ -122,7 +122,7 @@ qck_describe(@"finishing", ^{
 			[subscriber sendError:nil];
 
 			finished = YES;
-			OSMemoryBarrier();
+			atomic_thread_fence(memory_order_seq_cst);
 		});
 	});
 });
