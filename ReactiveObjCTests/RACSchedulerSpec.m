@@ -15,7 +15,6 @@
 #import "RACDisposable.h"
 #import <ReactiveObjC/EXTScope.h>
 #import "RACTestExampleScheduler.h"
-#import <libkern/OSAtomic.h>
 
 // This shouldn't be used directly. Use the `expectCurrentSchedulers` block
 // below instead.

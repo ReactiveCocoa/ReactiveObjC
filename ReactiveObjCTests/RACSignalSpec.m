@@ -33,7 +33,7 @@
 #import "RACTestScheduler.h"
 #import "RACTuple.h"
 #import "RACUnit.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 // Set in a beforeAll below.
 static NSError *RACSignalTestError;
@@ -111,7 +111,7 @@ qck_describe(@"RACStream", ^{
 	};
 
 	RACSignal *infiniteSignal = [RACSignal createSignal:^(id<RACSubscriber> subscriber) {
-		__block volatile int32_t done = 0;
+		__block atomic_int done = 0;
 
 		[RACScheduler.mainThreadScheduler schedule:^{
 			while (!done) {
@@ -120,7 +120,7 @@ qck_describe(@"RACStream", ^{
 		}];
 
 		return [RACDisposable disposableWithBlock:^{
-			OSAtomicIncrement32Barrier(&done);
+			atomic_fetch_add(&done, 1);
 		}];
 	}];
 

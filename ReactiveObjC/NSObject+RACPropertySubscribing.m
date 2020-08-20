@@ -17,7 +17,6 @@
 #import "RACSubscriber.h"
 #import "RACSignal+Operations.h"
 #import "RACTuple.h"
-#import <libkern/OSAtomic.h>
 
 @implementation NSObject (RACPropertySubscribing)
 

@@ -7,7 +7,7 @@
 //
 
 #import "RACDynamicSequence.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 // Determines how RACDynamicSequences will be deallocated before the next one is
 // shifted onto the autorelease pool.
@@ -114,10 +114,10 @@
 }
 
 - (void)dealloc {
-	static volatile int32_t directDeallocCount = 0;
+	static atomic_int directDeallocCount = 0;
 
-	if (OSAtomicIncrement32(&directDeallocCount) >= DEALLOC_OVERFLOW_GUARD) {
-		OSAtomicAdd32(-DEALLOC_OVERFLOW_GUARD, &directDeallocCount);
+	if (atomic_fetch_add(&directDeallocCount, 1) + 1 >= DEALLOC_OVERFLOW_GUARD) {
+		atomic_fetch_add(&directDeallocCount, -DEALLOC_OVERFLOW_GUARD);
 
 		// Put this sequence's tail onto the autorelease pool so we stop
 		// recursing.

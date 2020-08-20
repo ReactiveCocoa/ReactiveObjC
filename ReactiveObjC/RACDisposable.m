@@ -8,7 +8,7 @@
 
 #import "RACDisposable.h"
 #import "RACScopedDisposable.h"
-#import <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 @interface RACDisposable () {
 	// A copied block of type void (^)(void) containing the logic for disposal,
@@ -16,7 +16,7 @@
 	// NULL if the receiver is already disposed.
 	//
 	// This should only be used atomically.
-	void * volatile _disposeBlock;
+	_Atomic(void *) _disposeBlock;
 }
 
 @end
@@ -35,7 +35,7 @@
 	self = [super init];
 
 	_disposeBlock = (__bridge void *)self;
-	OSMemoryBarrier();
+	atomic_thread_fence(memory_order_seq_cst);
 
 	return self;
 }
@@ -46,7 +46,7 @@
 	self = [super init];
 
 	_disposeBlock = (void *)CFBridgingRetain([block copy]); 
-	OSMemoryBarrier();
+	atomic_thread_fence(memory_order_seq_cst);
 
 	return self;
 }
@@ -69,7 +69,7 @@
 
 	while (YES) {
 		void *blockPtr = _disposeBlock;
-		if (OSAtomicCompareAndSwapPtrBarrier(blockPtr, NULL, &_disposeBlock)) {
+		if (atomic_compare_exchange_strong(&_disposeBlock, &blockPtr, NULL)) {
 			if (blockPtr != (__bridge void *)self) {
 				disposeBlock = CFBridgingRelease(blockPtr);
 			}

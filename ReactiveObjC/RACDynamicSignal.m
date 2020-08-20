@@ -12,7 +12,6 @@
 #import "RACPassthroughSubscriber.h"
 #import "RACScheduler+Private.h"
 #import "RACSubscriber.h"
-#import <libkern/OSAtomic.h>
 
 @interface RACDynamicSignal ()
 
