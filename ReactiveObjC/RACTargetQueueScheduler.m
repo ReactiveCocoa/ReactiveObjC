@@ -20,7 +20,7 @@
 		name = [NSString stringWithFormat:@"org.reactivecocoa.ReactiveObjC.RACTargetQueueScheduler(%s)", dispatch_queue_get_label(targetQueue)];
 	}
 
-	dispatch_queue_t queue = dispatch_queue_create(name.UTF8String, DISPATCH_QUEUE_SERIAL);
+	dispatch_queue_t queue = dispatch_queue_create(name.UTF8String, DISPATCH_QUEUE_CONCURRENT);
 	if (queue == NULL) return nil;
 
 	dispatch_set_target_queue(queue, targetQueue);
