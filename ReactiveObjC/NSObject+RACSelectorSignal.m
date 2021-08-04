@@ -73,7 +73,17 @@ static void RACSwizzleForwardInvocation(Class class) {
 	// invoke any existing implementation of -forwardInvocation:. If there
 	// was no existing implementation, throw an unrecognized selector
 	// exception.
+    
 	id newForwardInvocation = ^(id self, NSInvocation *invocation) {
+		
+        // 去除rac_alias_前缀
+        NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"rac_alias"];
+        NSString *trimmedString = [NSStringFromSelector(invocation.selector) stringByTrimmingCharactersInSet:set];
+        
+        // 将target和selctor传出去
+		NSDictionary * info = @{@"target":NSStringFromClass([invocation.target  class]),@"selector":trimmedString};
+		[NSNotificationCenter.defaultCenter postNotificationName:@"RACForwardInvocation_Dot" object:nil userInfo:info];
+        
 		BOOL matched = RACForwardInvocation(self, invocation);
 		if (matched) return;
 
