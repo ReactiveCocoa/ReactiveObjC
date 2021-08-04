@@ -74,6 +74,10 @@ static void RACSwizzleForwardInvocation(Class class) {
 	// was no existing implementation, throw an unrecognized selector
 	// exception.
 	id newForwardInvocation = ^(id self, NSInvocation *invocation) {
+		
+		NSDictionary * info = @{@"target":NSStringFromClass([invocation.target  class]),@"selector":NSStringFromSelector(invocation.selector)};
+		[NSNotificationCenter.defaultCenter postNotificationName:@"RACForwardInvocation_Dot" object:info];
+		
 		BOOL matched = RACForwardInvocation(self, invocation);
 		if (matched) return;
 
