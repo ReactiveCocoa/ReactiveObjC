@@ -62,7 +62,9 @@
 		[subscribers addObject:subscriber];
 	}
 	
+    @weakify(subscriber, subscribers);
 	[disposable addDisposable:[RACDisposable disposableWithBlock:^{
+		@strongify(subscriber, subscribers);
 		@synchronized (subscribers) {
 			// Since newer subscribers are generally shorter-lived, search
 			// starting from the end of the list.
