@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.screenshots  = "https://reactivecocoa.io/img/logo.png"
   s.license      = { type: "MIT", file: "LICENSE.md" }
 
-  s.documentation_url  = "https://github.com/aioser/ReactiveObjC/"\
+  s.documentation_url  = "https://github.com/ReactiveCocoa/ReactiveObjC/"\
                          "tree/master/Documentation#readme"
 
   s.author             = "ReactiveCocoa"
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target     = "11.0"
 
-  s.source = { git: "https://github.com/ReactiveCocoa/ReactiveObjC.git",
+  s.source = { git: "https://github.com/aioser/ReactiveObjC.git",
                tag: s.version }
 
   s.source_files          = "ReactiveObjC/*.{h,m,d}",
