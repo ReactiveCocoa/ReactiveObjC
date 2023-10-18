@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// to the command's `canExecute`.
 ///
 /// Note: this will reset the control's target and action.
-@property (nonatomic, strong, nullable) RACCommand<__kindof UIBarButtonItem *, id> *rac_command;
+@property(nonatomic, strong, nullable) RACCommand<__kindof UIBarButtonItem *, id> *rac_command;
 
 @end
 

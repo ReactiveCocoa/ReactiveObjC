@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///     subscribeNext:^(UIButton *x) {
 ///         // do other things
 ///     }];
-@property (nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
+@property(nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
 
 @end
 

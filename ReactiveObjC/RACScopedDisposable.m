@@ -13,20 +13,20 @@
 #pragma mark Lifecycle
 
 + (instancetype)scopedDisposableWithDisposable:(RACDisposable *)disposable {
-	return [self disposableWithBlock:^{
-		[disposable dispose];
-	}];
+  return [self disposableWithBlock:^{
+    [disposable dispose];
+  }];
 }
 
 - (void)dealloc {
-	[self dispose];
+  [self dispose];
 }
 
 #pragma mark RACDisposable
 
 - (RACScopedDisposable *)asScopedDisposable {
-	// totally already are
-	return self;
+  // totally already are
+  return self;
 }
 
 @end

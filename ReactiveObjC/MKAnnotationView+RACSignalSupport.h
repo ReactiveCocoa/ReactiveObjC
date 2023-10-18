@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 GitHub. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <UIKit/UIKit.h>
 
 @class RACSignal<__covariant ValueType>;
 @class RACUnit;
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///     subscribeNext:^(UIButton *x) {
 ///         // do other things
 ///     }];
-@property (nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
+@property(nonatomic, strong, readonly) RACSignal<RACUnit *> *rac_prepareForReuseSignal;
 
 @end
 

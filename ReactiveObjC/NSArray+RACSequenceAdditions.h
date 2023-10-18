@@ -12,12 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSArray<__covariant ObjectType> (RACSequenceAdditions)
+@interface NSArray <__covariant ObjectType>(RACSequenceAdditions)
 
 /// Creates and returns a sequence corresponding to the receiver.
 ///
 /// Mutating the receiver will not affect the sequence after it's been created.
-@property (nonatomic, copy, readonly) RACSequence<ObjectType> *rac_sequence;
+@property(nonatomic, copy, readonly) RACSequence<ObjectType> *rac_sequence;
 
 @end
 

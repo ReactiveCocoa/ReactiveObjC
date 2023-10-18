@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 GitHub. All rights reserved.
 //
 
-#import "NSSet+RACSequenceAdditions.h"
 #import "NSArray+RACSequenceAdditions.h"
+#import "NSSet+RACSequenceAdditions.h"
 
 @implementation NSSet (RACSequenceAdditions)
 
 - (RACSequence *)rac_sequence {
-	// TODO: First class support for set sequences.
-	return self.allObjects.rac_sequence;
+  // TODO: First class support for set sequences.
+  return self.allObjects.rac_sequence;
 }
 
 @end

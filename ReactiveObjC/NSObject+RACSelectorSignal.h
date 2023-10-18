@@ -14,16 +14,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The domain for any errors originating from -rac_signalForSelector:.
-extern NSErrorDomain const RACSelectorSignalErrorDomain;
+extern NSString *const RACSelectorSignalErrorDomain;
 
-typedef NS_ERROR_ENUM(RACSelectorSignalErrorDomain, RACSelectorSignalError) {
-	/// -rac_signalForSelector: was going to add a new method implementation for
-	/// `selector`, but another thread added an implementation before it was able to.
-	///
-	/// This will _not_ occur for cases where a method implementation exists before
-	/// -rac_signalForSelector: is invoked.
-	RACSelectorSignalErrorMethodSwizzlingRace = 1,
-};
+/// -rac_signalForSelector: was going to add a new method implementation for
+/// `selector`, but another thread added an implementation before it was able to.
+///
+/// This will _not_ occur for cases where a method implementation exists before
+/// -rac_signalForSelector: is invoked.
+extern const NSInteger RACSelectorSignalErrorMethodSwizzlingRace;
 
 @interface NSObject (RACSelectorSignal)
 

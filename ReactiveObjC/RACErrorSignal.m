@@ -13,7 +13,7 @@
 @interface RACErrorSignal ()
 
 // The error to send upon subscription.
-@property (nonatomic, strong, readonly) NSError *error;
+@property(nonatomic, strong, readonly) NSError *error;
 
 @end
 
@@ -22,26 +22,26 @@
 #pragma mark Lifecycle
 
 + (RACSignal *)error:(NSError *)error {
-	RACErrorSignal *signal = [[self alloc] init];
-	signal->_error = error;
+  RACErrorSignal *signal = [[self alloc] init];
+  signal->_error = error;
 
 #ifdef DEBUG
-	[signal setNameWithFormat:@"+error: %@", error];
+  [signal setNameWithFormat:@"+error: %@", error];
 #else
-	signal.name = @"+error:";
+  signal.name = @"+error:";
 #endif
 
-	return signal;
+  return signal;
 }
 
 #pragma mark Subscription
 
 - (RACDisposable *)subscribe:(id<RACSubscriber>)subscriber {
-	NSCParameterAssert(subscriber != nil);
+  NSCParameterAssert(subscriber != nil);
 
-	return [RACScheduler.subscriptionScheduler schedule:^{
-		[subscriber sendError:self.error];
-	}];
+  return [RACScheduler.subscriptionScheduler schedule:^{
+    [subscriber sendError:self.error];
+  }];
 }
 
 @end

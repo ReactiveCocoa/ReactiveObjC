@@ -31,19 +31,19 @@ NS_ASSUME_NONNULL_BEGIN
 /// The first object in the sequence, or nil if the sequence is empty.
 ///
 /// Subclasses must provide an implementation of this method.
-@property (nonatomic, strong, readonly, nullable) ValueType head;
+@property(nonatomic, strong, readonly, nullable) ValueType head;
 
 /// All but the first object in the sequence, or nil if there are no other
 /// objects.
 ///
 /// Subclasses must provide an implementation of this method.
-@property (nonatomic, strong, readonly, nullable) RACSequence<ValueType> *tail;
+@property(nonatomic, strong, readonly, nullable) RACSequence<ValueType> *tail;
 
 /// Evaluates the full sequence to produce an equivalently-sized array.
-@property (nonatomic, copy, readonly) NSArray<ValueType> *array;
+@property(nonatomic, copy, readonly) NSArray<ValueType> *array;
 
 /// Returns an enumerator of all objects in the sequence.
-@property (nonatomic, copy, readonly) NSEnumerator<ValueType> *objectEnumerator;
+@property(nonatomic, copy, readonly) NSEnumerator<ValueType> *objectEnumerator;
 
 /// Converts a sequence into an eager sequence.
 ///
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a new eager sequence, or the receiver if the sequence is already
 /// eager.
-@property (nonatomic, copy, readonly) RACSequence<ValueType> *eagerSequence;
+@property(nonatomic, copy, readonly) RACSequence<ValueType> *eagerSequence;
 
 /// Converts a sequence into a lazy sequence.
 ///
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Sequences derived from a lazy sequence will also be lazy.
 ///
 /// Returns a new lazy sequence, or the receiver if the sequence is already lazy.
-@property (nonatomic, copy, readonly) RACSequence<ValueType> *lazySequence;
+@property(nonatomic, copy, readonly) RACSequence<ValueType> *lazySequence;
 
 /// Invokes -signalWithScheduler: with a new RACScheduler.
 - (RACSignal<ValueType> *)signal;
@@ -87,7 +87,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///          Cannot be nil.
 ///
 /// Returns a reduced value.
-- (id)foldLeftWithStart:(nullable id)start reduce:(id _Nullable (^)(id _Nullable accumulator, ValueType _Nullable value))reduce;
+- (id)foldLeftWithStart:(nullable id)start
+                 reduce:
+                     (id _Nullable (^)(id _Nullable accumulator, ValueType _Nullable value))reduce;
 
 /// Applies a right fold to the sequence.
 ///
@@ -106,7 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///          don't need to.
 ///
 /// Returns a reduced value.
-- (id)foldRightWithStart:(nullable id)start reduce:(id _Nullable (^)(id _Nullable first, RACSequence *rest))reduce;
+- (id)foldRightWithStart:(nullable id)start
+                  reduce:(id _Nullable (^)(id _Nullable first, RACSequence *rest))reduce;
 
 /// Check if any value in sequence passes the block.
 ///
@@ -146,11 +149,13 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a sequence that lazily invokes the given blocks to provide head and
 /// tail. `headBlock` must not be nil.
-+ (RACSequence<ValueType> *)sequenceWithHeadBlock:(ValueType _Nullable (^)(void))headBlock tailBlock:(nullable RACSequence<ValueType> *(^)(void))tailBlock;
++ (RACSequence<ValueType> *)sequenceWithHeadBlock:(ValueType _Nullable (^)(void))headBlock
+                                        tailBlock:
+                                            (nullable RACSequence<ValueType> * (^)(void))tailBlock;
 
 @end
 
-@interface RACSequence<__covariant ValueType> (RACStream)
+@interface RACSequence <__covariant ValueType>(RACStream)
 
 /// Returns a sequence that immediately sends the given value and then completes.
 + (RACSequence<ValueType> *)return:(nullable ValueType)value;
@@ -162,7 +167,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Setting `stop` to `YES` will cause the bind to terminate after the returned
 /// value. Returning `nil` will result in immediate termination.
-typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable value, BOOL *stop);
+typedef RACSequence *_Nullable (^RACSequenceBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
@@ -197,7 +202,7 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable valu
 
 /// Redeclarations of operations built on the RACStream primitives with more
 /// precise type information.
-@interface RACSequence<__covariant ValueType> (RACStreamOperations)
+@interface RACSequence <__covariant ValueType>(RACStreamOperations)
 
 /// Maps `block` across the values in the receiver and flattens the result.
 ///
@@ -212,7 +217,7 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable valu
 ///
 /// Returns a new sequence which represents the combined sequences resulting
 /// from mapping `block`.
-- (RACSequence *)flattenMap:(__kindof RACSequence * _Nullable (^)(ValueType _Nullable value))block;
+- (RACSequence *)flattenMap:(__kindof RACSequence *_Nullable (^)(ValueType _Nullable value))block;
 
 /// Flattens a sequence of sequences.
 ///
@@ -342,7 +347,9 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable valu
 ///
 /// Returns a new sequence that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty sequence is returned.
-- (RACSequence *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
+- (RACSequence *)scanWithStart:(nullable id)startingValue
+                        reduce:(id _Nullable (^)(id _Nullable running,
+                                                 ValueType _Nullable next))reduceBlock;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
@@ -356,7 +363,9 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable valu
 ///
 /// Returns a new sequence that consists of each application of `reduceBlock`.
 /// If the receiver is empty, an empty sequence is returned.
-- (RACSequence *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock;
+- (RACSequence *)scanWithStart:(nullable id)startingValue
+               reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next,
+                                                 NSUInteger index))reduceBlock;
 
 /// Combines each previous and current value into one object.
 ///
@@ -374,13 +383,17 @@ typedef RACSequence * _Nullable (^RACSequenceBindBlock)(ValueType _Nullable valu
 ///      RACSequence *numbers = [@[ @1, @2, @3, @4 ].rac_sequence;
 ///
 ///      // Contains 1, 3, 5, 7
-///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
+///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous,
+///      NSNumber *next) {
 ///          return @(previous.integerValue + next.integerValue);
 ///      }];
 ///
 /// Returns a new sequence consisting of the return values from each application of
 /// `reduceBlock`.
-- (RACSequence *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock;
+- (RACSequence *)combinePreviousWithStart:(nullable ValueType)start
+                                   reduce:
+                                       (id _Nullable (^)(ValueType _Nullable previous,
+                                                         ValueType _Nullable current))reduceBlock;
 
 /// Takes values until the given block returns `YES`.
 ///

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // The delegate to which messages should be forwarded if not handled by
 // any -signalForSelector: applications.
-@property (nonatomic, unsafe_unretained) id rac_proxiedDelegate;
+@property(nonatomic, unsafe_unretained) id rac_proxiedDelegate;
 
 // Creates a delegate proxy capable of responding to selectors from `protocol`.
 - (instancetype)initWithProtocol:(Protocol *)protocol;

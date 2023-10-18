@@ -10,16 +10,16 @@
 #import <pthread/pthread.h>
 
 @interface RACSerialDisposable () {
-	// The receiver's `disposable`. This variable must only be referenced while
-	// _mutex is held.
-	RACDisposable * _disposable;
+  // The receiver's `disposable`. This variable must only be referenced while
+  // _mutex is held.
+  RACDisposable *_disposable;
 
-	// YES if the receiver has been disposed. This variable must only be accessed
-	// while _mutex is held.
-	BOOL _disposed;
+  // YES if the receiver has been disposed. This variable must only be accessed
+  // while _mutex is held.
+  BOOL _disposed;
 
-	// A mutex to protect access to _disposable and _disposed.
-	pthread_mutex_t _mutex;
+  // A mutex to protect access to _disposable and _disposed.
+  pthread_mutex_t _mutex;
 }
 
 @end
@@ -29,93 +29,93 @@
 #pragma mark Properties
 
 - (BOOL)isDisposed {
-	pthread_mutex_lock(&_mutex);
-	const BOOL disposed = _disposed;
-	pthread_mutex_unlock(&_mutex);
+  pthread_mutex_lock(&_mutex);
+  const BOOL disposed = _disposed;
+  pthread_mutex_unlock(&_mutex);
 
-	return disposed;
+  return disposed;
 }
 
 - (RACDisposable *)disposable {
-	pthread_mutex_lock(&_mutex);
-	RACDisposable * const result = _disposable;
-	pthread_mutex_unlock(&_mutex);
+  pthread_mutex_lock(&_mutex);
+  RACDisposable *const result = _disposable;
+  pthread_mutex_unlock(&_mutex);
 
-	return result;
+  return result;
 }
 
 - (void)setDisposable:(RACDisposable *)disposable {
-	[self swapInDisposable:disposable];
+  [self swapInDisposable:disposable];
 }
 
 #pragma mark Lifecycle
 
 + (instancetype)serialDisposableWithDisposable:(RACDisposable *)disposable {
-	RACSerialDisposable *serialDisposable = [[self alloc] init];
-	serialDisposable.disposable = disposable;
-	return serialDisposable;
+  RACSerialDisposable *serialDisposable = [[self alloc] init];
+  serialDisposable.disposable = disposable;
+  return serialDisposable;
 }
 
 - (instancetype)init {
-	self = [super init];
-	if (self == nil) return nil;
+  self = [super init];
+  if (self == nil) return nil;
 
-	const int result __attribute__((unused)) = pthread_mutex_init(&_mutex, NULL);
-	NSCAssert(0 == result, @"Failed to initialize mutex with error %d", result);
+  const int result __attribute__((unused)) = pthread_mutex_init(&_mutex, NULL);
+  NSCAssert(0 == result, @"Failed to initialize mutex with error %d", result);
 
-	return self;
+  return self;
 }
 
 - (instancetype)initWithBlock:(void (^)(void))block {
-	self = [self init];
-	if (self == nil) return nil;
+  self = [self init];
+  if (self == nil) return nil;
 
-	self.disposable = [RACDisposable disposableWithBlock:block];
+  self.disposable = [RACDisposable disposableWithBlock:block];
 
-	return self;
+  return self;
 }
 
 - (void)dealloc {
-	const int result __attribute__((unused)) = pthread_mutex_destroy(&_mutex);
-	NSCAssert(0 == result, @"Failed to destroy mutex with error %d", result);
+  const int result __attribute__((unused)) = pthread_mutex_destroy(&_mutex);
+  NSCAssert(0 == result, @"Failed to destroy mutex with error %d", result);
 }
 
 #pragma mark Inner Disposable
 
 - (RACDisposable *)swapInDisposable:(RACDisposable *)newDisposable {
-	RACDisposable *existingDisposable;
-	BOOL alreadyDisposed;
+  RACDisposable *existingDisposable;
+  BOOL alreadyDisposed;
 
-	pthread_mutex_lock(&_mutex);
-	alreadyDisposed = _disposed;
-	if (!alreadyDisposed) {
-		existingDisposable = _disposable;
-		_disposable = newDisposable;
-	}
-	pthread_mutex_unlock(&_mutex);
+  pthread_mutex_lock(&_mutex);
+  alreadyDisposed = _disposed;
+  if (!alreadyDisposed) {
+    existingDisposable = _disposable;
+    _disposable = newDisposable;
+  }
+  pthread_mutex_unlock(&_mutex);
 
-	if (alreadyDisposed) {
-		[newDisposable dispose];
-		return nil;
-	}
+  if (alreadyDisposed) {
+    [newDisposable dispose];
+    return nil;
+  }
 
-	return existingDisposable;
+  return existingDisposable;
 }
 
 #pragma mark Disposal
 
 - (void)dispose {
-	RACDisposable *existingDisposable;
+  RACDisposable *existingDisposable;
 
-	pthread_mutex_lock(&_mutex);
-	if (!_disposed) {
-		existingDisposable = _disposable;
-		_disposed = YES;
-		_disposable = nil;
-	}
-	pthread_mutex_unlock(&_mutex);
-	
-	[existingDisposable dispose];
+  pthread_mutex_lock(&_mutex);
+  if (!_disposed) {
+    existingDisposable = _disposable;
+    _disposed = YES;
+    _disposable = nil;
+  }
+  pthread_mutex_unlock(&_mutex);
+
+  [existingDisposable dispose];
 }
 
 @end

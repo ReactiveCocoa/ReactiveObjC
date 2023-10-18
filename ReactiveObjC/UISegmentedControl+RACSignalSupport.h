@@ -21,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a RACChannelTerminal that sends the receiver's currently selected
 /// segment's index whenever the UIControlEventValueChanged control event is
 /// fired, and sets the selected segment index to the values it receives.
-- (RACChannelTerminal<NSNumber *> *)rac_newSelectedSegmentIndexChannelWithNilValue:(nullable NSNumber *)nilValue;
+- (RACChannelTerminal<NSNumber *> *)rac_newSelectedSegmentIndexChannelWithNilValue:
+    (nullable NSNumber *)nilValue;
 
 @end
 

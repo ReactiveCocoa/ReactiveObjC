@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// the receiver.
 ///
 /// Mutating the receiver will not affect the sequence after it's been created.
-@property (nonatomic, copy, readonly) RACSequence<NSNumber *> *rac_sequence;
+@property(nonatomic, copy, readonly) RACSequence<NSNumber *> *rac_sequence;
 
 @end
 

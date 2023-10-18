@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Note that encoding won't be valid until the signal completes successfully.
 //
 // scheduler - cannot be nil.
-+ (RACSignal<NSString *> *)rac_readContentsOfURL:(NSURL *)URL usedEncoding:(NSStringEncoding *)encoding scheduler:(RACScheduler *)scheduler;
++ (RACSignal<NSString *> *)rac_readContentsOfURL:(NSURL *)URL
+                                    usedEncoding:(NSStringEncoding *)encoding
+                                       scheduler:(RACScheduler *)scheduler;
 
 @end
 

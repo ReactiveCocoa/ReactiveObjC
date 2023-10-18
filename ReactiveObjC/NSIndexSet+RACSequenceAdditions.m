@@ -12,7 +12,7 @@
 @implementation NSIndexSet (RACSequenceAdditions)
 
 - (RACSequence *)rac_sequence {
-	return [RACIndexSetSequence sequenceWithIndexSet:self];
+  return [RACIndexSetSequence sequenceWithIndexSet:self];
 }
 
 @end

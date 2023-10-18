@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// New subscribers to this terminal will not receive a starting value, but will
 /// receive all future values that are sent to the `followingTerminal`.
-@property (nonatomic, strong, readonly) RACChannelTerminal<ValueType> *leadingTerminal;
+@property(nonatomic, strong, readonly) RACChannelTerminal<ValueType> *leadingTerminal;
 
 /// The terminal which "follows" the lead of the other terminal, only sending
 /// _future_ values to the subscribers of the `leadingTerminal`.
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The latest value sent to the `leadingTerminal` (if any) will be sent
 /// immediately to new subscribers of this terminal, and then all future values
 /// as well.
-@property (nonatomic, strong, readonly) RACChannelTerminal<ValueType> *followingTerminal;
+@property(nonatomic, strong, readonly) RACChannelTerminal<ValueType> *followingTerminal;
 
 @end
 
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// terminals.
 ///
 /// Do not instantiate this class directly. Create a RACChannel instead.
-@interface RACChannelTerminal<ValueType> : RACSignal<ValueType> <RACSubscriber>
+@interface RACChannelTerminal<ValueType> : RACSignal <ValueType> <RACSubscriber>
 
 - (instancetype)init __attribute__((unavailable("Instantiate a RACChannel instead")));
 

@@ -21,6 +21,7 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 #import <ReactiveObjC/NSDictionary+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSEnumerator+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSFileHandle+RACSupport.h>
+#import <ReactiveObjC/NSIndexSet+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSNotificationCenter+RACSupport.h>
 #import <ReactiveObjC/NSObject+RACDeallocating.h>
 #import <ReactiveObjC/NSObject+RACLifting.h>
@@ -30,7 +31,6 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 #import <ReactiveObjC/NSSet+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSString+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSString+RACSupport.h>
-#import <ReactiveObjC/NSIndexSet+RACSequenceAdditions.h>
 #import <ReactiveObjC/NSUserDefaults+RACSupport.h>
 #import <ReactiveObjC/RACBehaviorSubject.h>
 #import <ReactiveObjC/RACChannel.h>
@@ -42,11 +42,11 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 #import <ReactiveObjC/RACGroupedSignal.h>
 #import <ReactiveObjC/RACKVOChannel.h>
 #import <ReactiveObjC/RACMulticastConnection.h>
-#import <ReactiveObjC/RACQueueScheduler.h>
 #import <ReactiveObjC/RACQueueScheduler+Subclass.h>
+#import <ReactiveObjC/RACQueueScheduler.h>
 #import <ReactiveObjC/RACReplaySubject.h>
-#import <ReactiveObjC/RACScheduler.h>
 #import <ReactiveObjC/RACScheduler+Subclass.h>
+#import <ReactiveObjC/RACScheduler.h>
 #import <ReactiveObjC/RACScopedDisposable.h>
 #import <ReactiveObjC/RACSequence.h>
 #import <ReactiveObjC/RACSerialDisposable.h>
@@ -63,33 +63,33 @@ FOUNDATION_EXPORT const unsigned char ReactiveObjCVersionString[];
 
 #if TARGET_OS_WATCH
 #elif TARGET_OS_IOS || TARGET_OS_TV
-	#import <ReactiveObjC/UIBarButtonItem+RACCommandSupport.h>
-	#import <ReactiveObjC/UIButton+RACCommandSupport.h>
-	#import <ReactiveObjC/UICollectionReusableView+RACSignalSupport.h>
-	#import <ReactiveObjC/UIControl+RACSignalSupport.h>
-	#import <ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h>
-	#import <ReactiveObjC/UISegmentedControl+RACSignalSupport.h>
-	#import <ReactiveObjC/UITableViewCell+RACSignalSupport.h>
-	#import <ReactiveObjC/UITableViewHeaderFooterView+RACSignalSupport.h>
-	#import <ReactiveObjC/UITextField+RACSignalSupport.h>
-	#import <ReactiveObjC/UITextView+RACSignalSupport.h>
+#import <ReactiveObjC/UIBarButtonItem+RACCommandSupport.h>
+#import <ReactiveObjC/UIButton+RACCommandSupport.h>
+#import <ReactiveObjC/UICollectionReusableView+RACSignalSupport.h>
+#import <ReactiveObjC/UIControl+RACSignalSupport.h>
+#import <ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h>
+#import <ReactiveObjC/UISegmentedControl+RACSignalSupport.h>
+#import <ReactiveObjC/UITableViewCell+RACSignalSupport.h>
+#import <ReactiveObjC/UITableViewHeaderFooterView+RACSignalSupport.h>
+#import <ReactiveObjC/UITextField+RACSignalSupport.h>
+#import <ReactiveObjC/UITextView+RACSignalSupport.h>
 
-	#if TARGET_OS_IOS
-		#import <ReactiveObjC/NSURLConnection+RACSupport.h>
-		#import <ReactiveObjC/UIStepper+RACSignalSupport.h>
-		#import <ReactiveObjC/UIDatePicker+RACSignalSupport.h>
-		#import <ReactiveObjC/UIAlertView+RACSignalSupport.h>
-		#import <ReactiveObjC/UIActionSheet+RACSignalSupport.h>
-		#import <ReactiveObjC/MKAnnotationView+RACSignalSupport.h>
-		#import <ReactiveObjC/UIImagePickerController+RACSignalSupport.h>
-		#import <ReactiveObjC/UIRefreshControl+RACCommandSupport.h>
-		#import <ReactiveObjC/UISlider+RACSignalSupport.h>
-		#import <ReactiveObjC/UISwitch+RACSignalSupport.h>
-	#endif
+#if TARGET_OS_IOS
+#import <ReactiveObjC/NSURLConnection+RACSupport.h>
+#import <ReactiveObjC/UIStepper+RACSignalSupport.h>
+#import <ReactiveObjC/UIDatePicker+RACSignalSupport.h>
+#import <ReactiveObjC/UIAlertView+RACSignalSupport.h>
+#import <ReactiveObjC/UIActionSheet+RACSignalSupport.h>
+#import <ReactiveObjC/MKAnnotationView+RACSignalSupport.h>
+#import <ReactiveObjC/UIImagePickerController+RACSignalSupport.h>
+#import <ReactiveObjC/UIRefreshControl+RACCommandSupport.h>
+#import <ReactiveObjC/UISlider+RACSignalSupport.h>
+#import <ReactiveObjC/UISwitch+RACSignalSupport.h>
+#endif
 #elif TARGET_OS_MAC
-	#import <ReactiveObjC/NSControl+RACCommandSupport.h>
-	#import <ReactiveObjC/NSControl+RACTextSignalSupport.h>
-	#import <ReactiveObjC/NSObject+RACAppKitBindings.h>
-	#import <ReactiveObjC/NSText+RACSignalSupport.h>
-	#import <ReactiveObjC/NSURLConnection+RACSupport.h>
+#import <ReactiveObjC/NSControl+RACCommandSupport.h>
+#import <ReactiveObjC/NSControl+RACTextSignalSupport.h>
+#import <ReactiveObjC/NSObject+RACAppKitBindings.h>
+#import <ReactiveObjC/NSText+RACSignalSupport.h>
+#import <ReactiveObjC/NSURLConnection+RACSupport.h>
 #endif

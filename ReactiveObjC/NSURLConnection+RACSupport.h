@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// then send a tuple of the received response and downloaded data, and complete
 /// on a background thread. If any errors occur, the returned signal will error
 /// out.
-+ (RACSignal<RACTwoTuple<NSURLResponse *, NSData *> *> *)rac_sendAsynchronousRequest:(NSURLRequest *)request;
++ (RACSignal<RACTwoTuple<NSURLResponse *, NSData *> *> *)rac_sendAsynchronousRequest:
+    (NSURLRequest *)request;
 
 @end
 

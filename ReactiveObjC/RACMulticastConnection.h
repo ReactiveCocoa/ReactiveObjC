@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RACMulticastConnection<__covariant ValueType> : NSObject
 
 /// The multicasted signal.
-@property (nonatomic, strong, readonly) RACSignal<ValueType> *signal;
+@property(nonatomic, strong, readonly) RACSignal<ValueType> *signal;
 
 /// Connect to the underlying signal by subscribing to it. Calling this multiple
 /// times does nothing but return the existing connection's disposable.

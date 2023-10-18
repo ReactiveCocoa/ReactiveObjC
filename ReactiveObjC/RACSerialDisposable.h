@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// this property, then set the property to nil. If any new disposable is set
 /// after the receiver is disposed, it will be disposed immediately and this
 /// property will remain set to nil.
-@property (atomic, strong, nullable) RACDisposable *disposable;
+@property(atomic, strong, nullable) RACDisposable *disposable;
 
 /// Creates a serial disposable which will wrap the given disposable.
 ///

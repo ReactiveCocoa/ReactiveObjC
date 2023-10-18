@@ -10,7 +10,7 @@
 
 @class RACSubject;
 
-@interface RACMulticastConnection<__covariant ValueType> ()
+@interface RACMulticastConnection <__covariant ValueType>()
 
 - (instancetype)initWithSourceSignal:(RACSignal<ValueType> *)source subject:(RACSubject *)subject;
 

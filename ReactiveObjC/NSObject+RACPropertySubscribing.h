@@ -46,22 +46,18 @@
 /// Returns a signal which sends the current value of the key path on
 /// subscription, then sends the new value every time it changes, and sends
 /// completed if self or observer is deallocated.
-#define _RACObserve(TARGET, KEYPATH) \
-({ \
-	__weak id target_ = (TARGET); \
-	[target_ rac_valuesForKeyPath:@keypath(TARGET, KEYPATH) observer:self]; \
-})
+#define _RACObserve(TARGET, KEYPATH)                                        \
+  ({                                                                        \
+    __weak id target_ = (TARGET);                                           \
+    [target_ rac_valuesForKeyPath:@keypath(TARGET, KEYPATH) observer:self]; \
+  })
 
 #if __clang__ && (__clang_major__ >= 8)
 #define RACObserve(TARGET, KEYPATH) _RACObserve(TARGET, KEYPATH)
 #else
-#define RACObserve(TARGET, KEYPATH) \
-({ \
-	_Pragma("clang diagnostic push") \
-	_Pragma("clang diagnostic ignored \"-Wreceiver-is-weak\"") \
-	_RACObserve(TARGET, KEYPATH) \
-	_Pragma("clang diagnostic pop") \
-})
+#define RACObserve(TARGET, KEYPATH)                                                             \
+  ({_Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wreceiver-is-weak\"") \
+        _RACObserve(TARGET, KEYPATH) _Pragma("clang diagnostic pop")})
 #endif
 
 @class RACDisposable;
@@ -96,25 +92,31 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a signal that sends tuples containing the current value at the key
 /// path and the change dictionary for each KVO callback.
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
-- (RACSignal<RACTwoTuple<id, NSDictionary *> *> *)rac_valuesAndChangesForKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options observer:(__weak NSObject *)observer;
+- (RACSignal<RACTwoTuple<id, NSDictionary *> *> *)
+    rac_valuesAndChangesForKeyPath:(NSString *)keyPath
+                           options:(NSKeyValueObservingOptions)options
+                          observer:(__weak NSObject *)observer;
 #else
-- (RACSignal<RACTwoTuple<id, NSDictionary *> *> *)rac_valuesAndChangesForKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options observer:(NSObject *)observer;
+- (RACSignal<RACTwoTuple<id, NSDictionary *> *> *)
+    rac_valuesAndChangesForKeyPath:(NSString *)keyPath
+                           options:(NSKeyValueObservingOptions)options
+                          observer:(NSObject *)observer;
 #endif
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#define RACAble(...) \
-	metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__)) \
-		(_RACAbleObject(self, __VA_ARGS__)) \
-		(_RACAbleObject(__VA_ARGS__))
+#define RACAble(...)                                                                      \
+  metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(_RACAbleObject(self, __VA_ARGS__))( \
+      _RACAbleObject(__VA_ARGS__))
 
-#define _RACAbleObject(object, property) [object rac_signalForKeyPath:@keypath(object, property) observer:self]
+#define _RACAbleObject(object, property) \
+  [object rac_signalForKeyPath:@keypath(object, property) observer:self]
 
-#define RACAbleWithStart(...) \
-	metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__)) \
-		(_RACAbleWithStartObject(self, __VA_ARGS__)) \
-		(_RACAbleWithStartObject(__VA_ARGS__))
+#define RACAbleWithStart(...)                                                                      \
+  metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(_RACAbleWithStartObject(self, __VA_ARGS__))( \
+      _RACAbleWithStartObject(__VA_ARGS__))
 
-#define _RACAbleWithStartObject(object, property) [object rac_signalWithStartingValueForKeyPath:@keypath(object, property) observer:self]
+#define _RACAbleWithStartObject(object, property) \
+  [object rac_signalWithStartingValueForKeyPath:@keypath(object, property) observer:self]

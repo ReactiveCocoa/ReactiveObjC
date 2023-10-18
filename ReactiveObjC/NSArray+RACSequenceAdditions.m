@@ -12,7 +12,7 @@
 @implementation NSArray (RACSequenceAdditions)
 
 - (RACSequence *)rac_sequence {
-	return [RACArraySequence sequenceWithArray:self offset:0];
+  return [RACArraySequence sequenceWithArray:self offset:0];
 }
 
 @end

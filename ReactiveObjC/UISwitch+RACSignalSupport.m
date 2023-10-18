@@ -6,14 +6,16 @@
 //  Copyright (c) 2013 GitHub, Inc. All rights reserved.
 //
 
-#import "UISwitch+RACSignalSupport.h"
 #import <ReactiveObjC/EXTKeyPathCoding.h>
 #import "UIControl+RACSignalSupportPrivate.h"
+#import "UISwitch+RACSignalSupport.h"
 
 @implementation UISwitch (RACSignalSupport)
 
 - (RACChannelTerminal *)rac_newOnChannel {
-	return [self rac_channelForControlEvents:UIControlEventValueChanged key:@keypath(self.on) nilValue:@NO];
+  return [self rac_channelForControlEvents:UIControlEventValueChanged
+                                       key:@keypath(self.on)
+                                  nilValue:@NO];
 }
 
 @end

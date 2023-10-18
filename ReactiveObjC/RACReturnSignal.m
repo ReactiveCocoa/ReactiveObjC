@@ -14,7 +14,7 @@
 @interface RACReturnSignal ()
 
 // The value to send upon subscription.
-@property (nonatomic, strong, readonly) id value;
+@property(nonatomic, strong, readonly) id value;
 
 @end
 
@@ -26,15 +26,15 @@
 // potentially a singleton in release builds (see +return:).
 - (void)setName:(NSString *)name {
 #ifdef DEBUG
-	[super setName:name];
+  [super setName:name];
 #endif
 }
 
 - (NSString *)name {
 #ifdef DEBUG
-	return super.name;
+  return super.name;
 #else
-	return @"+return:";
+  return @"+return:";
 #endif
 }
 
@@ -42,49 +42,49 @@
 
 + (RACSignal *)return:(id)value {
 #ifndef DEBUG
-	// In release builds, use singletons for two very common cases.
-	if (value == RACUnit.defaultUnit) {
-		static RACReturnSignal *unitSingleton;
-		static dispatch_once_t unitPred;
+  // In release builds, use singletons for two very common cases.
+  if (value == RACUnit.defaultUnit) {
+    static RACReturnSignal *unitSingleton;
+    static dispatch_once_t unitPred;
 
-		dispatch_once(&unitPred, ^{
-			unitSingleton = [[self alloc] init];
-			unitSingleton->_value = RACUnit.defaultUnit;
-		});
+    dispatch_once(&unitPred, ^{
+      unitSingleton = [[self alloc] init];
+      unitSingleton->_value = RACUnit.defaultUnit;
+    });
 
-		return unitSingleton;
-	} else if (value == nil) {
-		static RACReturnSignal *nilSingleton;
-		static dispatch_once_t nilPred;
+    return unitSingleton;
+  } else if (value == nil) {
+    static RACReturnSignal *nilSingleton;
+    static dispatch_once_t nilPred;
 
-		dispatch_once(&nilPred, ^{
-			nilSingleton = [[self alloc] init];
-			nilSingleton->_value = nil;
-		});
+    dispatch_once(&nilPred, ^{
+      nilSingleton = [[self alloc] init];
+      nilSingleton->_value = nil;
+    });
 
-		return nilSingleton;
-	}
+    return nilSingleton;
+  }
 #endif
 
-	RACReturnSignal *signal = [[self alloc] init];
-	signal->_value = value;
+  RACReturnSignal *signal = [[self alloc] init];
+  signal->_value = value;
 
 #ifdef DEBUG
-	[signal setNameWithFormat:@"+return: %@", value];
+  [signal setNameWithFormat:@"+return: %@", value];
 #endif
 
-	return signal;
+  return signal;
 }
 
 #pragma mark Subscription
 
 - (RACDisposable *)subscribe:(id<RACSubscriber>)subscriber {
-	NSCParameterAssert(subscriber != nil);
+  NSCParameterAssert(subscriber != nil);
 
-	return [RACScheduler.subscriptionScheduler schedule:^{
-		[subscriber sendNext:self.value];
-		[subscriber sendCompleted];
-	}];
+  return [RACScheduler.subscriptionScheduler schedule:^{
+    [subscriber sendNext:self.value];
+    [subscriber sendCompleted];
+  }];
 }
 
 @end

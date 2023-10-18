@@ -24,17 +24,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The domain for errors originating in RACSignal operations.
-extern NSErrorDomain const RACSignalErrorDomain;
+extern NSString *const RACSignalErrorDomain;
 
-typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
-	/// The error code used with -timeout:.
-	RACSignalErrorTimedOut = 1,
-	/// The error code used when a value passed into +switch:cases:default: does not
-	/// match any of the cases, and no default was given.
-	RACSignalErrorNoMatchingCase = 2,
-};
+/// The error code used with -timeout:.
+extern const NSInteger RACSignalErrorTimedOut;
 
-@interface RACSignal<__covariant ValueType> (Operations)
+/// The error code used when a value passed into +switch:cases:default: does not
+/// match any of the cases, and no default was given.
+extern const NSInteger RACSignalErrorNoMatchingCase;
+
+@interface RACSignal <__covariant ValueType>(Operations)
 
 /// Do the given block on `next`. This should be used to inject side effects into
 /// the signal.
@@ -42,7 +41,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 
 /// Do the given block on `error`. This should be used to inject side effects
 /// into the signal.
-- (RACSignal<ValueType> *)doError:(void (^)(NSError * _Nonnull error))block RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)doError:(void (^)(NSError *_Nonnull error))block RAC_WARN_UNUSED_RESULT;
 
 /// Do the given block on `completed`. This should be used to inject side effects
 /// into the signal.
@@ -85,7 +84,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Returns a signal which sends `next` events, throttled when `predicate`
 /// returns YES. Completion and errors are always forwarded immediately.
-- (RACSignal<ValueType> *)throttle:(NSTimeInterval)interval valuesPassingTest:(BOOL (^)(id _Nullable next))predicate RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)throttle:(NSTimeInterval)interval
+                 valuesPassingTest:(BOOL (^)(id _Nullable next))predicate RAC_WARN_UNUSED_RESULT;
 
 /// Forwards `next` and `completed` events after delaying for `interval` seconds
 /// on the current scheduler (on which the events were delivered).
@@ -140,7 +140,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal which sends RACTuples of the buffered values at each
 /// interval on `scheduler`. When the receiver completes, any currently-buffered
 /// values will be sent immediately.
-- (RACSignal<RACTuple *> *)bufferWithTime:(NSTimeInterval)interval onScheduler:(RACScheduler *)scheduler;
+- (RACSignal<RACTuple *> *)bufferWithTime:(NSTimeInterval)interval
+                              onScheduler:(RACScheduler *)scheduler;
 
 /// Collects all receiver's `next`s into a NSArray. Nil values will be converted
 /// to NSNull.
@@ -164,7 +165,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Returns a signal which sends RACTuples of the combined values, forwards any
 /// `error` events, and completes when both input signals complete.
-- (RACSignal<RACTwoTuple<ValueType, id> *> *)combineLatestWith:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
+- (RACSignal<RACTwoTuple<ValueType, id> *> *)combineLatestWith:(RACSignal *)signal
+    RAC_WARN_UNUSED_RESULT;
 
 /// Combines the latest values from the given signals into RACTuples, once all
 /// the signals have sent at least one `next`.
@@ -192,14 +194,15 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Example:
 ///
-///   [RACSignal combineLatest:@[ stringSignal, intSignal ] reduce:^(NSString *string, NSNumber *number) {
+///   [RACSignal combineLatest:@[ stringSignal, intSignal ] reduce:^(NSString *string, NSNumber
+///   *number) {
 ///       return [NSString stringWithFormat:@"%@: %@", string, number];
 ///   }];
 ///
 /// Returns a signal which sends the results from each invocation of
 /// `reduceBlock`.
-+ (RACSignal<ValueType> *)combineLatest:(id<NSFastEnumeration>)signals reduce:(RACGenericReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
-
++ (RACSignal<ValueType> *)combineLatest:(id<NSFastEnumeration>)signals
+                                 reduce:(RACGenericReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Merges the receiver and the given signal with `+merge:` and returns the
 /// resulting signal.
@@ -264,7 +267,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal that will send the aggregated value when the receiver
 /// completes, then itself complete. If the receiver never sends any values,
 /// `start` will be sent instead.
-- (RACSignal *)aggregateWithStart:(id)start reduce:(id (^)(id running, id next))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)aggregateWithStart:(id)start
+                           reduce:(id (^)(id running, id next))reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Aggregates the `next` values of the receiver into a single combined value.
 /// This is indexed version of -aggregateWithStart:reduce:.
@@ -279,7 +283,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal that will send the aggregated value when the receiver
 /// completes, then itself complete. If the receiver never sends any values,
 /// `start` will be sent instead.
-- (RACSignal *)aggregateWithStart:(id)start reduceWithIndex:(id (^)(id running, id next, NSUInteger index))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)aggregateWithStart:(id)start
+                  reduceWithIndex:(id (^)(id running, id next, NSUInteger index))reduceBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Aggregates the `next` values of the receiver into a single combined value.
 ///
@@ -295,7 +301,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal that will send the aggregated value when the receiver
 /// completes, then itself complete. If the receiver never sends any values,
 /// the return value of `startFactory` will be sent instead.
-- (RACSignal *)aggregateWithStartFactory:(id (^)(void))startFactory reduce:(id (^)(id running, id next))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)aggregateWithStartFactory:(id (^)(void))startFactory
+                                  reduce:(id (^)(id running, id next))reduceBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Invokes -setKeyPath:onObject:nilValue: with `nil` for the nil value.
 ///
@@ -333,7 +341,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///            object is set to `nil`).
 ///
 /// Returns a disposable which can be used to terminate the binding.
-- (RACDisposable *)setKeyPath:(NSString *)keyPath onObject:(NSObject *)object nilValue:(nullable id)nilValue;
+- (RACDisposable *)setKeyPath:(NSString *)keyPath
+                     onObject:(NSObject *)object
+                     nilValue:(nullable id)nilValue;
 
 /// Sends NSDate.date every `interval` seconds.
 ///
@@ -343,7 +353,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Returns a signal that sends the current date/time every `interval` on
 /// `scheduler`.
-+ (RACSignal<NSDate *> *)interval:(NSTimeInterval)interval onScheduler:(RACScheduler *)scheduler RAC_WARN_UNUSED_RESULT;
++ (RACSignal<NSDate *> *)interval:(NSTimeInterval)interval
+                      onScheduler:(RACScheduler *)scheduler RAC_WARN_UNUSED_RESULT;
 
 /// Sends NSDate.date at intervals of at least `interval` seconds, up to
 /// approximately `interval` + `leeway` seconds.
@@ -361,7 +372,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal that sends the current date/time at intervals of at least
 /// `interval seconds` up to approximately `interval` + `leeway` seconds on
 /// `scheduler`.
-+ (RACSignal<NSDate *> *)interval:(NSTimeInterval)interval onScheduler:(RACScheduler *)scheduler withLeeway:(NSTimeInterval)leeway RAC_WARN_UNUSED_RESULT;
++ (RACSignal<NSDate *> *)interval:(NSTimeInterval)interval
+                      onScheduler:(RACScheduler *)scheduler
+                       withLeeway:(NSTimeInterval)leeway RAC_WARN_UNUSED_RESULT;
 
 /// Takes `next`s until the `signalTrigger` sends `next` or `completed`.
 ///
@@ -382,7 +395,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 - (RACSignal *)takeUntilReplacement:(RACSignal *)replacement RAC_WARN_UNUSED_RESULT;
 
 /// Subscribes to the returned signal when an error occurs.
-- (RACSignal *)catch:(RACSignal * (^)(NSError * _Nonnull error))catchBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)catch:(RACSignal * (^)(NSError *_Nonnull error))catchBlock RAC_WARN_UNUSED_RESULT;
 
 /// Subscribes to the given signal when an error occurs.
 - (RACSignal *)catchTo:(RACSignal *)signal RAC_WARN_UNUSED_RESULT;
@@ -400,7 +413,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///   [RACSignal try:^(NSError **error) {
 ///       return [NSJSONSerialization JSONObjectWithData:someJSONData options:0 error:error];
 ///   }];
-+ (RACSignal<ValueType> *)try:(nullable ValueType (^)(NSError **errorPtr))tryBlock RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)try:(nullable ValueType (^)(NSError **errorPtr))tryBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Runs `tryBlock` against each of the receiver's values, passing values
 /// until `tryBlock` returns NO, or the receiver completes.
@@ -420,7 +434,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal which passes through all the values of the receiver. If
 /// `tryBlock` fails for any value, the returned signal will error using the
 /// `NSError` passed out from the block.
-- (RACSignal<ValueType> *)try:(BOOL (^)(id _Nullable value, NSError **errorPtr))tryBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)try:(BOOL (^)(id _Nullable value, NSError **errorPtr))tryBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Runs `mapBlock` against each of the receiver's values, mapping values until
 /// `mapBlock` returns nil, or the receiver completes.
@@ -440,7 +455,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal which transforms all the values of the receiver. If
 /// `mapBlock` returns nil for any value, the returned signal will error using
 /// the `NSError` passed out from the block.
-- (RACSignal *)tryMap:(id (^)(id _Nullable value, NSError **errorPtr))mapBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)tryMap:(id (^)(id _Nullable value, NSError **errorPtr))mapBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Returns the first `next`. Note that this is a blocking call.
 - (nullable ValueType)first;
@@ -454,7 +470,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// will be populated. Note that this is a blocking call.
 ///
 /// Both success and error may be NULL.
-- (nullable ValueType)firstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error;
+- (nullable ValueType)firstOrDefault:(nullable ValueType)defaultValue
+                             success:(nullable BOOL *)success
+                               error:(NSError *_Nullable *_Nullable)error;
 
 /// Blocks the caller and waits for the signal to complete.
 ///
@@ -462,7 +480,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Returns whether the signal completed successfully. If NO, `error` will be set
 /// to the error that occurred.
-- (BOOL)waitUntilCompleted:(NSError * _Nullable * _Nullable)error;
+- (BOOL)waitUntilCompleted:(NSError *_Nullable *_Nullable)error;
 
 /// Defers creation of a signal until the signal's actually subscribed to.
 ///
@@ -496,7 +514,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// the signals in `cases` or `defaultSignal`, and sends `completed` when both
 /// `signal` and the last used signal complete. If no `defaultSignal` is given,
 /// an unmatched `next` will result in an error on the returned signal.
-+ (RACSignal<ValueType> *)switch:(RACSignal *)signal cases:(NSDictionary *)cases default:(nullable RACSignal *)defaultSignal RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)switch:(RACSignal *)signal
+                           cases:(NSDictionary *)cases
+                         default:(nullable RACSignal *)defaultSignal RAC_WARN_UNUSED_RESULT;
 
 /// Switches between `trueSignal` and `falseSignal` based on the latest value
 /// sent by `boolSignal`.
@@ -511,7 +531,9 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a signal which passes through `next`s and `error`s from `trueSignal`
 /// and/or `falseSignal`, and sends `completed` when both `boolSignal` and the
 /// last switched signal complete.
-+ (RACSignal<ValueType> *)if:(RACSignal<NSNumber *> *)boolSignal then:(RACSignal *)trueSignal else:(RACSignal *)falseSignal RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)if:(RACSignal<NSNumber *> *)boolSignal
+                        then:(RACSignal *)trueSignal
+                        else:(RACSignal *)falseSignal RAC_WARN_UNUSED_RESULT;
 
 /// Adds every `next` to an array. Nils are represented by NSNulls. Note that
 /// this is a blocking call.
@@ -529,7 +551,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Returns a sequence which provides values from the signal as they're sent.
 /// Trying to retrieve a value from the sequence which has not yet been sent will
 /// block.
-@property (nonatomic, strong, readonly) RACSequence<ValueType> *sequence;
+@property(nonatomic, strong, readonly) RACSequence<ValueType> *sequence;
 
 /// Creates and returns a multicast connection. This allows you to share a single
 /// subscription to the underlying signal.
@@ -538,7 +560,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Creates and returns a multicast connection that pushes values into the given
 /// subject. This allows you to share a single subscription to the underlying
 /// signal.
-- (RACMulticastConnection<ValueType> *)multicast:(RACSubject<ValueType> *)subject RAC_WARN_UNUSED_RESULT;
+- (RACMulticastConnection<ValueType> *)multicast:(RACSubject<ValueType> *)subject
+    RAC_WARN_UNUSED_RESULT;
 
 /// Multicasts the signal to a RACReplaySubject of unlimited capacity, and
 /// immediately connects to the resulting RACMulticastConnection.
@@ -573,7 +596,8 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 ///
 /// Returns a signal that passes through the receiver's events, until the stream
 /// finishes or times out, at which point an error will be sent on `scheduler`.
-- (RACSignal<ValueType> *)timeout:(NSTimeInterval)interval onScheduler:(RACScheduler *)scheduler RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)timeout:(NSTimeInterval)interval
+                      onScheduler:(RACScheduler *)scheduler RAC_WARN_UNUSED_RESULT;
 
 /// Creates and returns a signal that delivers its events on the given scheduler.
 /// Any side effects of the receiver will still be performed on the original
@@ -612,10 +636,13 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// with the object. If `transformBlock` is nil, it sends the original object.
 ///
 /// The returned signal is a signal of RACGroupedSignal.
-- (RACSignal<RACGroupedSignal *> *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock transform:(nullable id _Nullable (^)(id _Nullable object))transformBlock  RAC_WARN_UNUSED_RESULT;
+- (RACSignal<RACGroupedSignal *> *)
+      groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock
+    transform:(nullable id _Nullable (^)(id _Nullable object))transformBlock RAC_WARN_UNUSED_RESULT;
 
 /// Calls -[RACSignal groupBy:keyBlock transform:nil].
-- (RACSignal<RACGroupedSignal *> *)groupBy:(id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock  RAC_WARN_UNUSED_RESULT;
+- (RACSignal<RACGroupedSignal *> *)groupBy:
+    (id<NSCopying> _Nullable (^)(id _Nullable object))keyBlock RAC_WARN_UNUSED_RESULT;
 
 /// Sends an [NSNumber numberWithBool:YES] if the receiving signal sends any
 /// objects.
@@ -627,7 +654,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// predicateBlock - cannot be nil.
 - (RACSignal<NSNumber *> *)any:(BOOL (^)(id _Nullable object))predicateBlock RAC_WARN_UNUSED_RESULT;
 
-/// Sends an [NSNumber numberWithBool:YES] if all the objects the receiving 
+/// Sends an [NSNumber numberWithBool:YES] if all the objects the receiving
 /// signal sends pass `predicateBlock`.
 ///
 /// predicateBlock - cannot be nil.
@@ -685,7 +712,7 @@ typedef NS_ERROR_ENUM(RACSignalErrorDomain, RACSignalError) {
 /// Performs a boolean OR on all of the RACTuple of NSNumbers in sent by the receiver.
 ///
 /// Asserts if the receiver sends anything other than a RACTuple of one or more NSNumbers.
-/// 
+///
 /// Returns a signal that applies OR to each NSNumber in the tuple.
 - (RACSignal<NSNumber *> *)or RAC_WARN_UNUSED_RESULT;
 

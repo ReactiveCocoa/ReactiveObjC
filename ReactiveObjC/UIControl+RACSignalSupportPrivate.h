@@ -26,7 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a RACChannelTerminal which will send future values from the receiver,
 /// and update the receiver when values are sent to the terminal.
-- (RACChannelTerminal *)rac_channelForControlEvents:(UIControlEvents)controlEvents key:(NSString *)key nilValue:(nullable id)nilValue;
+- (RACChannelTerminal *)rac_channelForControlEvents:(UIControlEvents)controlEvents
+                                                key:(NSString *)key
+                                           nilValue:(nullable id)nilValue;
 
 @end
 

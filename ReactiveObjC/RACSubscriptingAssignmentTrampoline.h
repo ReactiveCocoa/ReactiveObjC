@@ -39,14 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// WARNING: Under certain conditions, use of this macro can be thread-unsafe.
 ///          See the documentation of -setKeyPath:onObject:nilValue:.
-#define RAC(TARGET, ...) \
-    metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__)) \
-        (RAC_(TARGET, __VA_ARGS__, nil)) \
-        (RAC_(TARGET, __VA_ARGS__))
+#define RAC(TARGET, ...)                                                               \
+  metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(RAC_(TARGET, __VA_ARGS__, nil))( \
+      RAC_(TARGET, __VA_ARGS__))
 
 /// Do not use this directly. Use the RAC macro above.
-#define RAC_(TARGET, KEYPATH, NILVALUE) \
-    [[RACSubscriptingAssignmentTrampoline alloc] initWithTarget:(TARGET) nilValue:(NILVALUE)][@keypath(TARGET, KEYPATH)]
+#define RAC_(TARGET, KEYPATH, NILVALUE)        \
+  [[RACSubscriptingAssignmentTrampoline alloc] \
+      initWithTarget:(TARGET)                  \
+            nilValue:(NILVALUE)][@keypath(TARGET, KEYPATH)]
 
 @interface RACSubscriptingAssignmentTrampoline : NSObject
 

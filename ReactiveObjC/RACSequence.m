@@ -24,7 +24,7 @@
 //
 // This will change as the enumerator is exhausted. This property should only be
 // accessed while synchronized on self.
-@property (nonatomic, strong) RACSequence *sequence;
+@property(nonatomic, strong) RACSequence *sequence;
 
 @end
 
@@ -36,21 +36,22 @@
 //
 // Returns a new sequence which contains `current`, followed by the combined
 // result of all applications of `block` to the remaining values in the receiver.
-- (RACSequence *)bind:(RACSequenceBindBlock)block passingThroughValuesFromSequence:(RACSequence *)current;
+- (RACSequence *)bind:(RACSequenceBindBlock)block
+    passingThroughValuesFromSequence:(RACSequence *)current;
 
 @end
 
 @implementation RACSequenceEnumerator
 
 - (id)nextObject {
-	id object = nil;
-	
-	@synchronized (self) {
-		object = self.sequence.head;
-		self.sequence = self.sequence.tail;
-	}
-	
-	return object;
+  id object = nil;
+
+  @synchronized(self) {
+    object = self.sequence.head;
+    self.sequence = self.sequence.tail;
+  }
+
+  return object;
 }
 
 @end
@@ -59,313 +60,327 @@
 
 #pragma mark Lifecycle
 
-+ (RACSequence *)sequenceWithHeadBlock:(id (^)(void))headBlock tailBlock:(RACSequence<id> *(^)(void))tailBlock {
-	return [[RACDynamicSequence sequenceWithHeadBlock:headBlock tailBlock:tailBlock] setNameWithFormat:@"+sequenceWithHeadBlock:tailBlock:"];
++ (RACSequence *)sequenceWithHeadBlock:(id (^)(void))headBlock
+                             tailBlock:(RACSequence<id> * (^)(void))tailBlock {
+  return [[RACDynamicSequence sequenceWithHeadBlock:headBlock tailBlock:tailBlock]
+      setNameWithFormat:@"+sequenceWithHeadBlock:tailBlock:"];
 }
 
 #pragma mark Class cluster primitives
 
 - (id)head {
-	NSCAssert(NO, @"%s must be overridden by subclasses", __func__);
-	return nil;
+  NSCAssert(NO, @"%s must be overridden by subclasses", __func__);
+  return nil;
 }
 
 - (RACSequence *)tail {
-	NSCAssert(NO, @"%s must be overridden by subclasses", __func__);
-	return nil;
+  NSCAssert(NO, @"%s must be overridden by subclasses", __func__);
+  return nil;
 }
 
 #pragma mark RACStream
 
 + (RACSequence *)empty {
-	return RACEmptySequence.empty;
+  return RACEmptySequence.empty;
 }
 
 + (RACSequence *)return:(id)value {
-	return [RACUnarySequence return:value];
+  return [RACUnarySequence return:value];
 }
 
 - (RACSequence *)bind:(RACSequenceBindBlock (^)(void))block {
-	RACSequenceBindBlock bindBlock = block();
-	return [[self bind:bindBlock passingThroughValuesFromSequence:nil] setNameWithFormat:@"[%@] -bind:", self.name];
+  RACSequenceBindBlock bindBlock = block();
+  return [[self bind:bindBlock
+      passingThroughValuesFromSequence:nil] setNameWithFormat:@"[%@] -bind:", self.name];
 }
 
-- (RACSequence *)bind:(RACSequenceBindBlock)bindBlock passingThroughValuesFromSequence:(RACSequence *)passthroughSequence {
-	// Store values calculated in the dependency here instead, avoiding any kind
-	// of temporary collection and boxing.
-	//
-	// This relies on the implementation of RACDynamicSequence synchronizing
-	// access to its head, tail, and dependency, and we're only doing it because
-	// we really need the performance.
-	__block RACSequence *valuesSeq = self;
-	__block RACSequence *current = passthroughSequence;
-	__block BOOL stop = NO;
+- (RACSequence *)bind:(RACSequenceBindBlock)bindBlock
+    passingThroughValuesFromSequence:(RACSequence *)passthroughSequence {
+  // Store values calculated in the dependency here instead, avoiding any kind
+  // of temporary collection and boxing.
+  //
+  // This relies on the implementation of RACDynamicSequence synchronizing
+  // access to its head, tail, and dependency, and we're only doing it because
+  // we really need the performance.
+  __block RACSequence *valuesSeq = self;
+  __block RACSequence *current = passthroughSequence;
+  __block BOOL stop = NO;
 
-	RACSequence *sequence = [RACDynamicSequence sequenceWithLazyDependency:^ id {
-		while (current.head == nil) {
-			if (stop) return nil;
+  RACSequence *sequence = [RACDynamicSequence
+      sequenceWithLazyDependency:^id {
+        while (current.head == nil) {
+          if (stop) return nil;
 
-			// We've exhausted the current sequence, create a sequence from the
-			// next value.
-			id value = valuesSeq.head;
+          // We've exhausted the current sequence, create a sequence from the
+          // next value.
+          id value = valuesSeq.head;
 
-			if (value == nil) {
-				// We've exhausted all the sequences.
-				stop = YES;
-				return nil;
-			}
+          if (value == nil) {
+            // We've exhausted all the sequences.
+            stop = YES;
+            return nil;
+          }
 
-			current = (id)bindBlock(value, &stop);
-			if (current == nil) {
-				stop = YES;
-				return nil;
-			}
+          current = (id)bindBlock(value, &stop);
+          if (current == nil) {
+            stop = YES;
+            return nil;
+          }
 
-			valuesSeq = valuesSeq.tail;
-		}
+          valuesSeq = valuesSeq.tail;
+        }
 
-		NSCAssert([current isKindOfClass:RACSequence.class], @"-bind: block returned an object that is not a sequence: %@", current);
-		return nil;
-	} headBlock:^(id _) {
-		return current.head;
-	} tailBlock:^ id (id _) {
-		if (stop) return nil;
+        NSCAssert([current isKindOfClass:RACSequence.class],
+                  @"-bind: block returned an object that is not a sequence: %@", current);
+        return nil;
+      }
+      headBlock:^(id _) {
+        return current.head;
+      }
+      tailBlock:^id(id _) {
+        if (stop) return nil;
 
-		return [valuesSeq bind:bindBlock passingThroughValuesFromSequence:current.tail];
-	}];
+        return [valuesSeq bind:bindBlock passingThroughValuesFromSequence:current.tail];
+      }];
 
-	sequence.name = self.name;
-	return sequence;
+  sequence.name = self.name;
+  return sequence;
 }
 
 - (RACSequence *)concat:(RACSequence *)sequence {
-	NSCParameterAssert(sequence != nil);
+  NSCParameterAssert(sequence != nil);
 
-	return [[[RACArraySequence sequenceWithArray:@[ self, sequence ] offset:0]
-		flatten]
-		setNameWithFormat:@"[%@] -concat: %@", self.name, sequence];
+  return [[[RACArraySequence sequenceWithArray:@[ self, sequence ] offset:0] flatten]
+      setNameWithFormat:@"[%@] -concat: %@", self.name, sequence];
 }
 
 - (RACSequence *)zipWith:(RACSequence *)sequence {
-	NSCParameterAssert(sequence != nil);
+  NSCParameterAssert(sequence != nil);
 
-	return [[RACSequence
-		sequenceWithHeadBlock:^ id {
-			if (self.head == nil || sequence.head == nil) return nil;
-			return RACTuplePack(self.head, sequence.head);
-		} tailBlock:^ id {
-			if (self.tail == nil || [[RACSequence empty] isEqual:self.tail]) return nil;
-			if (sequence.tail == nil || [[RACSequence empty] isEqual:sequence.tail]) return nil;
+  return [[RACSequence
+      sequenceWithHeadBlock:^id {
+        if (self.head == nil || sequence.head == nil) return nil;
+        return RACTuplePack(self.head, sequence.head);
+      }
+      tailBlock:^id {
+        if (self.tail == nil || [[RACSequence empty] isEqual:self.tail]) return nil;
+        if (sequence.tail == nil || [[RACSequence empty] isEqual:sequence.tail]) return nil;
 
-			return [self.tail zipWith:sequence.tail];
-		}]
-		setNameWithFormat:@"[%@] -zipWith: %@", self.name, sequence];
+        return [self.tail zipWith:sequence.tail];
+      }] setNameWithFormat:@"[%@] -zipWith: %@", self.name, sequence];
 }
 
 #pragma mark Extended methods
 
 - (NSArray *)array {
-	NSMutableArray *array = [NSMutableArray array];
-	for (id obj in self) {
-		[array addObject:obj];
-	}
+  NSMutableArray *array = [NSMutableArray array];
+  for (id obj in self) {
+    [array addObject:obj];
+  }
 
-	return [array copy];
+  return [array copy];
 }
 
 - (NSEnumerator *)objectEnumerator {
-	RACSequenceEnumerator *enumerator = [[RACSequenceEnumerator alloc] init];
-	enumerator.sequence = self;
-	return enumerator;
+  RACSequenceEnumerator *enumerator = [[RACSequenceEnumerator alloc] init];
+  enumerator.sequence = self;
+  return enumerator;
 }
 
 - (RACSignal *)signal {
-	return [[self signalWithScheduler:[RACScheduler scheduler]] setNameWithFormat:@"[%@] -signal", self.name];
+  return [[self signalWithScheduler:[RACScheduler scheduler]]
+      setNameWithFormat:@"[%@] -signal", self.name];
 }
 
 - (RACSignal *)signalWithScheduler:(RACScheduler *)scheduler {
-	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
-		__block RACSequence *sequence = self;
+  return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
+    __block RACSequence *sequence = self;
 
-		return [scheduler scheduleRecursiveBlock:^(void (^reschedule)(void)) {
-			if (sequence.head == nil) {
-				[subscriber sendCompleted];
-				return;
-			}
+    return [scheduler scheduleRecursiveBlock:^(void (^reschedule)(void)) {
+      if (sequence.head == nil) {
+        [subscriber sendCompleted];
+        return;
+      }
 
-			[subscriber sendNext:sequence.head];
+      [subscriber sendNext:sequence.head];
 
-			sequence = sequence.tail;
-			reschedule();
-		}];
-	}] setNameWithFormat:@"[%@] -signalWithScheduler: %@", self.name, scheduler];
+      sequence = sequence.tail;
+      reschedule();
+    }];
+  }] setNameWithFormat:@"[%@] -signalWithScheduler: %@", self.name, scheduler];
 }
 
 - (id)foldLeftWithStart:(id)start reduce:(id (^)(id, id))reduce {
-	NSCParameterAssert(reduce != NULL);
+  NSCParameterAssert(reduce != NULL);
 
-	if (self.head == nil) return start;
-	
-	for (id value in self) {
-		start = reduce(start, value);
-	}
-	
-	return start;
+  if (self.head == nil) return start;
+
+  for (id value in self) {
+    start = reduce(start, value);
+  }
+
+  return start;
 }
 
 - (id)foldRightWithStart:(id)start reduce:(id (^)(id, RACSequence *))reduce {
-	NSCParameterAssert(reduce != NULL);
+  NSCParameterAssert(reduce != NULL);
 
-	if (self.head == nil) return start;
-	
-	RACSequence *rest = [RACSequence sequenceWithHeadBlock:^{
-		if (self.tail) {
-			return [self.tail foldRightWithStart:start reduce:reduce];
-		} else {
-			return start;
-		}
-	} tailBlock:nil];
-	
-	return reduce(self.head, rest);
+  if (self.head == nil) return start;
+
+  RACSequence *rest = [RACSequence
+      sequenceWithHeadBlock:^{
+        if (self.tail) {
+          return [self.tail foldRightWithStart:start reduce:reduce];
+        } else {
+          return start;
+        }
+      }
+                  tailBlock:nil];
+
+  return reduce(self.head, rest);
 }
 
 - (BOOL)any:(BOOL (^)(id))block {
-	NSCParameterAssert(block != NULL);
+  NSCParameterAssert(block != NULL);
 
-	return [self objectPassingTest:block] != nil;
+  return [self objectPassingTest:block] != nil;
 }
 
 - (BOOL)all:(BOOL (^)(id))block {
-	NSCParameterAssert(block != NULL);
-	
-	NSNumber *result = [self foldLeftWithStart:@YES reduce:^(NSNumber *accumulator, id value) {
-		return @(accumulator.boolValue && block(value));
-	}];
-	
-	return result.boolValue;
+  NSCParameterAssert(block != NULL);
+
+  NSNumber *result = [self foldLeftWithStart:@YES
+                                      reduce:^(NSNumber *accumulator, id value) {
+                                        return @(accumulator.boolValue && block(value));
+                                      }];
+
+  return result.boolValue;
 }
 
 - (id)objectPassingTest:(BOOL (^)(id))block {
-	NSCParameterAssert(block != NULL);
+  NSCParameterAssert(block != NULL);
 
-	return [self filter:block].head;
+  return [self filter:block].head;
 }
 
 - (RACSequence *)eagerSequence {
-	return [RACEagerSequence sequenceWithArray:self.array offset:0];
+  return [RACEagerSequence sequenceWithArray:self.array offset:0];
 }
 
 - (RACSequence *)lazySequence {
-	return self;
+  return self;
 }
 
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-	return self;
+  return self;
 }
 
 #pragma mark NSCoding
 
 - (Class)classForCoder {
-	// Most sequences should be archived as RACArraySequences.
-	return RACArraySequence.class;
+  // Most sequences should be archived as RACArraySequences.
+  return RACArraySequence.class;
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
-	if (![self isKindOfClass:RACArraySequence.class]) return [[RACArraySequence alloc] initWithCoder:coder];
+  if (![self isKindOfClass:RACArraySequence.class])
+    return [[RACArraySequence alloc] initWithCoder:coder];
 
-	// Decoding is handled in RACArraySequence.
-	return [super init];
+  // Decoding is handled in RACArraySequence.
+  return [super init];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	[coder encodeObject:self.array forKey:@"array"];
+  [coder encodeObject:self.array forKey:@"array"];
 }
 
 #pragma mark NSFastEnumeration
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id *)stackbuf count:(NSUInteger)len {
-	if (state->state == ULONG_MAX) {
-		// Enumeration has completed.
-		return 0;
-	}
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(__unsafe_unretained id *)stackbuf
+                                    count:(NSUInteger)len {
+  if (state->state == ULONG_MAX) {
+    // Enumeration has completed.
+    return 0;
+  }
 
-	// We need to traverse the sequence itself on repeated calls to this
-	// method, so use the 'state' field to track the current head.
-	RACSequence *(^getSequence)(void) = ^{
-		return (__bridge RACSequence *)(void *)state->state;
-	};
+  // We need to traverse the sequence itself on repeated calls to this
+  // method, so use the 'state' field to track the current head.
+  RACSequence * (^getSequence)(void) = ^{
+    return (__bridge RACSequence *)(void *)state->state;
+  };
 
-	void (^setSequence)(RACSequence *) = ^(RACSequence *sequence) {
-		// Release the old sequence and retain the new one.
-		CFBridgingRelease((void *)state->state);
+  void (^setSequence)(RACSequence *) = ^(RACSequence *sequence) {
+    // Release the old sequence and retain the new one.
+    CFBridgingRelease((void *)state->state);
 
-		state->state = (unsigned long)CFBridgingRetain(sequence);
-	};
+    state->state = (unsigned long)CFBridgingRetain(sequence);
+  };
 
-	void (^complete)(void) = ^{
-		// Release any stored sequence.
-		setSequence(nil);
-		state->state = ULONG_MAX;
-	};
+  void (^complete)(void) = ^{
+    // Release any stored sequence.
+    setSequence(nil);
+    state->state = ULONG_MAX;
+  };
 
-	if (state->state == 0) {
-		// Since a sequence doesn't mutate, this just needs to be set to
-		// something non-NULL.
-		state->mutationsPtr = state->extra;
+  if (state->state == 0) {
+    // Since a sequence doesn't mutate, this just needs to be set to
+    // something non-NULL.
+    state->mutationsPtr = state->extra;
 
-		setSequence(self);
-	}
+    setSequence(self);
+  }
 
-	state->itemsPtr = stackbuf;
+  state->itemsPtr = stackbuf;
 
-	NSUInteger enumeratedCount = 0;
-	while (enumeratedCount < len) {
-		RACSequence *seq = getSequence();
+  NSUInteger enumeratedCount = 0;
+  while (enumeratedCount < len) {
+    RACSequence *seq = getSequence();
 
-		// Because the objects in a sequence may be generated lazily, we want to
-		// prevent them from being released until the enumerator's used them.
-		__autoreleasing id obj = seq.head;
-		if (obj == nil) {
-			complete();
-			break;
-		}
+    // Because the objects in a sequence may be generated lazily, we want to
+    // prevent them from being released until the enumerator's used them.
+    __autoreleasing id obj = seq.head;
+    if (obj == nil) {
+      complete();
+      break;
+    }
 
-		stackbuf[enumeratedCount++] = obj;
+    stackbuf[enumeratedCount++] = obj;
 
-		if (seq.tail == nil) {
-			complete();
-			break;
-		}
+    if (seq.tail == nil) {
+      complete();
+      break;
+    }
 
-		setSequence(seq.tail);
-	}
+    setSequence(seq.tail);
+  }
 
-	return enumeratedCount;
+  return enumeratedCount;
 }
 
 #pragma mark NSObject
 
 - (NSUInteger)hash {
-	return [self.head hash];
+  return [self.head hash];
 }
 
 - (BOOL)isEqual:(RACSequence *)seq {
-	if (self == seq) return YES;
-	if (![seq isKindOfClass:RACSequence.class]) return NO;
+  if (self == seq) return YES;
+  if (![seq isKindOfClass:RACSequence.class]) return NO;
 
-	for (id<NSObject> selfObj in self) {
-		id<NSObject> seqObj = seq.head;
+  for (id<NSObject> selfObj in self) {
+    id<NSObject> seqObj = seq.head;
 
-		// Handles the nil case too.
-		if (![seqObj isEqual:selfObj]) return NO;
+    // Handles the nil case too.
+    if (![seqObj isEqual:selfObj]) return NO;
 
-		seq = seq.tail;
-	}
+    seq = seq.tail;
+  }
 
-	// self is now depleted -- the argument should be too.
-	return (seq.head == nil);
+  // self is now depleted -- the argument should be too.
+  return (seq.head == nil);
 }
 
 @end

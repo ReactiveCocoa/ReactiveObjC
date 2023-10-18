@@ -209,6 +209,12 @@
 		7DFBED6C1CDB8DE300EE435B /* RACTestUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C3131D19EF2D9700984962 /* RACTestUIButton.m */; };
 		7DFBED6E1CDB918900EE435B /* UIBarButtonItem+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C719EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m */; };
 		7DFBED6F1CDB926400EE435B /* UIBarButtonItem+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C619EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9A3DBBB32ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3DBBAD2ADFAF720003277C /* UIAlertController+RACSignalSupport.h */; };
+		9A3DBBB42ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3DBBAD2ADFAF720003277C /* UIAlertController+RACSignalSupport.h */; };
+		9A3DBBB52ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3DBBAD2ADFAF720003277C /* UIAlertController+RACSignalSupport.h */; };
+		9A3DBBBF2ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3DBBB12ADFAF720003277C /* UIAlertController+RACSignalSupport.m */; };
+		9A3DBBC02ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3DBBB12ADFAF720003277C /* UIAlertController+RACSignalSupport.m */; };
+		9A3DBBC12ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3DBBB12ADFAF720003277C /* UIAlertController+RACSignalSupport.m */; };
 		A1046B7A1BFF5661004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A1046B7B1BFF5662004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A1046B7C1BFF5662004D8045 /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D037666719EDA57100A782A9 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -568,10 +574,6 @@
 		D037661319EDA41200A782A9 /* RACUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764BF19EDA41200A782A9 /* RACUnit.m */; };
 		D037661619EDA41200A782A9 /* RACValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C119EDA41200A782A9 /* RACValueTransformer.m */; };
 		D037661719EDA41200A782A9 /* RACValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C119EDA41200A782A9 /* RACValueTransformer.m */; };
-		D037661919EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C219EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D037661B19EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C319EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m */; };
-		D037661D19EDA41200A782A9 /* UIAlertView+RACSignalSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C419EDA41200A782A9 /* UIAlertView+RACSignalSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D037661F19EDA41200A782A9 /* UIAlertView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C519EDA41200A782A9 /* UIAlertView+RACSignalSupport.m */; };
 		D037662119EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C619EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D037662319EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D03764C719EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m */; };
 		D037662519EDA41200A782A9 /* UIButton+RACCommandSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D03764C819EDA41200A782A9 /* UIButton+RACCommandSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -783,6 +785,8 @@
 		7A70657E1A3F88B8001E8354 /* RACKVOProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxy.m; sourceTree = "<group>"; };
 		7A7065831A3F8967001E8354 /* RACKVOProxySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACKVOProxySpec.m; sourceTree = "<group>"; };
 		7DFBED031CDB8C9500EE435B /* ReactiveObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3DBBAD2ADFAF720003277C /* UIAlertController+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+RACSignalSupport.h"; sourceTree = "<group>"; };
+		9A3DBBB12ADFAF720003277C /* UIAlertController+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+RACSignalSupport.m"; sourceTree = "<group>"; };
 		A97451331B3A935E00F48E55 /* watchOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Application.xcconfig"; sourceTree = "<group>"; };
 		A97451341B3A935E00F48E55 /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		A97451351B3A935E00F48E55 /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
@@ -936,10 +940,6 @@
 		D03764BF19EDA41200A782A9 /* RACUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACUnit.m; sourceTree = "<group>"; };
 		D03764C019EDA41200A782A9 /* RACValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACValueTransformer.h; sourceTree = "<group>"; };
 		D03764C119EDA41200A782A9 /* RACValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACValueTransformer.m; sourceTree = "<group>"; };
-		D03764C219EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+RACSignalSupport.h"; sourceTree = "<group>"; };
-		D03764C319EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+RACSignalSupport.m"; sourceTree = "<group>"; };
-		D03764C419EDA41200A782A9 /* UIAlertView+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+RACSignalSupport.h"; sourceTree = "<group>"; };
-		D03764C519EDA41200A782A9 /* UIAlertView+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+RACSignalSupport.m"; sourceTree = "<group>"; };
 		D03764C619EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+RACCommandSupport.h"; sourceTree = "<group>"; };
 		D03764C719EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+RACCommandSupport.m"; sourceTree = "<group>"; };
 		D03764C819EDA41200A782A9 /* UIButton+RACCommandSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+RACCommandSupport.h"; sourceTree = "<group>"; };
@@ -1192,6 +1192,8 @@
 		D04725EC19E49ED7006002AA /* ReactiveObjC */ = {
 			isa = PBXGroup;
 			children = (
+				9A3DBBAD2ADFAF720003277C /* UIAlertController+RACSignalSupport.h */,
+				9A3DBBB12ADFAF720003277C /* UIAlertController+RACSignalSupport.m */,
 				D037666519EDA57100A782A9 /* extobjc */,
 				4AC5B3B521D40E75005920AA /* Deprecations+Removals.swift */,
 				314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */,
@@ -1349,10 +1351,6 @@
 				D03764C119EDA41200A782A9 /* RACValueTransformer.m */,
 				D04725EF19E49ED7006002AA /* ReactiveObjC.h */,
 				D04725ED19E49ED7006002AA /* Supporting Files */,
-				D03764C219EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h */,
-				D03764C319EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m */,
-				D03764C419EDA41200A782A9 /* UIAlertView+RACSignalSupport.h */,
-				D03764C519EDA41200A782A9 /* UIAlertView+RACSignalSupport.m */,
 				D03764C619EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h */,
 				D03764C719EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.m */,
 				D03764C819EDA41200A782A9 /* UIButton+RACCommandSupport.h */,
@@ -1594,6 +1592,7 @@
 				57DC89A21C50673C00E367B7 /* UISegmentedControl+RACSignalSupport.h in Headers */,
 				57A4D22B1BA13D7A00F7D4B1 /* RACScheduler.h in Headers */,
 				57DC89A41C50674D00E367B7 /* UITableViewHeaderFooterView+RACSignalSupport.h in Headers */,
+				9A3DBBB52ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */,
 				57A4D22C1BA13D7A00F7D4B1 /* RACScheduler+Subclass.h in Headers */,
 				57DC89A11C50672B00E367B7 /* UIControl+RACSignalSupport.h in Headers */,
 				57A4D22D1BA13D7A00F7D4B1 /* RACScopedDisposable.h in Headers */,
@@ -1686,6 +1685,7 @@
 				D03765D219EDA41200A782A9 /* RACSignal.h in Headers */,
 				D037650419EDA41200A782A9 /* NSIndexSet+RACSequenceAdditions.h in Headers */,
 				D037659A19EDA41200A782A9 /* RACKVOChannel.h in Headers */,
+				9A3DBBB32ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */,
 				D037651419EDA41200A782A9 /* NSObject+RACDeallocating.h in Headers */,
 				D037650C19EDA41200A782A9 /* NSNotificationCenter+RACSupport.h in Headers */,
 				D037667319EDA57100A782A9 /* metamacros.h in Headers */,
@@ -1753,7 +1753,6 @@
 				D037656F19EDA41200A782A9 /* RACDisposable.h in Headers */,
 				314304171ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h in Headers */,
 				D037654519EDA41200A782A9 /* NSURLConnection+RACSupport.h in Headers */,
-				D037661D19EDA41200A782A9 /* UIAlertView+RACSignalSupport.h in Headers */,
 				D037650D19EDA41200A782A9 /* NSNotificationCenter+RACSupport.h in Headers */,
 				D037650119EDA41200A782A9 /* NSFileHandle+RACSupport.h in Headers */,
 				D037666119EDA41200A782A9 /* UITextView+RACSignalSupport.h in Headers */,
@@ -1777,6 +1776,7 @@
 				D037651519EDA41200A782A9 /* NSObject+RACDeallocating.h in Headers */,
 				D037658F19EDA41200A782A9 /* RACGroupedSignal.h in Headers */,
 				D03765C519EDA41200A782A9 /* RACScheduler+Subclass.h in Headers */,
+				9A3DBBB42ADFAF720003277C /* UIAlertController+RACSignalSupport.h in Headers */,
 				D03765E119EDA41200A782A9 /* RACStream.h in Headers */,
 				D03765D719EDA41200A782A9 /* RACSignal+Operations.h in Headers */,
 				D037665D19EDA41200A782A9 /* UITextField+RACSignalSupport.h in Headers */,
@@ -1803,7 +1803,6 @@
 				A1046B7B1BFF5662004D8045 /* EXTRuntimeExtensions.h in Headers */,
 				D037661119EDA41200A782A9 /* RACUnit.h in Headers */,
 				D03765FD19EDA41200A782A9 /* RACTargetQueueScheduler.h in Headers */,
-				D037661919EDA41200A782A9 /* UIActionSheet+RACSignalSupport.h in Headers */,
 				D037664D19EDA41200A782A9 /* UIStepper+RACSignalSupport.h in Headers */,
 				D037662119EDA41200A782A9 /* UIBarButtonItem+RACCommandSupport.h in Headers */,
 				D03765EB19EDA41200A782A9 /* RACSubject.h in Headers */,
@@ -2092,6 +2091,7 @@
 				57D476981C4206EC00EFE697 /* UITextView+RACSignalSupport.m in Sources */,
 				57A4D1D01BA13D7A00F7D4B1 /* NSOrderedSet+RACSequenceAdditions.m in Sources */,
 				57A4D1D11BA13D7A00F7D4B1 /* NSSet+RACSequenceAdditions.m in Sources */,
+				9A3DBBC12ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */,
 				57D476911C4206DA00EFE697 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				57A4D1D21BA13D7A00F7D4B1 /* NSString+RACKeyPathUtilities.m in Sources */,
 				57D4769A1C4206F200EFE697 /* UIButton+RACCommandSupport.m in Sources */,
@@ -2312,6 +2312,7 @@
 				D037651A19EDA41200A782A9 /* NSObject+RACDescription.m in Sources */,
 				D03765A419EDA41200A782A9 /* RACMulticastConnection.m in Sources */,
 				D037654E19EDA41200A782A9 /* RACArraySequence.m in Sources */,
+				9A3DBBBF2ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */,
 				D037652219EDA41200A782A9 /* NSObject+RACLifting.m in Sources */,
 				D037650619EDA41200A782A9 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
 				D037650E19EDA41200A782A9 /* NSNotificationCenter+RACSupport.m in Sources */,
@@ -2427,7 +2428,6 @@
 				D037662B19EDA41200A782A9 /* UICollectionReusableView+RACSignalSupport.m in Sources */,
 				D037659919EDA41200A782A9 /* RACIndexSetSequence.m in Sources */,
 				D03765D919EDA41200A782A9 /* RACSignal+Operations.m in Sources */,
-				D037661B19EDA41200A782A9 /* UIActionSheet+RACSignalSupport.m in Sources */,
 				D037650319EDA41200A782A9 /* NSFileHandle+RACSupport.m in Sources */,
 				D03765E319EDA41200A782A9 /* RACStream.m in Sources */,
 				D037655719EDA41200A782A9 /* RACBehaviorSubject.m in Sources */,
@@ -2443,11 +2443,11 @@
 				D03764FB19EDA41200A782A9 /* NSDictionary+RACSequenceAdditions.m in Sources */,
 				D037656919EDA41200A782A9 /* RACCompoundDisposableProvider.d in Sources */,
 				D037653B19EDA41200A782A9 /* NSString+RACSequenceAdditions.m in Sources */,
-				D037661F19EDA41200A782A9 /* UIAlertView+RACSignalSupport.m in Sources */,
 				D03765E919EDA41200A782A9 /* RACStringSequence.m in Sources */,
 				D037660B19EDA41200A782A9 /* RACTupleSequence.m in Sources */,
 				D03765D519EDA41200A782A9 /* RACSignal.m in Sources */,
 				D037663319EDA41200A782A9 /* UIControl+RACSignalSupportPrivate.m in Sources */,
+				9A3DBBC02ADFAF720003277C /* UIAlertController+RACSignalSupport.m in Sources */,
 				D037664319EDA41200A782A9 /* UIRefreshControl+RACCommandSupport.m in Sources */,
 				D037651B19EDA41200A782A9 /* NSObject+RACDescription.m in Sources */,
 				D03765A519EDA41200A782A9 /* RACMulticastConnection.m in Sources */,
@@ -2872,6 +2872,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -2889,6 +2892,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -2937,11 +2943,16 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEFINES_MODULE = YES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = V68LF4H444;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -2954,11 +2965,16 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEFINES_MODULE = YES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = V68LF4H444;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -2972,7 +2988,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 			};
@@ -2985,7 +3003,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 			};
@@ -3024,6 +3044,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = macosx;
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -3052,11 +3075,16 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				DEFINES_MODULE = YES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = V68LF4H444;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
 			};
@@ -3069,7 +3097,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Profile;
@@ -3107,6 +3137,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -3142,6 +3175,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ReactiveObjC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = ReactiveObjC/extobjc;
@@ -3155,7 +3191,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ReactiveObjCTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = "$(PROJECT_NAME)Tests";
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 			};

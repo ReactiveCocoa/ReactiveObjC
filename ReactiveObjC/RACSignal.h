@@ -49,7 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// subscribes. Any side effects within the block will thus execute once for each
 /// subscription, not necessarily on one thread, and possibly even
 /// simultaneously!
-+ (RACSignal<ValueType> *)createSignal:(RACDisposable * _Nullable (^)(id<RACSubscriber> subscriber))didSubscribe RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)createSignal:
+    (RACDisposable *_Nullable (^)(id<RACSubscriber> subscriber))didSubscribe RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal that immediately sends the given error.
 + (RACSignal<ValueType> *)error:(nullable NSError *)error RAC_WARN_UNUSED_RESULT;
@@ -67,7 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns a signal which will send all events sent on the subscriber given to
 /// `block`. All events will be sent on `scheduler` and it will replay any missed
 /// events to new subscribers.
-+ (RACSignal<ValueType> *)startEagerlyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block;
++ (RACSignal<ValueType> *)startEagerlyWithScheduler:(RACScheduler *)scheduler
+                                              block:(void (^)(id<RACSubscriber> subscriber))block;
 
 /// Invokes the given block only on the first subscription. The block is given a
 /// subscriber to which it can send events.
@@ -78,18 +80,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// be disposed of. Because of this, `block` should never return an infinite
 /// signal since there would be no way of ending it.
 ///
-/// scheduler - The scheduler on which the block should be scheduled. Note that 
+/// scheduler - The scheduler on which the block should be scheduled. Note that
 ///             if given +[RACScheduler immediateScheduler], the block will be
 ///             invoked synchronously on the first subscription. Cannot be nil.
 /// block     - The block to invoke on the first subscription. Cannot be NULL.
 ///
 /// Returns a signal which will pass through the events sent to the subscriber
 /// given to `block` and replay any missed events to new subscribers.
-+ (RACSignal<ValueType> *)startLazilyWithScheduler:(RACScheduler *)scheduler block:(void (^)(id<RACSubscriber> subscriber))block RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)startLazilyWithScheduler:(RACScheduler *)scheduler
+                                             block:(void (^)(id<RACSubscriber> subscriber))block
+    RAC_WARN_UNUSED_RESULT;
 
 @end
 
-@interface RACSignal<__covariant ValueType> (RACStream)
+@interface RACSignal <__covariant ValueType>(RACStream)
 
 /// Returns a signal that immediately sends the given value and then completes.
 + (RACSignal<ValueType> *)return:(nullable ValueType)value RAC_WARN_UNUSED_RESULT;
@@ -101,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Setting `stop` to `YES` will cause the bind to terminate after the returned
 /// value. Returning `nil` will result in immediate termination.
-typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, BOOL *stop);
+typedef RACSignal *_Nullable (^RACSignalBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
@@ -142,7 +146,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// In cases where instancetype is a valid return type, the operation is not
 /// redeclared here.
-@interface RACSignal<__covariant ValueType> (RACStreamOperations)
+@interface RACSignal <__covariant ValueType>(RACStreamOperations)
 
 /// Maps `block` across the values in the receiver and flattens the result.
 ///
@@ -171,7 +175,8 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal which represents the combined signals resulting from
 /// mapping `block`.
-- (RACSignal *)flattenMap:(__kindof RACSignal * _Nullable (^)(ValueType _Nullable value))block RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)flattenMap:(__kindof RACSignal *_Nullable (^)(ValueType _Nullable value))block
+    RAC_WARN_UNUSED_RESULT;
 
 /// Flattens a signal of signals.
 ///
@@ -268,7 +273,8 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal containing the results from each invocation of
 /// `reduceBlock`.
-+ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals reduce:(RACGenericReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
++ (RACSignal<ValueType> *)zip:(id<NSFastEnumeration>)signals
+                       reduce:(RACGenericReduceBlock)reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal obtained by concatenating `signals` in order.
 + (RACSignal<ValueType> *)concat:(id<NSFastEnumeration>)signals RAC_WARN_UNUSED_RESULT;
@@ -301,7 +307,10 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty signal is returned.
-- (RACSignal *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)scanWithStart:(nullable id)startingValue
+                      reduce:(id _Nullable (^)(id _Nullable running,
+                                               ValueType _Nullable next))reduceBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
@@ -315,7 +324,9 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new signal that consists of each application of `reduceBlock`. If
 /// the receiver is empty, an empty signal is returned.
-- (RACSignal *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)scanWithStart:(nullable id)startingValue
+             reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next,
+                                               NSUInteger index))reduceBlock RAC_WARN_UNUSED_RESULT;
 
 /// Combines each previous and current value into one object.
 ///
@@ -334,41 +345,49 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///          signalWithScheduler:RACScheduler.immediateScheduler];
 ///
 ///      // Contains 1, 3, 5, 7
-///      RACSignal *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
+///      RACSignal *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous,
+///      NSNumber *next) {
 ///          return @(previous.integerValue + next.integerValue);
 ///      }];
 ///
 /// Returns a new signal consisting of the return values from each application of
 /// `reduceBlock`.
-- (RACSignal *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock RAC_WARN_UNUSED_RESULT;
+- (RACSignal *)combinePreviousWithStart:(nullable ValueType)start
+                                 reduce:(id _Nullable (^)(ValueType _Nullable previous,
+                                                          ValueType _Nullable current))reduceBlock
+    RAC_WARN_UNUSED_RESULT;
 
 /// Takes values until the given block returns `YES`.
 ///
 /// Returns a signal of the initial values in the receiver that fail `predicate`.
 /// If `predicate` never returns `YES`, a signal equivalent to the receiver is
 /// returned.
-- (RACSignal<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)takeUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate
+    RAC_WARN_UNUSED_RESULT;
 
 /// Takes values until the given block returns `NO`.
 ///
 /// Returns a signal of the initial values in the receiver that pass `predicate`.
 /// If `predicate` never returns `NO`, a signal equivalent to the receiver is
 /// returned.
-- (RACSignal<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)takeWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate
+    RAC_WARN_UNUSED_RESULT;
 
 /// Skips values until the given block returns `YES`.
 ///
 /// Returns a signal containing the values of the receiver that follow any
 /// initial values failing `predicate`. If `predicate` never returns `YES`,
 /// an empty signal is returned.
-- (RACSignal<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)skipUntilBlock:(BOOL (^)(ValueType _Nullable x))predicate
+    RAC_WARN_UNUSED_RESULT;
 
 /// Skips values until the given block returns `NO`.
 ///
 /// Returns a signal containing the values of the receiver that follow any
 /// initial values passing `predicate`. If `predicate` never returns `NO`, an
 /// empty signal is returned.
-- (RACSignal<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate RAC_WARN_UNUSED_RESULT;
+- (RACSignal<ValueType> *)skipWhileBlock:(BOOL (^)(ValueType _Nullable x))predicate
+    RAC_WARN_UNUSED_RESULT;
 
 /// Returns a signal of values for which -isEqual: returns NO when compared to the
 /// previous value.
@@ -376,7 +395,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 
 @end
 
-@interface RACSignal<__covariant ValueType> (Subscription)
+@interface RACSignal <__covariant ValueType>(Subscription)
 
 /// Subscribes `subscriber` to changes on the receiver. The receiver defines which
 /// events it actually sends and in what situations the events are sent.
@@ -402,15 +421,18 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 - (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock;
 
 /// Convenience method to subscribe to the `next` and `completed` events.
-- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock completed:(void (^)(void))completedBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock
+                       completed:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to the `next`, `completed`, and `error` events.
-- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock completed:(void (^)(void))completedBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock
+                           error:(void (^)(NSError *_Nullable error))errorBlock
+                       completed:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to `error` events.
 ///
 /// This corresponds to the `IObserver<T>.OnError` in Rx.
-- (RACDisposable *)subscribeError:(void (^)(NSError * _Nullable error))errorBlock;
+- (RACDisposable *)subscribeError:(void (^)(NSError *_Nullable error))errorBlock;
 
 /// Convenience method to subscribe to `completed` events.
 ///
@@ -418,15 +440,17 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 - (RACDisposable *)subscribeCompleted:(void (^)(void))completedBlock;
 
 /// Convenience method to subscribe to `next` and `error` events.
-- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock error:(void (^)(NSError * _Nullable error))errorBlock;
+- (RACDisposable *)subscribeNext:(void (^)(ValueType _Nullable x))nextBlock
+                           error:(void (^)(NSError *_Nullable error))errorBlock;
 
 /// Convenience method to subscribe to `error` and `completed` events.
-- (RACDisposable *)subscribeError:(void (^)(NSError * _Nullable error))errorBlock completed:(void (^)(void))completedBlock;
+- (RACDisposable *)subscribeError:(void (^)(NSError *_Nullable error))errorBlock
+                        completed:(void (^)(void))completedBlock;
 
 @end
 
 /// Additional methods to assist with debugging.
-@interface RACSignal<__covariant ValueType> (Debugging)
+@interface RACSignal <__covariant ValueType>(Debugging)
 
 /// Logs all events that the receiver sends.
 - (RACSignal<ValueType> *)logAll RAC_WARN_UNUSED_RESULT;
@@ -445,7 +469,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 /// Additional methods to assist with unit testing.
 ///
 /// **These methods should never ship in production code.**
-@interface RACSignal<__covariant ValueType> (Testing)
+@interface RACSignal <__covariant ValueType>(Testing)
 
 /// Spins the main run loop for a short while, waiting for the receiver to send a `next`
 /// or the provided timeout to elapse.
@@ -462,7 +486,10 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns the first value received, or `defaultValue` if no value is received
 /// before the signal finishes or the method times out.
-- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error timeout:(NSTimeInterval)timeout;
+- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue
+                                         success:(nullable BOOL *)success
+                                           error:(NSError *_Nullable *_Nullable)error
+                                         timeout:(NSTimeInterval)timeout;
 
 /// Spins the main run loop for a short while, waiting for the receiver to send a `next`.
 ///
@@ -478,7 +505,9 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns the first value received, or `defaultValue` if no value is received
 /// before the signal finishes or the method times out.
-- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue success:(nullable BOOL *)success error:(NSError * _Nullable * _Nullable)error;
+- (nullable ValueType)asynchronousFirstOrDefault:(nullable ValueType)defaultValue
+                                         success:(nullable BOOL *)success
+                                           error:(NSError *_Nullable *_Nullable)error;
 
 /// Spins the main run loop for a short while, waiting for the receiver to complete.
 /// or the provided timeout to elapse.
@@ -490,7 +519,8 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns whether the signal completed successfully before timing out. If NO,
 /// `error` will be set to any error that occurred.
-- (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error timeout:(NSTimeInterval)timeout;
+- (BOOL)asynchronouslyWaitUntilCompleted:(NSError *_Nullable *_Nullable)error
+                                 timeout:(NSTimeInterval)timeout;
 
 /// Spins the main run loop for a short while, waiting for the receiver to complete
 ///
@@ -501,7 +531,7 @@ typedef RACSignal * _Nullable (^RACSignalBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns whether the signal completed successfully before timing out. If NO,
 /// `error` will be set to any error that occurred.
-- (BOOL)asynchronouslyWaitUntilCompleted:(NSError * _Nullable * _Nullable)error;
+- (BOOL)asynchronouslyWaitUntilCompleted:(NSError *_Nullable *_Nullable)error;
 
 @end
 

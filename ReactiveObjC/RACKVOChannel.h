@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 GitHub, Inc. All rights reserved.
 //
 
-#import "RACChannel.h"
 #import <ReactiveObjC/EXTKeyPathCoding.h>
+#import "RACChannel.h"
 #import "metamacros.h"
 
 /// Creates a RACKVOChannel to the given key path. When the targeted object
@@ -51,19 +51,21 @@
 ///  side.
 ///  RACChannelTo(view, objectProperty) = RACChannelTo(model, objectProperty);
 ///  RACChannelTo(view, integerProperty, @2) = RACChannelTo(model, integerProperty, @10);
-#define RACChannelTo(TARGET, ...) \
-    metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__)) \
-        (RACChannelTo_(TARGET, __VA_ARGS__, nil)) \
-        (RACChannelTo_(TARGET, __VA_ARGS__))
+#define RACChannelTo(TARGET, ...)                                                               \
+  metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(RACChannelTo_(TARGET, __VA_ARGS__, nil))( \
+      RACChannelTo_(TARGET, __VA_ARGS__))
 
 /// Do not use this directly. Use the RACChannelTo macro above.
 #define RACChannelTo_(TARGET, KEYPATH, NILVALUE) \
-    [[RACKVOChannel alloc] initWithTarget:(TARGET) keyPath:@keypath(TARGET, KEYPATH) nilValue:(NILVALUE)][@keypath(RACKVOChannel.new, followingTerminal)]
+  [[RACKVOChannel alloc]                         \
+      initWithTarget:(TARGET)                    \
+             keyPath:@keypath(TARGET, KEYPATH)   \
+            nilValue:(NILVALUE)][@keypath(RACKVOChannel.new, followingTerminal)]
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// A RACChannel that observes a KVO-compliant key path for changes.
-@interface RACKVOChannel<ValueType> : RACChannel<ValueType>
+@interface RACKVOChannel<ValueType> : RACChannel <ValueType>
 
 /// Initializes a channel that will observe the given object and key path.
 ///
@@ -85,10 +87,14 @@ NS_ASSUME_NONNULL_BEGIN
 ///            exception if `nil` is received (which might occur if an intermediate
 ///            object is set to `nil`).
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
-- (instancetype)initWithTarget:(__weak NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable ValueType)nilValue;
+- (instancetype)initWithTarget:(__weak NSObject *)target
+                       keyPath:(NSString *)keyPath
+                      nilValue:(nullable ValueType)nilValue;
 #else
 // Swift builds with OS_OBJECT_HAVE_OBJC_SUPPORT=0 for Playgrounds and LLDB :(
-- (instancetype)initWithTarget:(NSObject *)target keyPath:(NSString *)keyPath nilValue:(nullable ValueType)nilValue;
+- (instancetype)initWithTarget:(NSObject *)target
+                       keyPath:(NSString *)keyPath
+                      nilValue:(nullable ValueType)nilValue;
 #endif
 
 - (instancetype)init __attribute__((unavailable("Use -initWithTarget:keyPath:nilValue: instead")));
@@ -104,4 +110,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-

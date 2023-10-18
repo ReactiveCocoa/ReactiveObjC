@@ -14,7 +14,7 @@
 @interface RACSignalSequence ()
 
 // Replays the signal given on initialization.
-@property (nonatomic, strong, readonly) RACReplaySubject *subject;
+@property(nonatomic, strong, readonly) RACReplaySubject *subject;
 
 @end
 
@@ -23,57 +23,61 @@
 #pragma mark Lifecycle
 
 + (RACSequence *)sequenceWithSignal:(RACSignal *)signal {
-	RACSignalSequence *seq = [[self alloc] init];
+  RACSignalSequence *seq = [[self alloc] init];
 
-	RACReplaySubject *subject = [RACReplaySubject subject];
-	[signal subscribeNext:^(id value) {
-		[subject sendNext:value];
-	} error:^(NSError *error) {
-		[subject sendError:error];
-	} completed:^{
-		[subject sendCompleted];
-	}];
+  RACReplaySubject *subject = [RACReplaySubject subject];
+  [signal
+      subscribeNext:^(id value) {
+        [subject sendNext:value];
+      }
+      error:^(NSError *error) {
+        [subject sendError:error];
+      }
+      completed:^{
+        [subject sendCompleted];
+      }];
 
-	seq->_subject = subject;
-	return seq;
+  seq->_subject = subject;
+  return seq;
 }
 
 #pragma mark RACSequence
 
 - (id)head {
-	id value = [self.subject firstOrDefault:self];
+  id value = [self.subject firstOrDefault:self];
 
-	if (value == self) {
-		return nil;
-	} else {
-		return value ?: NSNull.null;
-	}
+  if (value == self) {
+    return nil;
+  } else {
+    return value ?: NSNull.null;
+  }
 }
 
 - (RACSequence *)tail {
-	RACSequence *sequence = [self.class sequenceWithSignal:[self.subject skip:1]];
-	sequence.name = self.name;
-	return sequence;
+  RACSequence *sequence = [self.class sequenceWithSignal:[self.subject skip:1]];
+  sequence.name = self.name;
+  return sequence;
 }
 
 - (NSArray *)array {
-	return self.subject.toArray;
+  return self.subject.toArray;
 }
 
 #pragma mark NSObject
 
 - (NSString *)description {
-	// Synchronously accumulate the values that have been sent so far.
-	NSMutableArray *values = [NSMutableArray array];
-	RACDisposable *disposable = [self.subject subscribeNext:^(id value) {
-		@synchronized (values) {
-			[values addObject:value ?: NSNull.null];
-		}
-	}];
+  // Synchronously accumulate the values that have been sent so far.
+  NSMutableArray *values = [NSMutableArray array];
+  RACDisposable *disposable = [self.subject subscribeNext:^(id value) {
+    @synchronized(values) {
+      [values addObject:value ?: NSNull.null];
+    }
+  }];
 
-	[disposable dispose];
+  [disposable dispose];
 
-	return [NSString stringWithFormat:@"<%@: %p>{ name = %@, values = %@ … }", self.class, self, self.name, values];
+  return [NSString stringWithFormat:@"<%@: %p>{ name = %@, values = %@ … }", self.class, self,
+                                    self.name, values];
 }
 
 @end

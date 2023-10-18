@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Sends the data or the error.
 //
 // scheduler - cannot be nil.
-+ (RACSignal<NSData *> *)rac_readContentsOfURL:(nullable NSURL *)URL options:(NSDataReadingOptions)options scheduler:(RACScheduler *)scheduler;
++ (RACSignal<NSData *> *)rac_readContentsOfURL:(nullable NSURL *)URL
+                                       options:(NSDataReadingOptions)options
+                                     scheduler:(RACScheduler *)scheduler;
 
 @end
 

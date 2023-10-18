@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RACGroupedSignal : RACSubject
 
 /// The key shared by the group.
-@property (nonatomic, readonly, copy) id<NSCopying> key;
+@property(nonatomic, readonly, copy) id<NSCopying> key;
 
 + (instancetype)signalWithKey:(id<NSCopying>)key;
 

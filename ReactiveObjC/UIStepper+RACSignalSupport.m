@@ -6,14 +6,16 @@
 //  Copyright (c) 2013 GitHub, Inc. All rights reserved.
 //
 
-#import "UIStepper+RACSignalSupport.h"
 #import <ReactiveObjC/EXTKeyPathCoding.h>
 #import "UIControl+RACSignalSupportPrivate.h"
+#import "UIStepper+RACSignalSupport.h"
 
 @implementation UIStepper (RACSignalSupport)
 
 - (RACChannelTerminal *)rac_newValueChannelWithNilValue:(NSNumber *)nilValue {
-	return [self rac_channelForControlEvents:UIControlEventValueChanged key:@keypath(self.value) nilValue:nilValue];
+  return [self rac_channelForControlEvents:UIControlEventValueChanged
+                                       key:@keypath(self.value)
+                                  nilValue:nilValue];
 }
 
 @end

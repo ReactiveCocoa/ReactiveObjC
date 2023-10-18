@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// RACEventTypeError     - An `error` event.
 /// RACEventTypeNext      - A `next` event.
 typedef NS_ENUM(NSUInteger, RACEventType) {
-    RACEventTypeCompleted,
-    RACEventTypeError,
-    RACEventTypeNext
+  RACEventTypeCompleted,
+  RACEventTypeError,
+  RACEventTypeNext
 };
 
 /// Represents an event sent by a RACSignal.
@@ -36,19 +36,19 @@ typedef NS_ENUM(NSUInteger, RACEventType) {
 + (RACEvent<ValueType> *)eventWithValue:(nullable ValueType)value;
 
 /// The type of event represented by the receiver.
-@property (nonatomic, assign, readonly) RACEventType eventType;
+@property(nonatomic, assign, readonly) RACEventType eventType;
 
 /// Returns whether the receiver is of type RACEventTypeCompleted or
 /// RACEventTypeError.
-@property (nonatomic, getter = isFinished, assign, readonly) BOOL finished;
+@property(nonatomic, getter=isFinished, assign, readonly) BOOL finished;
 
 /// The error associated with an event of type RACEventTypeError. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly, nullable) NSError *error;
+@property(nonatomic, strong, readonly, nullable) NSError *error;
 
 /// The value associated with an event of type RACEventTypeNext. This will be
 /// nil for all other event types.
-@property (nonatomic, strong, readonly, nullable) ValueType value;
+@property(nonatomic, strong, readonly, nullable) ValueType value;
 
 @end
 

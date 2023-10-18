@@ -21,14 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// to be overridden.
 @interface RACStream<__covariant ValueType> : NSObject
 
-_Pragma("clang diagnostic push") \
-_Pragma("clang diagnostic ignored \"-Wstrict-prototypes\"") \
-typedef id _Nonnull (^RACReduceBlock)();
+_Pragma("clang diagnostic push")
+    _Pragma("clang diagnostic ignored \"-Wstrict-prototypes\"") typedef id
+    _Nonnull (^RACReduceBlock)();
 typedef ValueType _Nonnull (^RACGenericReduceBlock)();
 _Pragma("clang diagnostic pop")
 
-/// Returns an empty stream.
-+ (__kindof RACStream<ValueType> *)empty;
+    /// Returns an empty stream.
+    + (__kindof RACStream<ValueType> *)empty;
 
 /// Lifts `value` into the stream monad.
 ///
@@ -40,7 +40,7 @@ _Pragma("clang diagnostic pop")
 ///
 /// Setting `stop` to `YES` will cause the bind to terminate after the returned
 /// value. Returning `nil` will result in immediate termination.
-typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, BOOL *stop);
+typedef RACStream *_Nullable (^RACStreamBindBlock)(ValueType _Nullable value, BOOL *stop);
 
 /// Lazily binds a block to the values in the receiver.
 ///
@@ -85,7 +85,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 @interface RACStream ()
 
 /// The name of the stream. This is for debugging/human purposes only.
-@property (copy) NSString *name;
+@property(copy) NSString *name;
 
 /// Sets the name of the receiver to the given format string.
 ///
@@ -101,7 +101,7 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// These methods do not need to be overridden, although subclasses may
 /// occasionally gain better performance from doing so.
-@interface RACStream<__covariant ValueType> (Operations)
+@interface RACStream <__covariant ValueType>(Operations)
 
 /// Maps `block` across the values in the receiver and flattens the result.
 ///
@@ -130,7 +130,8 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream which represents the combined streams resulting from
 /// mapping `block`.
-- (__kindof RACStream *)flattenMap:(__kindof RACStream * _Nullable (^)(ValueType _Nullable value))block;
+- (__kindof RACStream *)flattenMap:
+    (__kindof RACStream *_Nullable (^)(ValueType _Nullable value))block;
 
 /// Flattens a stream of streams.
 ///
@@ -227,7 +228,8 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream containing the results from each invocation of
 /// `reduceBlock`.
-+ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams reduce:(RACGenericReduceBlock)reduceBlock;
++ (__kindof RACStream<ValueType> *)zip:(id<NSFastEnumeration>)streams
+                                reduce:(RACGenericReduceBlock)reduceBlock;
 
 /// Returns a stream obtained by concatenating `streams` in order.
 + (__kindof RACStream<ValueType> *)concat:(id<NSFastEnumeration>)streams;
@@ -260,7 +262,9 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream that consists of each application of `reduceBlock`. If the
 /// receiver is empty, an empty stream is returned.
-- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduce:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next))reduceBlock;
+- (__kindof RACStream *)scanWithStart:(nullable id)startingValue
+                               reduce:(id _Nullable (^)(id _Nullable running,
+                                                        ValueType _Nullable next))reduceBlock;
 
 /// Combines values in the receiver from left to right using the given block
 /// which also takes zero-based index of the values.
@@ -274,7 +278,10 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///
 /// Returns a new stream that consists of each application of `reduceBlock`. If the
 /// receiver is empty, an empty stream is returned.
-- (__kindof RACStream *)scanWithStart:(nullable id)startingValue reduceWithIndex:(id _Nullable (^)(id _Nullable running, ValueType _Nullable next, NSUInteger index))reduceBlock;
+- (__kindof RACStream *)scanWithStart:(nullable id)startingValue
+                      reduceWithIndex:(id _Nullable (^)(id _Nullable running,
+                                                        ValueType _Nullable next,
+                                                        NSUInteger index))reduceBlock;
 
 /// Combines each previous and current value into one object.
 ///
@@ -292,13 +299,17 @@ typedef RACStream * _Nullable (^RACStreamBindBlock)(ValueType _Nullable value, B
 ///      RACSequence *numbers = @[ @1, @2, @3, @4 ].rac_sequence;
 ///
 ///      // Contains 1, 3, 5, 7
-///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous, NSNumber *next) {
+///      RACSequence *sums = [numbers combinePreviousWithStart:@0 reduce:^(NSNumber *previous,
+///      NSNumber *next) {
 ///          return @(previous.integerValue + next.integerValue);
 ///      }];
 ///
 /// Returns a new stream consisting of the return values from each application of
 /// `reduceBlock`.
-- (__kindof RACStream *)combinePreviousWithStart:(nullable ValueType)start reduce:(id _Nullable (^)(ValueType _Nullable previous, ValueType _Nullable current))reduceBlock;
+- (__kindof RACStream *)combinePreviousWithStart:(nullable ValueType)start
+                                          reduce:(id _Nullable (^)(ValueType _Nullable previous,
+                                                                   ValueType _Nullable current))
+                                                     reduceBlock;
 
 /// Takes values until the given block returns `YES`.
 ///

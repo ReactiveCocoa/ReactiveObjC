@@ -33,7 +33,12 @@
 //            be nil.
 //
 // Returns a disposable that can be used to stop the observation.
-- (RACDisposable *)rac_observeKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options observer:(__weak NSObject *)observer block:(void (^)(id value, NSDictionary *change, BOOL causedByDealloc, BOOL affectedOnlyLastComponent))block;
+- (RACDisposable *)rac_observeKeyPath:(NSString *)keyPath
+                              options:(NSKeyValueObservingOptions)options
+                             observer:(__weak NSObject *)observer
+                                block:(void (^)(id value, NSDictionary *change,
+                                                BOOL causedByDealloc,
+                                                BOOL affectedOnlyLastComponent))block;
 
 @end
 
@@ -41,6 +46,10 @@ typedef void (^RACKVOBlock)(id target, id observer, NSDictionary *change);
 
 @interface NSObject (RACUnavailableKVOWrapper)
 
-- (RACKVOTrampoline *)rac_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RACKVOBlock)block __attribute((unavailable("Use rac_observeKeyPath:options:observer:block: instead.")));
+- (RACKVOTrampoline *)rac_addObserver:(NSObject *)observer
+                           forKeyPath:(NSString *)keyPath
+                              options:(NSKeyValueObservingOptions)options
+                                block:(RACKVOBlock)block
+    __attribute((unavailable("Use rac_observeKeyPath:options:observer:block: instead.")));
 
 @end

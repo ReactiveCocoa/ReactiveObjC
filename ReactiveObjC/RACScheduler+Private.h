@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 // The thread-specific current scheduler key.
-extern NSString * const RACSchedulerCurrentSchedulerKey;
+extern NSString *const RACSchedulerCurrentSchedulerKey;
 
 // A private interface for internal RAC use only.
 @interface RACScheduler ()

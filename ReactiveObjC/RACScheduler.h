@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// RACSchedulerPriorityLow        - Low priority.
 /// RACSchedulerPriorityBackground - Background priority.
 typedef enum : long {
-	RACSchedulerPriorityHigh = DISPATCH_QUEUE_PRIORITY_HIGH,
-	RACSchedulerPriorityDefault = DISPATCH_QUEUE_PRIORITY_DEFAULT,
-	RACSchedulerPriorityLow = DISPATCH_QUEUE_PRIORITY_LOW,
-	RACSchedulerPriorityBackground = DISPATCH_QUEUE_PRIORITY_BACKGROUND,
+  RACSchedulerPriorityHigh = DISPATCH_QUEUE_PRIORITY_HIGH,
+  RACSchedulerPriorityDefault = DISPATCH_QUEUE_PRIORITY_DEFAULT,
+  RACSchedulerPriorityLow = DISPATCH_QUEUE_PRIORITY_LOW,
+  RACSchedulerPriorityBackground = DISPATCH_QUEUE_PRIORITY_BACKGROUND,
 } RACSchedulerPriority;
 
 /// Scheduled with -scheduleRecursiveBlock:, this type of block is passed a block
@@ -48,7 +48,8 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 /// Scheduler creation is cheap. It's unnecessary to save the result of this
 /// method call unless you want to serialize some actions on the same background
 /// scheduler.
-+ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority name:(nullable NSString *)name;
++ (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority
+                                   name:(nullable NSString *)name;
 
 /// Invokes +schedulerWithPriority:name: with a default name.
 + (RACScheduler *)schedulerWithPriority:(RACSchedulerPriority)priority;
@@ -120,7 +121,10 @@ typedef void (^RACSchedulerRecursiveBlock)(void (^reschedule)(void));
 ///
 /// Returns a disposable which can be used to cancel the automatic scheduling and
 /// rescheduling, or nil if cancellation is not supported.
-- (nullable RACDisposable *)after:(NSDate *)date repeatingEvery:(NSTimeInterval)interval withLeeway:(NSTimeInterval)leeway schedule:(void (^)(void))block;
+- (nullable RACDisposable *)after:(NSDate *)date
+                   repeatingEvery:(NSTimeInterval)interval
+                       withLeeway:(NSTimeInterval)leeway
+                         schedule:(void (^)(void))block;
 
 /// Schedule the given recursive block for execution on the scheduler. The
 /// scheduler will automatically flatten any recursive scheduling into iteration

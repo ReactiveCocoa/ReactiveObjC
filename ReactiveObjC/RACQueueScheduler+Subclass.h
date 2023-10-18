@@ -18,10 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The queue on which blocks are enqueued.
 #if OS_OBJECT_USE_OBJC
-@property (nonatomic, strong, readonly) dispatch_queue_t queue;
+@property(nonatomic, strong, readonly) dispatch_queue_t queue;
 #else
 // Swift builds with OS_OBJECT_HAVE_OBJC_SUPPORT=0 for Playgrounds and LLDB :(
-@property (nonatomic, assign, readonly) dispatch_queue_t queue;
+@property(nonatomic, assign, readonly) dispatch_queue_t queue;
 #endif
 
 /// Initializes the receiver with the name of the scheduler and the queue which

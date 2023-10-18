@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// concurrently at any time.
 ///
 /// This property is not KVO-compliant.
-@property (atomic, assign, getter = isDisposed, readonly) BOOL disposed;
+@property(atomic, assign, getter=isDisposed, readonly) BOOL disposed;
 
 + (instancetype)disposableWithBlock:(void (^)(void))block;
 

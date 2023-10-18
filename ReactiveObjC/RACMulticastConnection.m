@@ -7,28 +7,29 @@
 //
 
 #import "RACMulticastConnection.h"
-#import "RACMulticastConnection+Private.h"
+#import <libkern/OSAtomic.h>
 #import "RACDisposable.h"
+#import "RACMulticastConnection+Private.h"
 #import "RACSerialDisposable.h"
 #import "RACSubject.h"
-#import <libkern/OSAtomic.h>
 
+#include <stdatomic.h>
 @interface RACMulticastConnection () {
-	RACSubject *_signal;
+  RACSubject *_signal;
 
-	// When connecting, a caller should attempt to atomically swap the value of this
-	// from `0` to `1`.
-	//
-	// If the swap is successful the caller is resposible for subscribing `_signal`
-	// to `sourceSignal` and storing the returned disposable in `serialDisposable`.
-	//
-	// If the swap is unsuccessful it means that `_sourceSignal` has already been
-	// connected and the caller has no action to take.
-	int32_t volatile _hasConnected;
+  // When connecting, a caller should attempt to atomically swap the value of this
+  // from `0` to `1`.
+  //
+  // If the swap is successful the caller is resposible for subscribing `_signal`
+  // to `sourceSignal` and storing the returned disposable in `serialDisposable`.
+  //
+  // If the swap is unsuccessful it means that `_sourceSignal` has already been
+  // connected and the caller has no action to take.
+  _Atomic int32_t _hasConnected;
 }
 
-@property (nonatomic, readonly, strong) RACSignal *sourceSignal;
-@property (strong) RACSerialDisposable *serialDisposable;
+@property(nonatomic, readonly, strong) RACSignal *sourceSignal;
+@property(strong) RACSerialDisposable *serialDisposable;
 @end
 
 @implementation RACMulticastConnection
@@ -36,49 +37,49 @@
 #pragma mark Lifecycle
 
 - (instancetype)initWithSourceSignal:(RACSignal *)source subject:(RACSubject *)subject {
-	NSCParameterAssert(source != nil);
-	NSCParameterAssert(subject != nil);
+  NSCParameterAssert(source != nil);
+  NSCParameterAssert(subject != nil);
 
-	self = [super init];
+  self = [super init];
 
-	_sourceSignal = source;
-	_serialDisposable = [[RACSerialDisposable alloc] init];
-	_signal = subject;
-	
-	return self;
+  _sourceSignal = source;
+  _serialDisposable = [[RACSerialDisposable alloc] init];
+  _signal = subject;
+
+  return self;
 }
 
 #pragma mark Connecting
 
 - (RACDisposable *)connect {
-	BOOL shouldConnect = OSAtomicCompareAndSwap32Barrier(0, 1, &_hasConnected);
+  BOOL shouldConnect = atomic_fetch_add(&_hasConnected, 1) == 0;
+  if (shouldConnect) {
+    self.serialDisposable.disposable = [self.sourceSignal subscribe:_signal];
+  }
 
-	if (shouldConnect) {
-		self.serialDisposable.disposable = [self.sourceSignal subscribe:_signal];
-	}
-
-	return self.serialDisposable;
+  return self.serialDisposable;
 }
 
 - (RACSignal *)autoconnect {
-	__block volatile int32_t subscriberCount = 0;
+  //	__block volatile int32_t subscriberCount = 0;
+  _Atomic int32_t *subscriberCount = malloc(sizeof(*subscriberCount));
+  *subscriberCount = 1;  // indicates self
 
-	return [[RACSignal
-		createSignal:^(id<RACSubscriber> subscriber) {
-			OSAtomicIncrement32Barrier(&subscriberCount);
+  return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
+    // OSAtomicIncrement32Barrier(&subscriberCount);
 
-			RACDisposable *subscriptionDisposable = [self.signal subscribe:subscriber];
-			RACDisposable *connectionDisposable = [self connect];
+    atomic_fetch_add(subscriberCount, 1);
+    RACDisposable *subscriptionDisposable = [self.signal subscribe:subscriber];
+    RACDisposable *connectionDisposable = [self connect];
 
-			return [RACDisposable disposableWithBlock:^{
-				[subscriptionDisposable dispose];
+    return [RACDisposable disposableWithBlock:^{
+      [subscriptionDisposable dispose];
 
-				if (OSAtomicDecrement32Barrier(&subscriberCount) == 0) {
-					[connectionDisposable dispose];
-				}
-			}];
-		}]
-		setNameWithFormat:@"[%@] -autoconnect", self.signal.name];
+      if (atomic_fetch_sub(subscriberCount, 1) == 0) {
+        [connectionDisposable dispose];
+      }
+    }];
+  }] setNameWithFormat:@"[%@] -autoconnect", self.signal.name];
 }
 
 @end

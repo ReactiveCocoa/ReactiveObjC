@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// A delegate proxy which will be set as the receiver's delegate when any of the
 /// methods in this category are used.
-@property (nonatomic, strong, readonly) RACDelegateProxy *rac_delegateProxy;
+@property(nonatomic, strong, readonly) RACDelegateProxy *rac_delegateProxy;
 
 /// Creates a signal for button clicks on the receiver.
 ///

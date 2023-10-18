@@ -13,8 +13,7 @@
 
 /// Creates a new tuple with the given values. At least one value must be given.
 /// Values can be nil.
-#define RACTuplePack(...) \
-    RACTuplePack_(__VA_ARGS__)
+#define RACTuplePack(...) RACTuplePack_(__VA_ARGS__)
 
 /// Declares new object variables and unpacks a RACTuple into them.
 ///
@@ -40,13 +39,13 @@
 ///   NSNumber *num = t[1];
 ///   NSLog(@"string: %@", string);
 ///   NSLog(@"num: %@", num);
-#define RACTupleUnpack(...) \
-        RACTupleUnpack_(__VA_ARGS__)
+#define RACTupleUnpack(...) RACTupleUnpack_(__VA_ARGS__)
 
 @class RACTwoTuple<__covariant First, __covariant Second>;
 @class RACThreeTuple<__covariant First, __covariant Second, __covariant Third>;
 @class RACFourTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth>;
-@class RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth, __covariant Fifth>;
+@class RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth,
+                    __covariant Fifth>;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -59,21 +58,20 @@ NS_ASSUME_NONNULL_BEGIN
 + (RACTupleNil *)tupleNil;
 @end
 
-
 /// A tuple is an ordered collection of objects. It may contain nils, represented
 /// by RACTupleNil.
 @interface RACTuple : NSObject <NSCoding, NSCopying, NSFastEnumeration>
 
-@property (nonatomic, readonly) NSUInteger count;
+@property(nonatomic, readonly) NSUInteger count;
 
-/// These properties all return the object at that index or nil if the number of 
+/// These properties all return the object at that index or nil if the number of
 /// objects is less than the index.
-@property (nonatomic, readonly, nullable) id first;
-@property (nonatomic, readonly, nullable) id second;
-@property (nonatomic, readonly, nullable) id third;
-@property (nonatomic, readonly, nullable) id fourth;
-@property (nonatomic, readonly, nullable) id fifth;
-@property (nonatomic, readonly, nullable) id last;
+@property(nonatomic, readonly, nullable) id first;
+@property(nonatomic, readonly, nullable) id second;
+@property(nonatomic, readonly, nullable) id third;
+@property(nonatomic, readonly, nullable) id fourth;
+@property(nonatomic, readonly, nullable) id fifth;
+@property(nonatomic, readonly, nullable) id last;
 
 /// Creates a new tuple out of the array. Does not convert nulls to nils.
 + (instancetype)tupleWithObjectsFromArray:(NSArray *)array;
@@ -106,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RACTuple (RACSequenceAdditions)
 
 /// Returns a sequence of all the objects. RACTupleNils are converted to NSNulls.
-@property (nonatomic, copy, readonly) RACSequence *rac_sequence;
+@property(nonatomic, copy, readonly) RACSequence *rac_sequence;
 
 @end
 
@@ -126,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates a new tuple with the given values.
 + (RACOneTuple<First> *)pack:(nullable First)first;
 
-@property (nonatomic, readonly, nullable) First first;
+@property(nonatomic, readonly, nullable) First first;
 
 @end
 
@@ -140,8 +138,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates a new tuple with the given value.
 + (RACTwoTuple<First, Second> *)pack:(nullable First)first :(nullable Second)second;
 
-@property (nonatomic, readonly, nullable) First first;
-@property (nonatomic, readonly, nullable) Second second;
+@property(nonatomic, readonly, nullable) First first;
+@property(nonatomic, readonly, nullable) Second second;
 
 @end
 
@@ -155,91 +153,108 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates a new tuple with the given values.
 + (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third;
 
-@property (nonatomic, readonly, nullable) First first;
-@property (nonatomic, readonly, nullable) Second second;
-@property (nonatomic, readonly, nullable) Third third;
+@property(nonatomic, readonly, nullable) First first;
+@property(nonatomic, readonly, nullable) Second second;
+@property(nonatomic, readonly, nullable) Third third;
 
 @end
 
 /// A tuple with exactly four generic values.
-@interface RACFourTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth> : RACTuple
+@interface RACFourTuple<__covariant First,
+                        __covariant Second,
+                        __covariant Third,
+                        __covariant Fourth> : RACTuple
 
-+ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack:::: instead.")));
++ (instancetype)tupleWithObjects:(id)object,
+                                 ... __attribute((unavailable("Use pack:::: instead.")));
 
 - (RACFiveTuple<First, Second, Third, Fourth, id> *)tupleByAddingObject:(nullable id)obj;
 
 /// Creates a new tuple with the given values.
-+ (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third :(nullable Fourth)fourth;
++ (instancetype)pack:(nullable First)first
+					:(nullable Second)second
+                    :(nullable Third)third
+                    :(nullable Fourth)fourth;
 
-@property (nonatomic, readonly, nullable) First first;
-@property (nonatomic, readonly, nullable) Second second;
-@property (nonatomic, readonly, nullable) Third third;
-@property (nonatomic, readonly, nullable) Fourth fourth;
+@property(nonatomic, readonly, nullable) First first;
+@property(nonatomic, readonly, nullable) Second second;
+@property(nonatomic, readonly, nullable) Third third;
+@property(nonatomic, readonly, nullable) Fourth fourth;
 
 @end
 
 /// A tuple with exactly five generic values.
-@interface RACFiveTuple<__covariant First, __covariant Second, __covariant Third, __covariant Fourth, __covariant Fifth> : RACTuple
+@interface RACFiveTuple<__covariant First,
+                        __covariant Second,
+                        __covariant Third,
+                        __covariant Fourth,
+                        __covariant Fifth> : RACTuple
 
-+ (instancetype)tupleWithObjects:(id)object, ... __attribute((unavailable("Use pack::::: instead.")));
++ (instancetype)tupleWithObjects:(id)object,
+                                 ... __attribute((unavailable("Use pack::::: instead.")));
 
 /// Creates a new tuple with the given values.
-+ (instancetype)pack:(nullable First)first :(nullable Second)second :(nullable Third)third :(nullable Fourth)fourth :(nullable Fifth)fifth;
++ (instancetype)pack:(nullable First)first
+					:(nullable Second)second
+                    :(nullable Third)third
+                    :(nullable Fourth)fourth
+                    :(nullable Fifth)fifth;
 
-@property (nonatomic, readonly, nullable) First first;
-@property (nonatomic, readonly, nullable) Second second;
-@property (nonatomic, readonly, nullable) Third third;
-@property (nonatomic, readonly, nullable) Fourth fourth;
-@property (nonatomic, readonly, nullable) Fifth fifth;
+@property(nonatomic, readonly, nullable) First first;
+@property(nonatomic, readonly, nullable) Second second;
+@property(nonatomic, readonly, nullable) Third third;
+@property(nonatomic, readonly, nullable) Fourth fourth;
+@property(nonatomic, readonly, nullable) Fifth fifth;
 
 @end
 
 /// This and everything below is for internal use only.
 ///
 /// See RACTuplePack() and RACTupleUnpack() instead.
-#define RACTuplePack_(...) \
-    ([RACTuplePack_class_name(__VA_ARGS__) tupleWithObjectsFromArray:@[ metamacro_foreach(RACTuplePack_object_or_ractuplenil,, __VA_ARGS__) ]])
+#define RACTuplePack_(...)                                                                 \
+  ([RACTuplePack_class_name(__VA_ARGS__)                                                   \
+      tupleWithObjectsFromArray:@[ metamacro_foreach(RACTuplePack_object_or_ractuplenil, , \
+                                                     __VA_ARGS__) ]])
 
-#define RACTuplePack_object_or_ractuplenil(INDEX, ARG) \
-    (ARG) ?: RACTupleNil.tupleNil,
+#define RACTuplePack_object_or_ractuplenil(INDEX, ARG) (ARG) ?: RACTupleNil.tupleNil,
 
 /// Returns the class that should be used to create a tuple with the provided
 /// variadic arguments to RACTuplePack_(). Supports up to 20 arguments.
-#define RACTuplePack_class_name(...) \
-        metamacro_at(20, __VA_ARGS__, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACFiveTuple, RACFourTuple, RACThreeTuple, RACTwoTuple, RACOneTuple)
+#define RACTuplePack_class_name(...)                                                           \
+  metamacro_at(20, __VA_ARGS__, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple,    \
+               RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, RACTuple, \
+               RACTuple, RACFiveTuple, RACFourTuple, RACThreeTuple, RACTwoTuple, RACOneTuple)
 
-#define RACTupleUnpack_(...) \
-    metamacro_foreach(RACTupleUnpack_decl,, __VA_ARGS__) \
-    \
-    int RACTupleUnpack_state = 0; \
-    \
-    RACTupleUnpack_after: \
-        ; \
-        metamacro_foreach(RACTupleUnpack_assign,, __VA_ARGS__) \
-        if (RACTupleUnpack_state != 0) RACTupleUnpack_state = 2; \
-        \
-        while (RACTupleUnpack_state != 2) \
-            if (RACTupleUnpack_state == 1) { \
-                goto RACTupleUnpack_after; \
-            } else \
-                for (; RACTupleUnpack_state != 1; RACTupleUnpack_state = 1) \
-                    [RACTupleUnpackingTrampoline trampoline][ @[ metamacro_foreach(RACTupleUnpack_value,, __VA_ARGS__) ] ]
+#define RACTupleUnpack_(...)                                                             \
+  metamacro_foreach(RACTupleUnpack_decl, , __VA_ARGS__)                                  \
+                                                                                         \
+      int RACTupleUnpack_state = 0;                                                      \
+                                                                                         \
+  RACTupleUnpack_after:;                                                                 \
+  metamacro_foreach(RACTupleUnpack_assign, , __VA_ARGS__) if (RACTupleUnpack_state != 0) \
+      RACTupleUnpack_state = 2;                                                          \
+                                                                                         \
+  while (RACTupleUnpack_state != 2)                                                      \
+    if (RACTupleUnpack_state == 1) {                                                     \
+      goto RACTupleUnpack_after;                                                         \
+    } else                                                                               \
+      for (; RACTupleUnpack_state != 1; RACTupleUnpack_state = 1)                        \
+      [RACTupleUnpackingTrampoline trampoline]                                           \
+          [@[ metamacro_foreach(RACTupleUnpack_value, , __VA_ARGS__) ]]
 
 #define RACTupleUnpack_state metamacro_concat(RACTupleUnpack_state, __LINE__)
 #define RACTupleUnpack_after metamacro_concat(RACTupleUnpack_after, __LINE__)
 #define RACTupleUnpack_loop metamacro_concat(RACTupleUnpack_loop, __LINE__)
 
 #define RACTupleUnpack_decl_name(INDEX) \
-    metamacro_concat(metamacro_concat(RACTupleUnpack, __LINE__), metamacro_concat(_var, INDEX))
+  metamacro_concat(metamacro_concat(RACTupleUnpack, __LINE__), metamacro_concat(_var, INDEX))
 
-#define RACTupleUnpack_decl(INDEX, ARG) \
-    __strong id RACTupleUnpack_decl_name(INDEX);
+#define RACTupleUnpack_decl(INDEX, ARG) __strong id RACTupleUnpack_decl_name(INDEX);
 
-#define RACTupleUnpack_assign(INDEX, ARG) \
-    __strong ARG = RACTupleUnpack_decl_name(INDEX);
+#define RACTupleUnpack_assign(INDEX, ARG) __strong ARG = RACTupleUnpack_decl_name(INDEX);
 
 #define RACTupleUnpack_value(INDEX, ARG) \
-    [NSValue valueWithPointer:&RACTupleUnpack_decl_name(INDEX)],
+  [NSValue valueWithPointer:&RACTupleUnpack_decl_name(INDEX)],
 
 @interface RACTupleUnpackingTrampoline : NSObject
 

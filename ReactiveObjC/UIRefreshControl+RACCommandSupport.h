@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// When this refresh control is activated by the user, the command will be
 /// executed. Upon completion or error of the execution signal, -endRefreshing
 /// will be invoked.
-@property (nonatomic, strong, nullable) RACCommand<__kindof UIRefreshControl *, id> *rac_command;
+@property(nonatomic, strong, nullable) RACCommand<__kindof UIRefreshControl *, id> *rac_command;
 
 @end
 

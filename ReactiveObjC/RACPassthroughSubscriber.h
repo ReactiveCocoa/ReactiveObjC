@@ -24,6 +24,8 @@
 //              forwarded. This must not be nil.
 //
 // Returns an initialized passthrough subscriber.
-- (instancetype)initWithSubscriber:(id<RACSubscriber>)subscriber signal:(RACSignal *)signal disposable:(RACCompoundDisposable *)disposable;
+- (instancetype)initWithSubscriber:(id<RACSubscriber>)subscriber
+                            signal:(RACSignal *)signal
+                        disposable:(RACCompoundDisposable *)disposable;
 
 @end
