@@ -55,6 +55,8 @@ Pod::Spec.new do |s|
                             "UITableViewHeaderFooterView,UIText,MK,AppKit,NSControl,NSText,"\
                             "NSTable,NSURLConnection}*"
 
+  s.resource_bundles = { 'ReactiveObjC' => ['ReactiveObjC/*.xcprivacy'] }
+
   s.requires_arc = true
 
   s.frameworks   = "Foundation"

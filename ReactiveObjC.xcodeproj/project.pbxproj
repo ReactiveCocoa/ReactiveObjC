@@ -13,6 +13,10 @@
 		3A17B4A71E8EFDD800C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A17B4A81E8EFDDA00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A17B4A91E8EFDDF00C8999E /* RACAnnotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3D55C2832BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */; };
+		3D55C2842BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */; };
+		3D55C2852BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */; };
+		3D55C2862BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */; };
 		4AC5B3B221D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
 		4AC5B3B321D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
 		4AC5B3B421D405B8005920AA /* RACSwiftBridgingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */; };
@@ -772,6 +776,7 @@
 		314304151ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+RACSignalSupport.h"; sourceTree = "<group>"; };
 		314304161ACA8B1E00595017 /* MKAnnotationView+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+RACSignalSupport.m"; sourceTree = "<group>"; };
 		3A17B4A51E8EFDCD00C8999E /* RACAnnotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RACAnnotations.h; sourceTree = "<group>"; };
+		3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4AC5B3B121D405B8005920AA /* RACSwiftBridgingSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RACSwiftBridgingSpec.swift; sourceTree = "<group>"; };
 		4AC5B3B521D40E75005920AA /* Deprecations+Removals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecations+Removals.swift"; sourceTree = "<group>"; };
 		57A4D2411BA13D7A00F7D4B1 /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1395,6 +1400,7 @@
 			isa = PBXGroup;
 			children = (
 				D04725EE19E49ED7006002AA /* Info.plist */,
+				3D55C2822BB57BA30062D166 /* PrivacyInfo.xcprivacy */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2012,6 +2018,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D55C2862BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2027,6 +2034,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D55C2852BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2034,6 +2042,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D55C2832BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2049,6 +2058,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D55C2842BB57BA30062D166 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
